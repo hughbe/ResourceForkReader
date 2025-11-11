@@ -2,12 +2,29 @@ using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader;
 
+/// <summary>
+/// Represents a classic Macintosh resource fork and provides methods for reading resource data.
+/// </summary>
 public class ResourceFork
 {
     private readonly Stream _stream;
+    
+    /// <summary>
+    /// Gets the resource fork header containing offsets and lengths for data and map sections.
+    /// </summary>
     public ResourceForkHeader Header { get; }
+    
+    /// <summary>
+    /// Gets the resource fork map containing resource types and entries.
+    /// </summary>
     public ResourceForkMap Map { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResourceFork"/> class by reading from a stream.
+    /// </summary>
+    /// <param name="stream">A seekable and readable stream containing resource fork data.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="stream"/> is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="stream"/> is not seekable or readable.</exception>
     public ResourceFork(Stream stream)
     {
         ArgumentNullException.ThrowIfNull(stream);
@@ -20,6 +37,10 @@ public class ResourceFork
 
         // Read the header
         Span<byte> headerData = stackalloc byte[ResourceForkHeader.Size];
+        if (_stream.Length < ResourceForkHeader.Size)
+        {
+            throw new ArgumentException("Stream is too small to contain a valid resource fork header.", nameof(stream));
+        }
         _stream.ReadExactly(headerData);
         Header = new ResourceForkHeader(headerData);
 
@@ -32,6 +53,11 @@ public class ResourceFork
         Map = new ResourceForkMap(mapData);
     }
 
+    /// <summary>
+    /// Reads the resource data for a given resource entry and returns it as a byte array.
+    /// </summary>
+    /// <param name="entry">The resource list entry to read data for.</param>
+    /// <returns>A byte array containing the resource data.</returns>
     public byte[] GetResourceData(ResourceListEntry entry)
     {
         using var ms = new MemoryStream();
@@ -39,9 +65,16 @@ public class ResourceFork
         return ms.ToArray();
     }
 
-    public int GetResourceData(ResourceListEntry entry, Stream output)
+    /// <summary>
+    /// Reads the resource data for a given resource entry and writes it to the specified outputStream stream.
+    /// </summary>
+    /// <param name="entry">The resource list entry to read data for.</param>
+    /// <param name="outputStream">The stream to write the resource data to.</param>
+    /// <returns>The number of bytes written to the output stream.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="outputStream"/> is null.</exception>
+    public int GetResourceData(ResourceListEntry entry, Stream outputStream)
     {
-        ArgumentNullException.ThrowIfNull(output);
+        ArgumentNullException.ThrowIfNull(outputStream);
 
         // Calculate the absolute offset of the resource data
         long dataOffset = Header.DataOffset + entry.DataOffset;
@@ -61,7 +94,7 @@ public class ResourceFork
         {
             int toRead = Math.Min(remaining, BufferSize);
             _stream.ReadExactly(buffer[..toRead]);
-            output.Write(buffer[..toRead]);
+            outputStream.Write(buffer[..toRead]);
             remaining -= toRead;
         }
 

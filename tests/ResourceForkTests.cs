@@ -30,7 +30,7 @@ public class ResourceForkTests
         }
 
         File.WriteAllLines(Path.Combine("Output", "Strings.txt"), strings);
-        
+
         // Dump the 'STR#' resources.
         var strListResources = fork.Map.Types["STR#"];
         foreach (var strListResource in strListResources)
@@ -61,6 +61,28 @@ public class ResourceForkTests
             var versionRecord = new VersionRecord(versData);
             Debug.WriteLine($"  Version: {versionRecord.Major}.{versionRecord.Minor}");
         }
+    }
+
+    [Fact]
+    public void Ctor_NullStream_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>("stream", () => new ResourceFork(null!));
+    }
+
+    [Fact]
+    public void Ctor_EmptyStream_ThrowsArgumentException()
+    {
+        using var stream = new MemoryStream();
+        Assert.Throws<ArgumentException>("stream", () => new ResourceFork(stream));
+    }
+
+    [Fact]
+    public void GetResourceData_NullOutputStream_ThrowsArgumentNullException()
+    {
+        using var stream = File.OpenRead(Path.Combine("Samples", "Microsoft Excel.res"));
+        var fork = new ResourceFork(stream);
+        var entry = fork.Map.Types["CODE"][0];
+        Assert.Throws<ArgumentNullException>("outputStream", () => fork.GetResourceData(entry, null!));
     }
 
     private static void DumpFork(ResourceFork fork)

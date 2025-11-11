@@ -3,10 +3,21 @@ using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
-public struct StringListRecord
+/// <summary>
+/// Represents a string list resource ('STR#') containing multiple Pascal-style strings.
+/// </summary>
+public readonly struct StringListRecord
 {
+    /// <summary>
+    /// Gets the list of strings.
+    /// </summary>
     public List<string> Values { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StringListRecord"/> struct by parsing binary data.
+    /// </summary>
+    /// <param name="data">A span containing at least 2 bytes for the string count, followed by length-prefixed strings.</param>
+    /// <exception cref="ArgumentException">Thrown when data is too short.</exception>
     public StringListRecord(ReadOnlySpan<byte> data)
     {
         if (data.Length < 2)

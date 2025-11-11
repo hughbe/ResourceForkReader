@@ -1,6 +1,9 @@
 namespace ResourceForkReader.Utilities;
 
-internal class SpanUtilities
+/// <summary>
+/// Provides utility methods for reading big-endian values from spans.
+/// </summary>
+internal static class SpanUtilities
 {
     public static ushort ReadUInt16BE(ReadOnlySpan<byte> data, int offset)
     {
