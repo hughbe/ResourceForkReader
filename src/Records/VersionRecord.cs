@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using ResourceForkReader.Utilities;
+using System.Text;
 
 namespace ResourceForkReader.Records;
 
@@ -17,7 +17,7 @@ public struct VersionRecord
     /// Gets the major version string (2 characters).
     /// </summary>
     public string Major { get; }
-    
+
     /// <summary>
     /// Gets the minor version string (2 characters).
     /// </summary>
@@ -36,10 +36,10 @@ public struct VersionRecord
         }
 
         int offset = 0;
-        Major = SpanUtilities.ReadString(data, offset, 2);
+        Major = Encoding.ASCII.GetString(data.Slice(offset, 2));
         offset += 2;
 
-        Minor = SpanUtilities.ReadString(data, offset, 2);
+        Minor = Encoding.ASCII.GetString(data.Slice(offset, 2));
         offset += 2;
 
         Debug.Assert(offset == Size);

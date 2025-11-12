@@ -1,4 +1,4 @@
-using ResourceForkReader.Utilities;
+using System.Buffers.Binary;
 
 namespace ResourceForkReader.Records;
 
@@ -11,7 +11,7 @@ public readonly ref struct CodeSegment
     /// Gets the offset to the executable code within the segment.
     /// </summary>
     public int CodeOffset { get; }
-    
+
     /// <summary>
     /// Gets a span containing the executable code bytes.
     /// </summary>
@@ -23,7 +23,7 @@ public readonly ref struct CodeSegment
     /// <param name="data">A span containing the code segment data.</param>
     public CodeSegment(Span<byte> data)
     {
-        CodeOffset = SpanUtilities.ReadInt32BE(data, 0);
+        CodeOffset = BinaryPrimitives.ReadInt32BigEndian(data);
         ExecutableCode = data[CodeOffset..];
     }
 }

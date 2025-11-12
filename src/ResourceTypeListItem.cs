@@ -1,5 +1,6 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
-using ResourceForkReader.Utilities;
+using System.Text;
 
 namespace ResourceForkReader;
 
@@ -42,13 +43,13 @@ public struct ResourceTypeListItem
 
 
         int offset = 0;
-        Type = SpanUtilities.ReadString(data, offset, 4);
+        Type = Encoding.ASCII.GetString(data.Slice(offset, 4));
         offset += 4;
 
-        ResourceCount = SpanUtilities.ReadUInt16BE(data, 4);
+        ResourceCount = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
-        ResourceListOffset = SpanUtilities.ReadUInt16BE(data, 6);
+        ResourceListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         Debug.Assert(offset == Size);

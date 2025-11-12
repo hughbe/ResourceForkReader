@@ -1,5 +1,5 @@
+using System.Buffers.Binary;
 using System.Text;
-using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
@@ -26,7 +26,7 @@ public readonly struct StringListRecord
         }
 
         int offset = 0;
-        var stringCount = SpanUtilities.ReadUInt16BE(data, offset);
+        var stringCount = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         var strings = new List<string>(stringCount);

@@ -1,4 +1,4 @@
-using ResourceForkReader.Utilities;
+using System.Buffers.Binary;
 
 namespace ResourceForkReader;
 
@@ -8,12 +8,12 @@ namespace ResourceForkReader;
 public class ResourceFork
 {
     private readonly Stream _stream;
-    
+
     /// <summary>
     /// Gets the resource fork header containing offsets and lengths for data and map sections.
     /// </summary>
     public ResourceForkHeader Header { get; }
-    
+
     /// <summary>
     /// Gets the resource fork map containing resource types and entries.
     /// </summary>
@@ -83,7 +83,7 @@ public class ResourceFork
         _stream.Seek(dataOffset, SeekOrigin.Begin);
         Span<byte> sizeData = stackalloc byte[4];
         _stream.ReadExactly(sizeData);
-        int dataSize = SpanUtilities.ReadInt32BE(sizeData, 0);
+        int dataSize = BinaryPrimitives.ReadInt32BigEndian(sizeData);
 
         // Read the resource data
         // Copy in chunks of 512 bytes.

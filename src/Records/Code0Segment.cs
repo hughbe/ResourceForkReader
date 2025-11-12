@@ -1,5 +1,5 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
-using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
@@ -49,19 +49,19 @@ public class Code0Segment
         int offset = 0;
 
         // Above A5 size. The size (in bytes) from the location pointed to by A5 to the upper end of the application space.
-        AboveA5Size = SpanUtilities.ReadUInt32BE(data, offset);
+        AboveA5Size = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // Below A5 size. The size (in bytes) of the application's global variables plus the QuickDraw global variables.
-        BelowA5Size = SpanUtilities.ReadUInt32BE(data, offset);
+        BelowA5Size = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // Jump table size. The size of the jump table. The jump table contains one 8-byte entry for each externally referenced routine.
-        JumpTableSize = SpanUtilities.ReadUInt32BE(data, offset);
+        JumpTableSize = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // The offset (in bytes) of the jump table from the location pointed to by A5. This offset is stored in the global variable CurJTOffset.
-        JumpTableOffset = SpanUtilities.ReadUInt32BE(data, offset);
+        JumpTableOffset = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         Debug.Assert(offset == 16);
@@ -78,7 +78,7 @@ public class Code0Segment
             // Each jump table entry is 8 bytes.
             stream.ReadExactly(entryData);
 
-            ulong entry = SpanUtilities.ReadUInt64BE(entryData, 0);
+            ulong entry = BinaryPrimitives.ReadUInt64BigEndian(entryData);
             entries.Add(entry);
         }
 

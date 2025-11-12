@@ -1,5 +1,5 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
-using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader;
 
@@ -52,7 +52,7 @@ public struct ResourceForkMap
     /// Gets a dictionary mapping 4-character resource type codes to lists of resource entries.
     /// </summary>
     public Dictionary<string, List<ResourceListEntry>> Types { get; }
-    
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ResourceForkMap"/> struct by parsing binary data.
     /// </summary>
@@ -72,19 +72,19 @@ public struct ResourceForkMap
         offset += ResourceForkHeader.Size;
 
         // Reserved for handle to next resource map
-        Reserved2 = SpanUtilities.ReadUInt32BE(data, offset);
+        Reserved2 = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // Reserved for file reference number
-        Reserved3 = SpanUtilities.ReadUInt16BE(data, offset);
+        Reserved3 = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         // Reserved for attributes
-        Attributes = SpanUtilities.ReadUInt16BE(data, offset);
+        Attributes = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         // Offset from beginning of map to resource type list
-        ResourceTypeListOffset = SpanUtilities.ReadUInt16BE(data, offset);
+        ResourceTypeListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         if (ResourceTypeListOffset >= data.Length)
@@ -93,7 +93,7 @@ public struct ResourceForkMap
         }
 
         // Offset from beginning of map to resource name list
-        ResourceNameListOffset = SpanUtilities.ReadUInt16BE(data, offset);
+        ResourceNameListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         Debug.Assert(offset == 28);
@@ -104,7 +104,7 @@ public struct ResourceForkMap
         // The documentation incorrectly states that this is part of the 
         // header when it is actually part of the list.
         // Number of types in the map minus 1
-        ResourceTypeCount = SpanUtilities.ReadUInt16BE(data, offset);
+        ResourceTypeCount = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         // Read the resource types and the entries.
@@ -113,7 +113,7 @@ public struct ResourceForkMap
         {
             var resourceType = new ResourceTypeListItem(data.Slice(offset, ResourceTypeListItem.Size));
             offset += ResourceTypeListItem.Size;
-            
+
             var resourceListOffset = ResourceTypeListOffset + resourceType.ResourceListOffset;
             for (int j = 0; j < resourceType.ResourceCount + 1; j++)
             {

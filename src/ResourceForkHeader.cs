@@ -1,5 +1,5 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
-using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader;
 
@@ -42,19 +42,19 @@ public struct ResourceForkHeader
         int offset = 0;
 
         // Offset from beginning of resource fork to resource data.
-        DataOffset = SpanUtilities.ReadUInt32BE(data, offset);
+        DataOffset = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // Offset from beginning of resource fork to resource map.
-        MapOffset = SpanUtilities.ReadUInt32BE(data, offset);
+        MapOffset = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // Length of resource data.
-        DataLength = SpanUtilities.ReadUInt32BE(data, offset);
+        DataLength = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         // Length of resource map.
-        MapLength = SpanUtilities.ReadUInt32BE(data, offset);
+        MapLength = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         Debug.Assert(offset == Size);

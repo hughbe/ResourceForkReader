@@ -92,7 +92,7 @@ foreach (var (type, entries) in resourceFork.Map.Types)
 - `DataOffset`: Offset to the resource data.
 - `ReservedHandle`: Reserved for handle to resource.
 
-### ResourceAttributes (enum)
+### ResourceAttributeFlags (enum)
 
 - `None`, `Changed`, `Preload`, `Protected`, `Locked`, `Purgeable`, `SystemHeap`, etc.
 

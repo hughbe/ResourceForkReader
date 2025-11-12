@@ -1,5 +1,5 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
-using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader;
 
@@ -26,7 +26,7 @@ public struct ResourceListEntry
     /// <summary>
     /// Gets the resource attributes (flags such as Protected, Locked, Purgeable, etc.).
     /// </summary>
-    public ResourceAttributes Attributes { get; }
+    public ResourceAttributeFlags Attributes { get; }
 
     /// <summary>
     /// Gets the offset from the beginning of the resource data section to this resource's data.
@@ -53,22 +53,22 @@ public struct ResourceListEntry
         int offset = 0;
 
         // Resource ID
-        ID = SpanUtilities.ReadUInt16BE(data, offset);
+        ID = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         // Offset from beginning of resource name list to resource name
-        NameOffset = SpanUtilities.ReadUInt16BE(data, offset);
+        NameOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
         // 1 byte: Resource attributes and
         // 3 bytes: Offset from beginning of resource data to data for this resource
-        var attributesAndOffset = SpanUtilities.ReadUInt32BE(data, offset);
-        Attributes = (ResourceAttributes)(attributesAndOffset >> 24);
+        var attributesAndOffset = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
+        Attributes = (ResourceAttributeFlags)(attributesAndOffset >> 24);
         DataOffset = attributesAndOffset & 0x00FFFFFF;
         offset += 4;
 
         // Reserved for handle to resource
-        ReservedHandle = SpanUtilities.ReadUInt32BE(data, offset);
+        ReservedHandle = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
         Debug.Assert(offset == Size);
