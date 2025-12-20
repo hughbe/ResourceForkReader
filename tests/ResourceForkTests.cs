@@ -101,7 +101,9 @@ public class ResourceForkTests
             Debug.WriteLine($"  Type: {type.Key}, Count: {type.Value.Count}");
             foreach (var entry in type.Value)
             {
-                Debug.WriteLine($"    ID: {entry.ID}, Name Offset: {entry.NameOffset}, Data Offset: {entry.DataOffset}, Attributes: {entry.Attributes}");
+                var name = entry.GetName(fork);
+                var nameString = string.IsNullOrEmpty(name) ? "(no name)" : name;
+                Debug.WriteLine($"    ID: {entry.ID}, Name Offset: 0x{entry.NameOffset:X4} ({nameString}), Data Offset: 0x{entry.DataOffset:X4}, Attributes: {entry.Attributes}");
             }
         }
     }

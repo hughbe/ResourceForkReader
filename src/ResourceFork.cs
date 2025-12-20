@@ -7,7 +7,8 @@ namespace ResourceForkReader;
 /// </summary>
 public class ResourceFork
 {
-    private readonly Stream _stream;
+    internal readonly Stream _stream;
+    internal readonly long _baseOffset;
 
     /// <summary>
     /// Gets the resource fork header containing offsets and lengths for data and map sections.
@@ -34,6 +35,7 @@ public class ResourceFork
         }
 
         _stream = stream;
+        _baseOffset = stream.Position;
 
         // Read the header
         Span<byte> headerData = stackalloc byte[ResourceForkHeader.Size];
@@ -45,7 +47,7 @@ public class ResourceFork
         Header = new ResourceForkHeader(headerData);
 
         // Read the resource map
-        _stream.Seek(Header.MapOffset, SeekOrigin.Begin);
+        _stream.Seek(_baseOffset + Header.MapOffset, SeekOrigin.Begin);
         Span<byte> mapData = Header.MapLength <= 1024
             ? stackalloc byte[(int)Header.MapLength]
             : new byte[Header.MapLength];
@@ -80,7 +82,7 @@ public class ResourceFork
         long dataOffset = Header.DataOffset + entry.DataOffset;
 
         // Length of following resource data
-        _stream.Seek(dataOffset, SeekOrigin.Begin);
+        _stream.Seek(_baseOffset + dataOffset, SeekOrigin.Begin);
         Span<byte> sizeData = stackalloc byte[4];
         _stream.ReadExactly(sizeData);
         int dataSize = BinaryPrimitives.ReadInt32BigEndian(sizeData);

@@ -73,4 +73,38 @@ public struct ResourceListEntry
 
         Debug.Assert(offset == Size);
     }
+
+    /// <summary>
+    /// Gets the name of the resource by reading it from the resource fork.
+    /// </summary>
+    /// <param name="fork">The resource fork containing the resource.</param>
+    /// <returns>The resource name as a string, or an empty string if the resource has no name.</returns>
+    public readonly string GetName(ResourceFork fork)
+    {
+        if (NameOffset == 0xFFFF)
+        {
+            return string.Empty;
+        }
+
+        // Calculate the absolute offset of the resource name
+        long nameListOffset = fork.Header.MapOffset + fork.Map.ResourceNameListOffset;
+        long absoluteNameOffset = nameListOffset + NameOffset;
+
+        // Read the name length (Pascal string format - first byte is length)
+        fork._stream.Seek(fork._baseOffset + absoluteNameOffset, SeekOrigin.Begin);
+        
+        int nameLength = fork._stream.ReadByte();
+        if (nameLength <= 0)
+        {
+            return string.Empty;
+        }
+
+        byte[] nameBytes = new byte[nameLength];
+        if (fork._stream.Read(nameBytes, 0, nameLength) != nameLength)
+        {
+            throw new ArgumentException("Failed to read the full resource name from the stream.", nameof(fork));
+        }
+        
+        return System.Text.Encoding.ASCII.GetString(nameBytes);
+    }
 }
