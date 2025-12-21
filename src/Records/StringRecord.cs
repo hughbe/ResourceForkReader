@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Text;
+using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
@@ -7,11 +9,6 @@ namespace ResourceForkReader.Records;
 /// </summary>
 public readonly struct StringRecord
 {
-    /// <summary>
-    /// Gets the length of the string in bytes.
-    /// </summary>
-    public byte Length { get; }
-
     /// <summary>
     /// Gets the string value.
     /// </summary>
@@ -24,18 +21,11 @@ public readonly struct StringRecord
     /// <exception cref="ArgumentException">Thrown when data is empty or too short for the specified string length.</exception>
     public StringRecord(ReadOnlySpan<byte> data)
     {
-        if (data.Length == 0)
-        {
-            throw new ArgumentException("Data must be at least 1 byte long.", nameof(data));
-        }
+        int offset = 0;
 
-        Length = data[0];
+        Value = SpanUtilities.ReadPascalString(data);
+        offset += 1 + Value.Length;
 
-        if (data.Length < 1 + Length)
-        {
-            throw new ArgumentException("Data is too short for the specified string length.", nameof(data));
-        }
-
-        Value = Encoding.ASCII.GetString(data.Slice(1, Length));
+        Debug.Assert(offset == data.Length, "Did not consume all data for StringRecord.");
     }
 }
