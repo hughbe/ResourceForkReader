@@ -43,6 +43,7 @@ public class ResourceFork
         {
             throw new ArgumentException("Stream is too small to contain a valid resource fork header.", nameof(stream));
         }
+
         _stream.ReadExactly(headerData);
         Header = new ResourceForkHeader(headerData);
 

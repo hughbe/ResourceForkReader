@@ -7,7 +7,7 @@ namespace ResourceForkReader.Records;
 /// <summary>
 /// Represents a bundle ('BNDL') in a resource fork.
 /// </summary>
-public struct BundleRecord
+public readonly struct BundleRecord
 {
     /// <summary>
     /// Gets the owner of the bundle.
@@ -61,7 +61,7 @@ public struct BundleRecord
     /// <summary>
     /// Represents a bundle type within a bundle record.
     /// </summary>
-    public struct BundleType
+    public readonly struct BundleType
     {
         /// <summary>
         /// Gets the type of the bundle.

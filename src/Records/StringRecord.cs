@@ -26,6 +26,9 @@ public readonly struct StringRecord
         Value = SpanUtilities.ReadPascalString(data);
         offset += 1 + Value.Length;
 
-        Debug.Assert(offset == data.Length, "Did not consume all data for StringRecord.");
+        // Seen cases where string length is odd, followed by a padding byte.
+        // Or there are additional zero bytes after the string.
+        Debug.Assert(offset == data.Length || offset + 1 == data.Length || (offset < data.Length && data[offset] == 0));
+
     }
 }

@@ -8,7 +8,7 @@ namespace ResourceForkReader.Records;
 /// <summary>
 /// Represents a file reference ('FREF') in a resource fork.
 /// </summary>
-public struct FileReferenceRecord
+public readonly struct FileReferenceRecord
 {
     /// <summary>
     /// Gets the file reference type.
