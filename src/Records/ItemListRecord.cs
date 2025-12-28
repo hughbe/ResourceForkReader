@@ -45,7 +45,8 @@ public readonly struct ItemListRecord
         for (int i = 0; i < ItemCount + 1; i++)
         {
             // The format of each item depends on its type.
-            items.Add(new Item(data, ref offset));
+            items.Add(new Item(data[offset..], out int itemBytesRead));
+            offset += itemBytesRead;
 
             if (offset % 2 != 0)
             {
@@ -98,14 +99,16 @@ public readonly struct ItemListRecord
         /// Initializes a new instance of the <see cref="Item"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">A span containing the item data.</param>
-        /// <param name="offset">The current offset within the data span. This will be updated to reflect the number of bytes consumed.</param>
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
         /// <exception cref="ArgumentException">Thrown when data is smaller than the minimum size.</exception>
-        public Item(ReadOnlySpan<byte> data, ref int offset)
+        public Item(ReadOnlySpan<byte> data, out int bytesRead)
         {
             if (data.Length < MinSize)
             {
                 throw new ArgumentException("Data must be at least 4 bytes long.", nameof(data));
             }
+
+            int offset = 0;
 
             // Reserved. The Dialog Manager uses the element for storage.
             Reserved = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
@@ -140,14 +143,18 @@ public readonly struct ItemListRecord
             Enabled = (enabledAndType & 0x80) != 0;
             Type = (ItemType)(enabledAndType & 0x7F);
 
+            int dataBytesRead;
             Data = Type switch
             {
-                ItemType.UserItem => new UserItemData(data, ref offset),
-                ItemType.Help => new HelpItemData(data, ref offset),
-                ItemType.Button or ItemType.CheckBox or ItemType.RadioButton or ItemType.StaticText or ItemType.EditText => new TextItemData(data, ref offset),
-                ItemType.IconButton or ItemType.Icon or ItemType.Picture => new IconItemData(data, ref offset),
+                ItemType.UserItem => new UserItemData(data[offset..], out dataBytesRead),
+                ItemType.Help => new HelpItemData(data[offset..], out dataBytesRead),
+                ItemType.Button or ItemType.CheckBox or ItemType.RadioButton or ItemType.StaticText or ItemType.EditText => new TextItemData(data[offset..], out dataBytesRead),
+                ItemType.IconButton or ItemType.Icon or ItemType.Picture => new IconItemData(data[offset..], out dataBytesRead),
                 _ => throw new ArgumentException($"Unknown item type: {Type}.", nameof(data)),
             };
+            offset += dataBytesRead;
+
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Did not consume all data for Item.");
         }
     }
@@ -176,14 +183,16 @@ public readonly struct ItemListRecord
         /// Initializes a new instance of the <see cref="UserItemData"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">A span containing the user item data.</param>
-        /// <param name="offset">The current offset within the data span. This will be updated to reflect the number of bytes consumed.</param>
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
         /// <exception cref="ArgumentException">Thrown when data is smaller than the minimum size.</exception>
-        public UserItemData(ReadOnlySpan<byte> data, ref int offset)
+        public UserItemData(ReadOnlySpan<byte> data, out int bytesRead)
         {
             if (data.Length < Size)
             {
                 throw new ArgumentException($"Data must be at least {Size} bytes long.", nameof(data));
             }
+
+            int offset = 0;
 
             ReservedLength = data[offset];
             offset += 1;
@@ -197,6 +206,7 @@ public readonly struct ItemListRecord
             ReservedData = data.Slice(offset, ReservedLength).ToArray();
             offset += ReservedLength;
 
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Did not consume all data for UserItemData.");
         }
     }
@@ -235,14 +245,16 @@ public readonly struct ItemListRecord
         /// Initializes a new instance of the <see cref="HelpItemData"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">A span containing the help item data.</param>
-        /// <param name="offset">The current offset within the data span. This will be updated to reflect the number of bytes consumed.</param>
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
         /// <exception cref="ArgumentException">Thrown when data is smaller than the minimum size.</exception>
-        public HelpItemData(ReadOnlySpan<byte> data, ref int offset)
+        public HelpItemData(ReadOnlySpan<byte> data, out int bytesRead)
         {
             if (data.Length < MinSize)
             {
                 throw new ArgumentException($"Data must be at least {MinSize} bytes long.", nameof(data));
             }
+
+            int offset = 0;
 
             // Size. This specifies the number of bytes contained in the
             // rest of this element.
@@ -301,6 +313,7 @@ public readonly struct ItemListRecord
                 ItemNumber = null;
             }
 
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Did not consume all data for HelpItemData.");
         }
 
@@ -340,10 +353,12 @@ public readonly struct ItemListRecord
         /// Initializes a new instance of the <see cref="TextItemData"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">A span containing the text item data.</param>
-        /// <param name="offset">The current offset within the data span. This will be updated to reflect the number of bytes consumed.</param>
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
         /// <exception cref="ArgumentException">Thrown when data is smaller than the minimum size.</exception>
-        public TextItemData(ReadOnlySpan<byte> data, ref int offset)
+        public TextItemData(ReadOnlySpan<byte> data, out int bytesRead)
         {
+            int offset = 0;
+
             // Text. This specifies the text that appears in the item. This element consists of a length
             // byte and as many as 255 additional bytes for the text. (“Titles for Buttons, Checkboxes,
             // and Radio Buttons” beginning on page 6-37 and “Text Strings for Static Text and
@@ -356,6 +371,7 @@ public readonly struct ItemListRecord
             Text = SpanUtilities.ReadPascalString(data[offset..]);
             offset += 1 + Text.Length;
 
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Did not consume all data for TextItemData.");
         }
     }
@@ -384,14 +400,16 @@ public readonly struct ItemListRecord
         /// Initializes a new instance of the <see cref="IconItemData"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">A span containing the icon item data.</param>
-        /// <param name="offset">The current offset within the data span. This will be updated to reflect the number of bytes consumed.</param>
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
         /// <exception cref="ArgumentException">Thrown when data is smaller than the minimum size.</exception>
-        public IconItemData(ReadOnlySpan<byte> data, ref int offset)
+        public IconItemData(ReadOnlySpan<byte> data, out int bytesRead)
         {
             if (data.Length < Size)
             {
                 throw new ArgumentException($"Data must be at least {Size} bytes long.", nameof(data));
             }
+
+            int offset = 0;
 
             Reserved = data[offset];
             offset += 1;
@@ -405,6 +423,7 @@ public readonly struct ItemListRecord
             IconResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
             offset += 2;
 
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Did not consume all data for IconItemData.");
         }
     }

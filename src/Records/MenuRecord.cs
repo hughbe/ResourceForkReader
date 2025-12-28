@@ -140,7 +140,8 @@ public readonly struct MenuRecord
         var menuItems = new List<StandardMenuItem>();
         while (data[offset] != 0)
         {
-            var menuItem = new StandardMenuItem(data, ref offset);
+            var menuItem = new StandardMenuItem(data[offset..], out int itemBytesRead);
+            offset += itemBytesRead;
             menuItems.Add(menuItem);
         }
 
@@ -166,6 +167,11 @@ public readonly struct MenuRecord
     /// </summary>
     public readonly struct StandardMenuItem
     {
+        /// <summary>
+        /// The minimum size of a StandardMenuItem in bytes.
+        /// </summary>
+        public const int MinSize = 1;
+
         /// <summary>
         /// Gets the length of the menu item text.
         /// </summary>
@@ -200,14 +206,16 @@ public readonly struct MenuRecord
         /// Initializes a new instance of the <see cref="StandardMenuItem"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">A span containing the menu item data.</param>
-        /// <param name="offset">The current offset within the data span. This will be updated to point after the parsed data.</param>
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
         /// <exception cref="ArgumentException">Thrown when data is smaller than the minimum size.</exception>
-        public StandardMenuItem(ReadOnlySpan<byte> data, ref int offset)
+        public StandardMenuItem(ReadOnlySpan<byte> data, out int bytesRead)
         {
-            if (data.Length - offset < 1)
+            if (data.Length < MinSize)
             {
                 throw new ArgumentException("Insufficient data for StandardMenuItem.", nameof(data));
             }
+
+            int offset = 0;
 
             // The length (in bytes) of the menu item text.
             TextLength = data[offset];
@@ -282,6 +290,7 @@ public readonly struct MenuRecord
             FontStyle = data[offset];
             offset += 1;
 
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Did not consume all data for StandardMenuItem.");
         }
     }

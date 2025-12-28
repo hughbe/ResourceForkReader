@@ -216,6 +216,16 @@ public static class ResourceForkType
     public const string KeyboardSwapping = "KSWP";
 
     /// <summary>
+    /// The 'icl4' resource type for large 4 bit icons.
+    /// </summary>
+    public const string LargeIcon4bit = "icl4";
+
+    /// <summary>
+    /// The 'icl8' resource type for large 8 bit icons.
+    /// </summary>
+    public const string LargeIcon8bit = "icl8";
+
+    /// <summary>
     /// The 'LAYO' resource type for layout resources.
     /// </summary>
     public const string Layout = "LAYO";
@@ -384,6 +394,16 @@ public static class ResourceForkType
     /// The 'SIZE' resource type for size resources.
     /// </summary>
     public const string Size = "SIZE";
+
+    /// <summary>
+    /// The 'icl4' resource type for large 4 bit icons.
+    /// </summary>
+    public const string SmallIcon4bit = "ics4";
+
+    /// <summary>
+    /// The 'icl8' resource type for large 8 bit icons.
+    /// </summary>
+    public const string SmallIcon8bit = "ics8";
 
     /// <summary>
     /// The 'ics#' resource type for small icon lists.

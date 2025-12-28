@@ -49,7 +49,8 @@ public readonly struct BundleRecord
         var types = new List<BundleType>(NumberOfTypes + 1);
         for (int i = 0; i <= NumberOfTypes; i++)
         {
-            var type = new BundleType(data, ref offset);
+            var type = new BundleType(data[offset..], out int typeBytesRead);
+            offset += typeBytesRead;
             types.Add(type);
         }
 
@@ -63,6 +64,11 @@ public readonly struct BundleRecord
     /// </summary>
     public readonly struct BundleType
     {
+        /// <summary>
+        /// The minimum size of a bundle type in bytes.
+        /// </summary>
+        public const int MinSize = 6;
+
         /// <summary>
         /// Gets the type of the bundle.
         /// </summary>
@@ -82,13 +88,16 @@ public readonly struct BundleRecord
         /// Initializes a new instance of the <see cref="BundleType"/> struct by parsing binary data.
         /// </summary>
         /// <param name="data">The span containing the bundle type data.</param>
-        /// <param name="offset">A reference to the current offset within the data span.</param>
-        public BundleType(ReadOnlySpan<byte> data, ref int offset)
+        /// <param name="bytesRead">Outputs the number of bytes read from the data span.</param>
+        /// <exception cref="ArgumentException">Thrown when the provided data is too short.</exception>
+        public BundleType(ReadOnlySpan<byte> data, out int bytesRead)
         {
-            if (data.Length - offset < 6)
+            if (data.Length < MinSize)
             {
                 throw new ArgumentException("Data is too short to be a valid BundleType.", nameof(data));
             }
+
+            int offset = 0;
 
             Type = Encoding.ASCII.GetString(data.Slice(offset, 4));
             offset += 4;
@@ -111,6 +120,7 @@ public readonly struct BundleRecord
 
             Mappings = mappings;
 
+            bytesRead = offset;
             Debug.Assert(offset <= data.Length, "Parsed beyond the end of the data span.");
         }
     }

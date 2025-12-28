@@ -64,7 +64,7 @@ public readonly struct MouseTrackingRecord
             throw new ArgumentException($"Data must be exactly {Size} bytes long.", nameof(data));
         }
 
-        // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/2725d5d8011c08cc2d11476375541f739433f19f/src/SystemTemplates.cc#L891-L900
+        // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/master/src/SystemTemplates.cc#L891-L900
         int offset = 0;
 
         Threshold1 = data[offset];

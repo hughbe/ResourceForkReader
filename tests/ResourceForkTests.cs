@@ -509,10 +509,208 @@ public class ResourceForkTests
 
                     break;
 
+                case ResourceForkType.Layout:
+                    Debug.WriteLine("LAYO Resources:");
+                    foreach (var layoutResource in type.Value)
+                    {
+                        var layoutData = fork.GetResourceData(layoutResource);
+                        var layoutRecord = new LayoutRecord(layoutData);
+                        Debug.WriteLine($"  Layout 0x{layoutResource.ID:X4}: FontResourceID={layoutRecord.FontResourceID}");
+                    }
+
+                    break;
+
+                case ResourceForkType.HelpWindow:
+                    Debug.WriteLine("hwin Resources:");
+                    foreach (var hwinResource in type.Value)
+                    {
+                        var hwinData = fork.GetResourceData(hwinResource);
+                        var helpWindowRecord = new HelpWindowRecord(hwinData);
+                        Debug.WriteLine($"  Help Window 0x{hwinResource.ID:X4}: Version={helpWindowRecord.Version}, Options={helpWindowRecord.Options}, Window Count={helpWindowRecord.WindowComponentCount}");
+                        foreach (var component in helpWindowRecord.WindowComponents)
+                        {
+                            Debug.WriteLine($"    Help Window Component: Type={component.ResourceType}, ID={component.ResourceID}, TitleLengthOrWindowKind={component.LengthOfComparisonStringOrWindowKind}, Title=\"{component.WindowTitleString}\")");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.Pattern:
+                    Debug.WriteLine("PAT Resources:");
+                    foreach (var patResource in type.Value)
+                    {
+                        var patData = fork.GetResourceData(patResource);
+                        var patternRecord = new PatternRecord(patData);
+                        Debug.WriteLine($"  Pattern 0x{patResource.ID:X4}: PatternData Length={patternRecord.PatternData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.PatternList:
+                    Debug.WriteLine("PAT# Resources:");
+                    foreach (var patListResource in type.Value)
+                    {
+                        var patListData = fork.GetResourceData(patListResource);
+                        var patternListRecord = new PatternListRecord(patListData);
+                        Debug.WriteLine($"  Pattern List 0x{patListResource.ID:X4}: PatternCount={patternListRecord.Patterns.Count}");
+                        foreach (var pattern in patternListRecord.Patterns)
+                        {
+                            Debug.WriteLine($"    Pattern: {pattern.PatternData.Length} bytes");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.FontFamily:
+                    Debug.WriteLine("FOND Resources:");
+                    foreach (var fondResource in type.Value)
+                    {
+                        var fondData = fork.GetResourceData(fondResource);
+                        var fontFamilyRecord = new FontFamilyRecord(fondData);
+                        Debug.WriteLine($"  Font Family 0x{fondResource.ID:X4}: ");
+                    }
+
+                    break;
+                
+                case ResourceForkType.FontInformation:
+                    Debug.WriteLine("finf Resources:");
+                    foreach (var finfResource in type.Value)
+                    {
+                        var finfData = fork.GetResourceData(finfResource);
+                        var fontInformationRecord = new FontInformationRecord(finfData);
+                        Debug.WriteLine($"  Font Information Entries Count: {fontInformationRecord.Entries.Count}");
+                        foreach (var fontInfoEntry in fontInformationRecord.Entries)
+                        {
+                            Debug.WriteLine($"    Font Information Entry: FontID={fontInfoEntry.FontID}, FontStyle={fontInfoEntry.FontStyle}, FontSize={fontInfoEntry.FontSize}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.Font:
+                    Debug.WriteLine("FONT Resources:");
+                    foreach (var fontResource in type.Value)
+                    {
+                        var fontData = fork.GetResourceData(fontResource);
+                        var fontRecord = new FontRecord(fontData);
+                        Debug.WriteLine($"  Font 0x{fontResource.ID:X4}: FontData Length={fontRecord.FontData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.FontNew:
+                    Debug.WriteLine("NFNT Resources:");
+                    foreach (var nfntResource in type.Value)
+                    {
+                        var nfntData = fork.GetResourceData(nfntResource);
+                        var newFontRecord = new FontNewRecord(nfntData);
+                        Debug.WriteLine($"  New Font 0x{nfntResource.ID:X4}: FontData Length={newFontRecord.FontData.Length}");
+                    }
+
+                    break;
+                
+                case ResourceForkType.Text:
+                    Debug.WriteLine("TEXT Resources:");
+                    foreach (var textResource in type.Value)
+                    {
+                        var textData = fork.GetResourceData(textResource);
+                        var textRecord = new TextRecord(textData);
+                        Debug.WriteLine($"  Text 0x{textResource.ID:X4}: TextData Length={textRecord.Text.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.LargeIcon4bit:
+                    Debug.WriteLine("icl4 Resources:");
+                    foreach (var icl4Resource in type.Value)
+                    {
+                        var icl4Data = fork.GetResourceData(icl4Resource);
+                        var icon4bitRecord = new LargeIcon4bitRecord(icl4Data);
+                        Debug.WriteLine($"  4-bit Icon 0x{icl4Resource.ID:X4}: IconData Length={icon4bitRecord.IconData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.LargeIcon8bit:
+                    Debug.WriteLine("icl8 Resources:");
+                    foreach (var icl8Resource in type.Value)
+                    {
+                        var icl8Data = fork.GetResourceData(icl8Resource);
+                        var icon8bitRecord = new LargeIcon8bitRecord(icl8Data);
+                        Debug.WriteLine($"  8-bit Icon 0x{icl8Resource.ID:X4}: IconData Length={icon8bitRecord.IconData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.SmallIcon4bit:
+                    Debug.WriteLine("ics4 Resources:");
+                    foreach (var ics4Resource in type.Value)
+                    {
+                        var ics4Data = fork.GetResourceData(ics4Resource);
+                        var smallIcon4bitRecord = new SmallIcon4bitRecord(ics4Data);
+                        Debug.WriteLine($"  Small 4-bit Icon 0x{ics4Resource.ID:X4}: IconData Length={smallIcon4bitRecord.IconData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.SmallIcon8bit:
+                    Debug.WriteLine("ics8 Resources:");
+                    foreach (var ics8Resource in type.Value)
+                    {
+                        var ics8Data = fork.GetResourceData(ics8Resource);
+                        var smallIcon8bitRecord = new SmallIcon8bitRecord(ics8Data);
+                        Debug.WriteLine($"  Small 8-bit Icon 0x{ics8Resource.ID:X4}: IconData Length={smallIcon8bitRecord.IconData.Length}");
+                    }
+
+                    break;
+                
+                case ResourceForkType.SmallIconList:
+                    Debug.WriteLine("icl# Resources:");
+                    foreach (var iclResource in type.Value)
+                    {
+                        var iclData = fork.GetResourceData(iclResource);
+                        var smallIconListRecord = new SmallIconListRecord(iclData);
+                        Debug.WriteLine($"  Small Icon List 0x{iclResource.ID:X4}: IconData Length={smallIconListRecord.IconData.Length}, MaskData Length={smallIconListRecord.MaskData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ColorIcon:
+                    Debug.WriteLine("cicn Resources:");
+                    foreach (var cicnResource in type.Value)
+                    {
+                        var cicnData = fork.GetResourceData(cicnResource);
+                        var colorIconRecord = new ColorIconRecord(cicnData);
+                        Debug.WriteLine($"  Color Icon 0x{cicnResource.ID:X4}: IconData Length={colorIconRecord.IconData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.Sound:
+                    Debug.WriteLine("snd Resources:");
+                    foreach (var sndResource in type.Value)
+                    {
+                        var sndData = fork.GetResourceData(sndResource);
+                        var soundRecord = new SoundRecord(sndData);
+                        Debug.WriteLine($"  Sound 0x{sndResource.ID:X4}: SoundData Length={soundRecord.SoundData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.Palette:
+                    Debug.WriteLine("pltt Resources:");
+                    foreach (var plttResource in type.Value)
+                    {
+                        var plttData = fork.GetResourceData(plttResource);
+                        var paletteRecord = new PaletteRecord(plttData);
+                        Debug.WriteLine($"  Palette 0x{plttResource.ID:X4}: ColorCount={paletteRecord.Entries.Count}");
+                    }
+
+                    break;
+
                 case ResourceForkType.ColorLookupTable:
                 case "CLUT":
                 case ResourceForkType.DialogColorLookupTable:
-                case ResourceForkType.Palette:
                 case ResourceForkType.WindowColorTable:
                 case ResourceForkType.ControlColorLookupTable:
                     Debug.WriteLine("CLUT Resources:");
@@ -520,28 +718,9 @@ public class ResourceForkTests
                     {
                         var clutData = fork.GetResourceData(clutResource);
                         var clutRecord = new ColorLookupTableRecord(clutData);
-                        Debug.WriteLine($"  Color Lookup Table 0x{clutResource.ID:X4}: ColorData Length={clutRecord.ColorData.Length}");
+                        Debug.WriteLine($"  Color Lookup Table 0x{clutResource.ID:X4}: ColorCount={clutRecord.Entries.Count}");
                     }
 
-                    break;
-
-                case ResourceForkType.Pattern:
-                case ResourceForkType.PatternList:
-                case ResourceForkType.Layout:
-                case ResourceForkType.Font:
-                case ResourceForkType.FontNew:
-                case ResourceForkType.FontFamily:
-                case ResourceForkType.FontInformation:
-                case ResourceForkType.Text:
-                case ResourceForkType.SmallIconList:
-                case ResourceForkType.HelpWindow:
-                case "icl4":
-                case "icl8":
-                case "ics8":
-                case "ics4":
-                case ResourceForkType.ColorIcon:
-                case ResourceForkType.Sound:
-                    // TODO.
                     break;
 
                 case ResourceForkType.InternationalResource:

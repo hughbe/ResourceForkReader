@@ -35,7 +35,7 @@ public readonly struct ROMFontsRecord
             throw new ArgumentException($"Data must be at least {MinSize} bytes long.", nameof(data));
         }
 
-        // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/2725d5d8011c08cc2d11476375541f739433f19f/src/SystemTemplates.cc#L462-L466
+        // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/master/src/SystemTemplates.cc#L462-L466
         int offset = 0;
 
         NumberOfFonts = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
