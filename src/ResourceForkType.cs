@@ -138,6 +138,11 @@ public static class ResourceForkType
     public const string FileReference = "FREF";
 
     /// <summary>
+    /// The 'FNDR' resource type for Finder version resources.
+    /// </summary>
+    public const string FinderVersion = "FNDR";
+
+    /// <summary>
     /// The 'FONT' resource type for fonts.
     /// </summary>
     public const string Font = "FONT";

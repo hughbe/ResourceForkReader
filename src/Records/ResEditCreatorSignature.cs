@@ -14,9 +14,14 @@ public readonly struct ResEditCreatorSignatureRecord
     public const int MinSize = 1;
 
     /// <summary>
-    /// Gets the signature string.
+    /// Gets the signature string, if any.
     /// </summary>
-    public string Signature { get; }
+    public string? Signature { get; }
+
+    /// <summary>
+    /// Gets the raw data of the record, if any.
+    /// </summary>
+    public byte[]? RawData { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResEditCreatorSignatureRecord"/> struct by parsing binary data.
@@ -36,8 +41,19 @@ public readonly struct ResEditCreatorSignatureRecord
         // It is a Pascal string.
         int offset = 0;
 
-        Signature = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Signature.Length;
+        byte stringLength = data[0];
+        if (1 + stringLength == data.Length)
+        {
+            Signature = SpanUtilities.ReadPascalString(data[offset..]);
+            RawData = null;
+            offset += 1 + Signature.Length;
+        }
+        else
+        {
+            RawData = data.ToArray();
+            offset += data.Length;
+            Signature = null;
+        }
 
         Debug.Assert(offset == data.Length, "Parsed beyond the end of the Res Edit Creator Signature Record data.");
     }

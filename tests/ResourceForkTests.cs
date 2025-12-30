@@ -8,6 +8,14 @@ namespace ResourceForkReader.Tests;
 public class ResourceForkTests
 {
     [Theory]
+    [InlineData("System1.1/DeskTop.res")]
+    [InlineData("System1.1/Disk Copy.res")]
+    [InlineData("System1.1/Finder.res")]
+    [InlineData("System1.1/Font Mover.res")]
+    [InlineData("System1.1/Fonts.res")]
+    [InlineData("System1.1/Imagewriter.res")]
+    [InlineData("System1.1/Scrapbook File.res")]
+    [InlineData("System1.1/System.res")]
     [InlineData("Microsoft Excel.res")]
     [InlineData("ResEdit.res")]
     [InlineData("Read Me.res")]
@@ -1272,6 +1280,17 @@ public class ResourceForkTests
 
                     break;
 
+                case ResourceForkType.FinderVersion: // "System 1.1/Finder.res"
+                    Debug.WriteLine("FNDR Resources:");
+                    foreach (var fndrResource in type.Value)
+                    {
+                        var fndrData = fork.GetResourceData(fndrResource);
+                        var finderVersionRecord = new FinderVersionRecord(fndrData);
+                        Debug.WriteLine($"  Finder Version {fndrResource}: VersionString=\"{finderVersionRecord.VersionString}\"");
+                    }
+
+                    break;
+
                 case ResourceForkType.MacroMakerInformation1:
                 case ResourceForkType.MacroMakerInformation2:
                 case ResourceForkType.MacroMakerInformation3:
@@ -1379,6 +1398,10 @@ public class ResourceForkTests
                 case "bvrs":
                 case "PATC":
                 case "ERRS":
+                case "FMOV": // "System 1.1/Font Mover.res"
+                case "QUIK": // "System 1.1/Disk Copy.res"
+                case "FVIS": // "System 1.1/Finder.res"
+                case "TAB#": // "System 1.1/Finder.res"
                     // Unknown.
                     break;
 

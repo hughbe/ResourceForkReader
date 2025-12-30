@@ -56,6 +56,14 @@ public readonly struct ROMFontsRecord
 
         FontResourceIDs = fontResourceIDs;
 
+        // Sometimes there are extra bytes at the end; ResEdit adds these.
+        while (offset + 2 <= data.Length)
+        {
+            ushort extraResourceID = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
+            fontResourceIDs.Add(extraResourceID);
+            offset += 2;
+        }
+
         Debug.Assert(offset == data.Length, "Did not consume all bytes for ROM fonts record.");
     }
 }
