@@ -52,7 +52,7 @@ public readonly struct DialogBoxRecord
     /// <summary>
     /// Gets the resource ID of the item list ('DITL') associated with this dialog box.
     /// </summary>
-    public ushort ItemListResourceID { get; }
+    public short ItemListResourceID { get; }
 
     /// <summary>
     /// Gets the title of the dialog box window.
@@ -139,7 +139,7 @@ public readonly struct DialogBoxRecord
         //  Item list resource ID. The ID of the item list resource
         // that specifies the items—such as buttons and static
         // text—to display in the dialog box.
-        ItemListResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        ItemListResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         // Window title. This is a Pascal string displayed in the

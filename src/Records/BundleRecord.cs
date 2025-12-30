@@ -143,7 +143,7 @@ public readonly struct BundleRecord
         /// <summary>
         /// Gets the actual resource ID.
         /// </summary>
-        public ushort ActualResourceID { get; }
+        public short ActualResourceID { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BundleMapping"/> struct by parsing binary data.
@@ -161,7 +161,7 @@ public readonly struct BundleRecord
             LocalID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
             offset += 2;
 
-            ActualResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+            ActualResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
             offset += 2;
 
             Debug.Assert(offset == Size);

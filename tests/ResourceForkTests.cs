@@ -9,6 +9,7 @@ public class ResourceForkTests
 {
     [Theory]
     [InlineData("Microsoft Excel.res")]
+    [InlineData("ResEdit.res")]
     [InlineData("Read Me.res")]
     [InlineData("Desktop.res")]
     [InlineData("OneEmptyFolder_Locked.res")]
@@ -123,8 +124,8 @@ public class ResourceForkTests
         {
             switch (type.Key)
             {
-                case ResourceForkType.Code:
-                case "Code":
+                case ResourceForkType.Code1:
+                case ResourceForkType.Code2:
                 case ResourceForkType.ControlDefinitionFunction:
                 case ResourceForkType.ControlDeviceFunction:
                 case ResourceForkType.Driver:
@@ -132,8 +133,8 @@ public class ResourceForkTests
                 case ResourceForkType.Boot:
                 case ResourceForkType.SystemExtension:
                 case ResourceForkType.Package:
-                case ResourceForkType.ROMPatchCode:
-                case "ptch":
+                case ResourceForkType.ROMPatchCode1:
+                case ResourceForkType.ROMPatchCode2:
                 case ResourceForkType.MenuDefinitionFunction:
                 case ResourceForkType.MenuBarDefinitionFunction:
                 case ResourceForkType.ROMOverride:
@@ -145,6 +146,9 @@ public class ResourceForkTests
                 case ResourceForkType.Synthesizer:
                 case ResourceForkType.MonitorCode:
                 case ResourceForkType.WindowDefinitionFunction:
+                case ResourceForkType.KeyboardConfiguration:
+                case ResourceForkType.AppleDesktopBusServiceRoutine:
+                case ResourceForkType.PrinterDefinitionFunction:
                     Debug.WriteLine("CODE Resources:");
                     foreach (var entry in type.Value)
                     {
@@ -159,7 +163,7 @@ public class ResourceForkTests
                     {
                         var record = new StringRecord(fork.GetResourceData(strResource));
                         strings.Add(record.Value);
-                        Debug.WriteLine($"  String 0x{strResource.ID:X4}: \"{record.Value}\"");
+                        Debug.WriteLine($"  String {strResource}: \"{record.Value}\"");
                     }
                     File.WriteAllLines(Path.Combine("Output", "Strings.txt"), strings);
                     break;
@@ -185,14 +189,14 @@ public class ResourceForkTests
                     }
                     break;
 
-                case ResourceForkType.Version:
-                case "vers": // Seen lowercase.
+                case ResourceForkType.Version1:
+                case ResourceForkType.Version2:
                     Debug.WriteLine("VERS Resources:");
                     foreach (var versResource in type.Value)
                     {
                         var versData = fork.GetResourceData(versResource);
                         var versionRecord = new VersionRecord(versData);
-                        Debug.WriteLine($"  Version 0x{versResource.ID:X4}: {versionRecord.Major}.{versionRecord.Minor}");
+                        Debug.WriteLine($"  Version {versResource}: {versionRecord.Major}.{versionRecord.Minor}");
                     }
                     break;
 
@@ -202,7 +206,7 @@ public class ResourceForkTests
                     {
                         var fileReferenceData = fork.GetResourceData(frefResource);
                         var fileReferenceRecord = new FileReferenceRecord(fileReferenceData);
-                        Debug.WriteLine($"  File Reference 0x{frefResource.ID:X4}: Type={fileReferenceRecord.Type}, LocalIconID={fileReferenceRecord.LocalIconID}, Name={fileReferenceRecord.Name}");
+                        Debug.WriteLine($"  File Reference {frefResource}: Type={fileReferenceRecord.Type}, LocalIconID={fileReferenceRecord.LocalIconID}, Name={fileReferenceRecord.Name}");
                     }
                     break;
 
@@ -212,7 +216,7 @@ public class ResourceForkTests
                     {
                         var fileCommentData = fork.GetResourceData(fcmtResource);
                         var fileCommentRecord = new FileCommentRecord(fileCommentData);
-                        Debug.WriteLine($"  File Comment 0x{fcmtResource.ID:X4}: \"{fileCommentRecord.Comment}\"");
+                        Debug.WriteLine($"  File Comment {fcmtResource}: \"{fileCommentRecord.Comment}\"");
                     }
                     break;
 
@@ -222,7 +226,7 @@ public class ResourceForkTests
                     {
                         var bundleData = fork.GetResourceData(bndlResource);
                         var bundleRecord = new BundleRecord(bundleData);
-                        Debug.WriteLine($"  Bundle 0x{bndlResource.ID:X4}: Owner={bundleRecord.Owner}, OwnerID={bundleRecord.OwnerID}, NumberOfTypes={bundleRecord.NumberOfTypes}");
+                        Debug.WriteLine($"  Bundle {bndlResource}: Owner={bundleRecord.Owner}, OwnerID={bundleRecord.OwnerID}, NumberOfTypes={bundleRecord.NumberOfTypes}");
                     }
                     break;
 
@@ -232,7 +236,7 @@ public class ResourceForkTests
                     {
                         var fileObjectData = fork.GetResourceData(fobjResource);
                         var fileObjectRecord = new FileObjectRecord(fileObjectData);
-                        Debug.WriteLine($"  File Object 0x{fobjResource.ID:X4}");
+                        Debug.WriteLine($"  File Object {fobjResource}");
                         Debug.WriteLine($"    Type: {fileObjectRecord.Type}");
                         Debug.WriteLine($"    ParentLocationX: {fileObjectRecord.ParentLocationX}");
                         Debug.WriteLine($"    ParentLocationY: {fileObjectRecord.ParentLocationY}");
@@ -259,7 +263,7 @@ public class ResourceForkTests
                     {
                         var iconData = fork.GetResourceData(iconResource);
                         var iconRecord = new IconRecord(iconData);
-                        Debug.WriteLine($"  Icon 0x{iconResource.ID:X4}: IconData Length={iconRecord.IconData.Length}");
+                        Debug.WriteLine($"  Icon {iconResource}: IconData Length={iconRecord.IconData.Length}");
                     }
 
                     break;
@@ -270,7 +274,7 @@ public class ResourceForkTests
                     {
                         var sicnData = fork.GetResourceData(sicnResource);
                         var systemIconRecord = new SystemIconRecord(sicnData);
-                        Debug.WriteLine($"  System Icon 0x{sicnResource.ID:X4}: IconData Length={systemIconRecord.IconData.Length}");
+                        Debug.WriteLine($"  System Icon {sicnResource}: IconData Length={systemIconRecord.IconData.Length}");
                     }
 
                     break;
@@ -281,7 +285,7 @@ public class ResourceForkTests
                     {
                         var pictData = fork.GetResourceData(pictResource);
                         var pictureRecord = new PictureRecord(pictData);
-                        Debug.WriteLine($"  Picture 0x{pictResource.ID:X4}: PictureData Length={pictureRecord.PictureData.Length}");
+                        Debug.WriteLine($"  Picture {pictResource}: PictureData Length={pictureRecord.PictureData.Length}");
                     }
 
                     break;
@@ -292,7 +296,7 @@ public class ResourceForkTests
                     {
                         var iconListData = fork.GetResourceData(iconListResource);
                         var iconListRecord = new IconListRecord(iconListData);
-                        Debug.WriteLine($"  IconList 0x{iconListResource.ID:X4}: IconData Length={iconListRecord.IconData.Length}, MaskData Length={iconListRecord.MaskData.Length}");
+                        Debug.WriteLine($"  IconList {iconListResource}: IconData Length={iconListRecord.IconData.Length}, MaskData Length={iconListRecord.MaskData.Length}");
                     }
 
                     break;
@@ -303,19 +307,30 @@ public class ResourceForkTests
                     {
                         var cursorData = fork.GetResourceData(cursResource);
                         var cursorRecord = new CursorRecord(cursorData);
-                        Debug.WriteLine($"  Cursor 0x{cursResource.ID:X4}: HotspotX={cursorRecord.HotspotX}, HotspotY={cursorRecord.HotspotY}, ImageData Length={cursorRecord.ImageData.Length}, MaskData Length={cursorRecord.MaskData.Length}");
+                        Debug.WriteLine($"  Cursor {cursResource}: HotspotX={cursorRecord.HotspotX}, HotspotY={cursorRecord.HotspotY}, ImageData Length={cursorRecord.ImageData.Length}, MaskData Length={cursorRecord.MaskData.Length}");
                     }
 
                     break;
 
-                case ResourceForkType.AnimatedCursor:
-                case "ACUR":
+                case ResourceForkType.ColorCursor:
+                    Debug.WriteLine("crsr Resources:");
+                    foreach (var crsrResource in type.Value)
+                    {
+                        var colorCursorData = fork.GetResourceData(crsrResource);
+                        var colorCursorRecord = new ColorCursorRecord(colorCursorData);
+                        Debug.WriteLine($"  Color Cursor {crsrResource}: Type={colorCursorRecord.Type}, PixelMapOffset={colorCursorRecord.PixelMapOffset}, PixelDataOffset={colorCursorRecord.PixelDataOffset}, ExpandedCursorData={colorCursorRecord.ExpandedCursorData}");
+                    }
+
+                    break;
+
+                case ResourceForkType.AnimatedCursor1:
+                case ResourceForkType.AnimatedCursor2:
                     Debug.WriteLine("ACUR Resources:");
                     foreach (var acurResource in type.Value)
                     {
                         var animatedCursorData = fork.GetResourceData(acurResource);
                         var animatedCursorRecord = new AnimatedCursorRecord(animatedCursorData);
-                        Debug.WriteLine($"  Animated Cursor 0x{acurResource.ID:X4}: NumberOfFrames={animatedCursorRecord.NumberOfFrames}");
+                        Debug.WriteLine($"  Animated Cursor {acurResource}: NumberOfFrames={animatedCursorRecord.NumberOfFrames}");
                     }
 
                     break;
@@ -326,7 +341,7 @@ public class ResourceForkTests
                     {
                         var alertBoxData = fork.GetResourceData(alrtResource);
                         var alertBoxRecord = new AlertBoxRecord(alertBoxData);
-                        Debug.WriteLine($"  Alert Box 0x{alrtResource.ID:X4}: Bounds=({alertBoxRecord.Bounds.Top}, {alertBoxRecord.Bounds.Left}, {alertBoxRecord.Bounds.Bottom}, {alertBoxRecord.Bounds.Right}), ItemListResourceID={alertBoxRecord.ItemListResourceID}, AlertInfo=({alertBoxRecord.FirstStageAlertInfo}, {alertBoxRecord.SecondStageAlertInfo}, {alertBoxRecord.ThirdStageAlertInfo}, {alertBoxRecord.FourthStageAlertInfo}), AlertBoxPosition={alertBoxRecord.AlertBoxPosition}");
+                        Debug.WriteLine($"  Alert Box {alrtResource}: Bounds=({alertBoxRecord.Bounds.Top}, {alertBoxRecord.Bounds.Left}, {alertBoxRecord.Bounds.Bottom}, {alertBoxRecord.Bounds.Right}), ItemListResourceID={alertBoxRecord.ItemListResourceID}, AlertInfo=({alertBoxRecord.FirstStageAlertInfo}, {alertBoxRecord.SecondStageAlertInfo}, {alertBoxRecord.ThirdStageAlertInfo}, {alertBoxRecord.FourthStageAlertInfo}), AlertBoxPosition={alertBoxRecord.AlertBoxPosition}");
                     }
 
                     break;
@@ -337,7 +352,7 @@ public class ResourceForkTests
                     {
                         var itemListData = fork.GetResourceData(ditlResource);
                         var itemListRecord = new ItemListRecord(itemListData);
-                        Debug.WriteLine($"  Item List 0x{ditlResource.ID:X4}: ItemCount={itemListRecord.Items.Count}");
+                        Debug.WriteLine($"  Item List {ditlResource}: ItemCount={itemListRecord.Items.Count}");
                         foreach (var item in itemListRecord.Items)
                         {
                             Debug.WriteLine($"    Item: Type={item.Type}, Enabled={item.Enabled}");
@@ -352,7 +367,7 @@ public class ResourceForkTests
                     {
                         var menuData = fork.GetResourceData(menuResource);
                         var menuRecord = new MenuRecord(menuData);
-                        Debug.WriteLine($"  Menu 0x{menuResource.ID:X4}: Title=\"{menuRecord.Title}\", ItemCount={menuRecord.Items.Count}");
+                        Debug.WriteLine($"  Menu {menuResource}: Title=\"{menuRecord.Title}\", ItemCount={menuRecord.Items.Count}");
                         foreach (var item in menuRecord.Items)
                         {
                             Debug.WriteLine($"    Menu Item: Text=\"{item.Text}\"");
@@ -367,7 +382,7 @@ public class ResourceForkTests
                     {
                         var menuBarData = fork.GetResourceData(mbarResource);
                         var menuBarRecord = new MenuBarRecord(menuBarData);
-                        Debug.WriteLine($"  Menu Bar 0x{mbarResource.ID:X4}: NumberOfMenus={menuBarRecord.NumberOfMenus}");
+                        Debug.WriteLine($"  Menu Bar {mbarResource}: NumberOfMenus={menuBarRecord.NumberOfMenus}");
                         foreach (var resourceID in menuBarRecord.ResourceIDs)
                         {
                             Debug.WriteLine($"    Menu Resource ID: {resourceID}");
@@ -382,7 +397,7 @@ public class ResourceForkTests
                     {
                         var dialogBoxData = fork.GetResourceData(dlogResource);
                         var dialogBoxRecord = new DialogBoxRecord(dialogBoxData);
-                        Debug.WriteLine($"  Dialog Box 0x{dlogResource.ID:X4}: Bounds=({dialogBoxRecord.Bounds.Top}, {dialogBoxRecord.Bounds.Left}, {dialogBoxRecord.Bounds.Bottom}, {dialogBoxRecord.Bounds.Right}), WindowDefinitionID={dialogBoxRecord.WindowDefinitionID}, Visible={dialogBoxRecord.Visible}, CloseBox={dialogBoxRecord.CloseBox}, ReferenceConstant={dialogBoxRecord.ReferenceConstant}, ItemListResourceID={dialogBoxRecord.ItemListResourceID}, WindowTitle=\"{dialogBoxRecord.WindowTitle}\", Position={dialogBoxRecord.Position}");
+                        Debug.WriteLine($"  Dialog Box {dlogResource}: Bounds=({dialogBoxRecord.Bounds.Top}, {dialogBoxRecord.Bounds.Left}, {dialogBoxRecord.Bounds.Bottom}, {dialogBoxRecord.Bounds.Right}), WindowDefinitionID={dialogBoxRecord.WindowDefinitionID}, Visible={dialogBoxRecord.Visible}, CloseBox={dialogBoxRecord.CloseBox}, ReferenceConstant={dialogBoxRecord.ReferenceConstant}, ItemListResourceID={dialogBoxRecord.ItemListResourceID}, WindowTitle=\"{dialogBoxRecord.WindowTitle}\", Position={dialogBoxRecord.Position}");
                     }
 
                     break;
@@ -393,7 +408,7 @@ public class ResourceForkTests
                     {
                         var sizeData = fork.GetResourceData(sizeResource);
                         var sizeRecord = new SizeRecord(sizeData);
-                        Debug.WriteLine($"  Size 0x{sizeResource.ID:X4}: PreferredMemorySize={sizeRecord.PreferredMemorySize}, MinimumMemorySize={sizeRecord.MinimumMemorySize}");
+                        Debug.WriteLine($"  Size {sizeResource}: PreferredMemorySize={sizeRecord.PreferredMemorySize}, MinimumMemorySize={sizeRecord.MinimumMemorySize}");
                     }
 
                     break;
@@ -404,7 +419,7 @@ public class ResourceForkTests
                     {
                         var controlData = fork.GetResourceData(ctrlResource);
                         var controlRecord = new ControlRecord(controlData);
-                        Debug.WriteLine($"  Control 0x{ctrlResource.ID:X4}: Bounds=({controlRecord.Bounds.Top}, {controlRecord.Bounds.Left}, {controlRecord.Bounds.Bottom}, {controlRecord.Bounds.Right}), InitialSetting={controlRecord.InitialSetting}, Visible={controlRecord.Visible}, Fill={controlRecord.Fill}, MaximumSetting={controlRecord.MaximumSetting}, MinimumSetting={controlRecord.MinimumSetting}, DefinitionID={controlRecord.DefinitionID}, ReferenceValue={controlRecord.ReferenceValue}, Title=\"{controlRecord.Title}\"");
+                        Debug.WriteLine($"  Control {ctrlResource}: Bounds=({controlRecord.Bounds.Top}, {controlRecord.Bounds.Left}, {controlRecord.Bounds.Bottom}, {controlRecord.Bounds.Right}), InitialSetting={controlRecord.InitialSetting}, Visible={controlRecord.Visible}, Fill={controlRecord.Fill}, MaximumSetting={controlRecord.MaximumSetting}, MinimumSetting={controlRecord.MinimumSetting}, DefinitionID={controlRecord.DefinitionID}, ReferenceValue={controlRecord.ReferenceValue}, Title=\"{controlRecord.Title}\"");
                     }
 
                     break;
@@ -415,7 +430,7 @@ public class ResourceForkTests
                     {
                         var nrctData = fork.GetResourceData(nrctResource);
                         var nrctRecord = new RectanglePositionsListRecord(nrctData);
-                        Debug.WriteLine($"  Rectangle Positions List 0x{nrctResource.ID:X4}: RectangleCount={nrctRecord.Rectangles.Count}");
+                        Debug.WriteLine($"  Rectangle Positions List {nrctResource}: RectangleCount={nrctRecord.Rectangles.Count}");
                         foreach (var rect in nrctRecord.Rectangles)
                         {
                             Debug.WriteLine($"    RECT: Top={rect.Top}, Left={rect.Left}, Bottom={rect.Bottom}, Right={rect.Right}");
@@ -430,7 +445,7 @@ public class ResourceForkTests
                     {
                         var machData = fork.GetResourceData(machResource);
                         var machRecord = new MachineRecord(machData);
-                        Debug.WriteLine($"  Machine 0x{machResource.ID:X4}: SoftMask=0x{machRecord.SoftMask:X4}, HardMask=0x{machRecord.HardMask:X4}");
+                        Debug.WriteLine($"  Machine {machResource}: SoftMask=0x{machRecord.SoftMask:X4}, HardMask=0x{machRecord.HardMask:X4}");
                     }
                     
                     break;
@@ -441,7 +456,7 @@ public class ResourceForkTests
                     {
                         var windowData = fork.GetResourceData(windResource);
                         var windowRecord = new WindowRecord(windowData);
-                        Debug.WriteLine($"  Window 0x{windResource.ID:X4}: Bounds=({windowRecord.Bounds.Top}, {windowRecord.Bounds.Left}, {windowRecord.Bounds.Bottom}, {windowRecord.Bounds.Right}), Visible={windowRecord.Visible}, CloseBox={windowRecord.CloseBox}, ReferenceConstant={windowRecord.ReferenceConstant}, Title=\"{windowRecord.Title}\", Position={windowRecord.Position}");
+                        Debug.WriteLine($"  Window {windResource}: Bounds=({windowRecord.Bounds.Top}, {windowRecord.Bounds.Left}, {windowRecord.Bounds.Bottom}, {windowRecord.Bounds.Right}), Visible={windowRecord.Visible}, CloseBox={windowRecord.CloseBox}, ReferenceConstant={windowRecord.ReferenceConstant}, Title=\"{windowRecord.Title}\", Position={windowRecord.Position}");
                     }
 
                     break;
@@ -452,7 +467,7 @@ public class ResourceForkTests
                     {
                         var rovData = fork.GetResourceData(rovResource);
                         var romOverrideListRecord = new ROMOverrideList(rovData);
-                        Debug.WriteLine($"  ROM Override List 0x{rovResource.ID:X4}: VersionNumber={romOverrideListRecord.VersionNumber}, NumberOfResources={romOverrideListRecord.NumberOfResources}");
+                        Debug.WriteLine($"  ROM Override List {rovResource}: VersionNumber={romOverrideListRecord.VersionNumber}, NumberOfResources={romOverrideListRecord.NumberOfResources}");
                         foreach (var entry in romOverrideListRecord.Entries)
                         {
                             Debug.WriteLine($"    ResourceType={entry.ResourceType}, ResourceID={entry.ResourceID}");
@@ -467,7 +482,7 @@ public class ResourceForkTests
                     {
                         var frsvData = fork.GetResourceData(frsvResource);
                         var romFontsRecord = new ROMFontsRecord(frsvData);
-                        Debug.WriteLine($"  ROM Fonts 0x{frsvResource.ID:X4}: FontCount={romFontsRecord.NumberOfFonts}");
+                        Debug.WriteLine($"  ROM Fonts {frsvResource}: FontCount={romFontsRecord.NumberOfFonts}");
                         foreach (var fontID in romFontsRecord.FontResourceIDs)
                         {
                             Debug.WriteLine($"    Font ID: {fontID}");
@@ -482,7 +497,7 @@ public class ResourceForkTests
                     {
                         var mckyData = fork.GetResourceData(mckyResource);
                         var mouseTrackingRecord = new MouseTrackingRecord(mckyData);
-                        Debug.WriteLine($"  Mouse Tracking 0x{mckyResource.ID:X4}: Threshold1={mouseTrackingRecord.Threshold1}, Threshold2={mouseTrackingRecord.Threshold2}, Threshold3={mouseTrackingRecord.Threshold3}, Threshold4={mouseTrackingRecord.Threshold4}, Threshold5={mouseTrackingRecord.Threshold5}, Threshold6={mouseTrackingRecord.Threshold6}, Threshold7={mouseTrackingRecord.Threshold7}, Threshold8={mouseTrackingRecord.Threshold8}");
+                        Debug.WriteLine($"  Mouse Tracking {mckyResource}: Threshold1={mouseTrackingRecord.Threshold1}, Threshold2={mouseTrackingRecord.Threshold2}, Threshold3={mouseTrackingRecord.Threshold3}, Threshold4={mouseTrackingRecord.Threshold4}, Threshold5={mouseTrackingRecord.Threshold5}, Threshold6={mouseTrackingRecord.Threshold6}, Threshold7={mouseTrackingRecord.Threshold7}, Threshold8={mouseTrackingRecord.Threshold8}");
                     }
 
                     break;
@@ -493,7 +508,7 @@ public class ResourceForkTests
                     {
                         var cardData = fork.GetResourceData(cardResource);
                         var videoCardRecord = new VideoCardRecord(cardData);
-                        Debug.WriteLine($"  Video Card 0x{cardResource.ID:X4}: Name=\"{videoCardRecord.Name}\"");
+                        Debug.WriteLine($"  Video Card {cardResource}: Name=\"{videoCardRecord.Name}\"");
                     }
 
                     break;
@@ -504,7 +519,7 @@ public class ResourceForkTests
                     {
                         var rectData = fork.GetResourceData(rectResource);
                         var rectangleRecord = new RectangleRecord(rectData);
-                        Debug.WriteLine($"  Rectangle 0x{rectResource.ID:X4}: Top={rectangleRecord.Rectangle.Top}, Left={rectangleRecord.Rectangle.Left}, Bottom={rectangleRecord.Rectangle.Bottom}, Right={rectangleRecord.Rectangle.Right}");
+                        Debug.WriteLine($"  Rectangle {rectResource}: Top={rectangleRecord.Rectangle.Top}, Left={rectangleRecord.Rectangle.Left}, Bottom={rectangleRecord.Rectangle.Bottom}, Right={rectangleRecord.Rectangle.Right}");
                     }
 
                     break;
@@ -515,7 +530,7 @@ public class ResourceForkTests
                     {
                         var layoutData = fork.GetResourceData(layoutResource);
                         var layoutRecord = new LayoutRecord(layoutData);
-                        Debug.WriteLine($"  Layout 0x{layoutResource.ID:X4}: FontResourceID={layoutRecord.FontResourceID}");
+                        Debug.WriteLine($"  Layout {layoutResource}: FontResourceID={layoutRecord.FontResourceID}");
                     }
 
                     break;
@@ -526,7 +541,7 @@ public class ResourceForkTests
                     {
                         var hwinData = fork.GetResourceData(hwinResource);
                         var helpWindowRecord = new HelpWindowRecord(hwinData);
-                        Debug.WriteLine($"  Help Window 0x{hwinResource.ID:X4}: Version={helpWindowRecord.Version}, Options={helpWindowRecord.Options}, Window Count={helpWindowRecord.WindowComponentCount}");
+                        Debug.WriteLine($"  Help Window {hwinResource}: Version={helpWindowRecord.Version}, Options={helpWindowRecord.Options}, Window Count={helpWindowRecord.WindowComponentCount}");
                         foreach (var component in helpWindowRecord.WindowComponents)
                         {
                             Debug.WriteLine($"    Help Window Component: Type={component.ResourceType}, ID={component.ResourceID}, TitleLengthOrWindowKind={component.LengthOfComparisonStringOrWindowKind}, Title=\"{component.WindowTitleString}\")");
@@ -541,7 +556,7 @@ public class ResourceForkTests
                     {
                         var patData = fork.GetResourceData(patResource);
                         var patternRecord = new PatternRecord(patData);
-                        Debug.WriteLine($"  Pattern 0x{patResource.ID:X4}: PatternData Length={patternRecord.PatternData.Length}");
+                        Debug.WriteLine($"  Pattern {patResource}: PatternData Length={patternRecord.PatternData.Length}");
                     }
 
                     break;
@@ -552,7 +567,7 @@ public class ResourceForkTests
                     {
                         var patListData = fork.GetResourceData(patListResource);
                         var patternListRecord = new PatternListRecord(patListData);
-                        Debug.WriteLine($"  Pattern List 0x{patListResource.ID:X4}: PatternCount={patternListRecord.Patterns.Count}");
+                        Debug.WriteLine($"  Pattern List {patListResource}: PatternCount={patternListRecord.Patterns.Count}");
                         foreach (var pattern in patternListRecord.Patterns)
                         {
                             Debug.WriteLine($"    Pattern: {pattern.PatternData.Length} bytes");
@@ -567,7 +582,7 @@ public class ResourceForkTests
                     {
                         var fondData = fork.GetResourceData(fondResource);
                         var fontFamilyRecord = new FontFamilyRecord(fondData);
-                        Debug.WriteLine($"  Font Family 0x{fondResource.ID:X4}: ");
+                        Debug.WriteLine($"  Font Family {fondResource}: ");
                     }
 
                     break;
@@ -588,23 +603,19 @@ public class ResourceForkTests
                     break;
 
                 case ResourceForkType.Font:
-                    Debug.WriteLine("FONT Resources:");
-                    foreach (var fontResource in type.Value)
-                    {
-                        var fontData = fork.GetResourceData(fontResource);
-                        var fontRecord = new FontRecord(fontData);
-                        Debug.WriteLine($"  Font 0x{fontResource.ID:X4}: FontData Length={fontRecord.FontData.Length}");
-                    }
-
-                    break;
-
                 case ResourceForkType.FontNew:
-                    Debug.WriteLine("NFNT Resources:");
+                    Debug.WriteLine("FONT/NFNT Resources:");
                     foreach (var nfntResource in type.Value)
                     {
                         var nfntData = fork.GetResourceData(nfntResource);
-                        var newFontRecord = new FontNewRecord(nfntData);
-                        Debug.WriteLine($"  New Font 0x{nfntResource.ID:X4}: FontData Length={newFontRecord.FontData.Length}");
+                        if (nfntData.Length == 0)
+                        {
+                            Debug.WriteLine("  Skipping empty FONT/NFNT resource.");
+                            continue;   
+                        }
+
+                        var newFontRecord = new FontRecord(nfntData);
+                        Debug.WriteLine($"  New Font {nfntResource}: BitImageTable Length={newFontRecord.BitImageTable.Length}");
                     }
 
                     break;
@@ -615,7 +626,7 @@ public class ResourceForkTests
                     {
                         var textData = fork.GetResourceData(textResource);
                         var textRecord = new TextRecord(textData);
-                        Debug.WriteLine($"  Text 0x{textResource.ID:X4}: TextData Length={textRecord.Text.Length}");
+                        Debug.WriteLine($"  Text {textResource}: TextData Length={textRecord.Text.Length}");
                     }
 
                     break;
@@ -626,7 +637,7 @@ public class ResourceForkTests
                     {
                         var icl4Data = fork.GetResourceData(icl4Resource);
                         var icon4bitRecord = new LargeIcon4bitRecord(icl4Data);
-                        Debug.WriteLine($"  4-bit Icon 0x{icl4Resource.ID:X4}: IconData Length={icon4bitRecord.IconData.Length}");
+                        Debug.WriteLine($"  4-bit Icon {icl4Resource}: IconData Length={icon4bitRecord.IconData.Length}");
                     }
 
                     break;
@@ -637,7 +648,7 @@ public class ResourceForkTests
                     {
                         var icl8Data = fork.GetResourceData(icl8Resource);
                         var icon8bitRecord = new LargeIcon8bitRecord(icl8Data);
-                        Debug.WriteLine($"  8-bit Icon 0x{icl8Resource.ID:X4}: IconData Length={icon8bitRecord.IconData.Length}");
+                        Debug.WriteLine($"  8-bit Icon {icl8Resource}: IconData Length={icon8bitRecord.IconData.Length}");
                     }
 
                     break;
@@ -648,7 +659,7 @@ public class ResourceForkTests
                     {
                         var ics4Data = fork.GetResourceData(ics4Resource);
                         var smallIcon4bitRecord = new SmallIcon4bitRecord(ics4Data);
-                        Debug.WriteLine($"  Small 4-bit Icon 0x{ics4Resource.ID:X4}: IconData Length={smallIcon4bitRecord.IconData.Length}");
+                        Debug.WriteLine($"  Small 4-bit Icon {ics4Resource}: IconData Length={smallIcon4bitRecord.IconData.Length}");
                     }
 
                     break;
@@ -659,7 +670,7 @@ public class ResourceForkTests
                     {
                         var ics8Data = fork.GetResourceData(ics8Resource);
                         var smallIcon8bitRecord = new SmallIcon8bitRecord(ics8Data);
-                        Debug.WriteLine($"  Small 8-bit Icon 0x{ics8Resource.ID:X4}: IconData Length={smallIcon8bitRecord.IconData.Length}");
+                        Debug.WriteLine($"  Small 8-bit Icon {ics8Resource}: IconData Length={smallIcon8bitRecord.IconData.Length}");
                     }
 
                     break;
@@ -670,7 +681,7 @@ public class ResourceForkTests
                     {
                         var iclData = fork.GetResourceData(iclResource);
                         var smallIconListRecord = new SmallIconListRecord(iclData);
-                        Debug.WriteLine($"  Small Icon List 0x{iclResource.ID:X4}: IconData Length={smallIconListRecord.IconData.Length}, MaskData Length={smallIconListRecord.MaskData.Length}");
+                        Debug.WriteLine($"  Small Icon List {iclResource}: IconData Length={smallIconListRecord.IconData.Length}, MaskData Length={smallIconListRecord.MaskData.Length}");
                     }
 
                     break;
@@ -681,7 +692,7 @@ public class ResourceForkTests
                     {
                         var cicnData = fork.GetResourceData(cicnResource);
                         var colorIconRecord = new ColorIconRecord(cicnData);
-                        Debug.WriteLine($"  Color Icon 0x{cicnResource.ID:X4}: IconData Length={colorIconRecord.IconData.Length}");
+                        Debug.WriteLine($"  Color Icon {cicnResource}: MaskBitmap Length={colorIconRecord.MaskBitmap.DataSize}, IconBitmap Length={colorIconRecord.IconBitmap.DataSize}");
                     }
 
                     break;
@@ -691,8 +702,15 @@ public class ResourceForkTests
                     foreach (var sndResource in type.Value)
                     {
                         var sndData = fork.GetResourceData(sndResource);
-                        var soundRecord = new SoundRecord(sndData);
-                        Debug.WriteLine($"  Sound 0x{sndResource.ID:X4}: SoundData Length={soundRecord.SoundData.Length}");
+                        if (sndResource.Attributes.HasFlag(ResourceAttributeFlags.Compressed))
+                        {
+                            Debug.WriteLine($"  Sound {sndResource}: Compressed sound data of length {sndData.Length} bytes.");
+                        }
+                        else
+                        {
+                            var soundRecord = new SoundRecord(sndData);
+                            Debug.WriteLine($"  Sound {sndResource}: Commands Count={soundRecord.Commands.Count}");
+                        }
                     }
 
                     break;
@@ -703,13 +721,13 @@ public class ResourceForkTests
                     {
                         var plttData = fork.GetResourceData(plttResource);
                         var paletteRecord = new PaletteRecord(plttData);
-                        Debug.WriteLine($"  Palette 0x{plttResource.ID:X4}: ColorCount={paletteRecord.Entries.Count}");
+                        Debug.WriteLine($"  Palette {plttResource}: ColorCount={paletteRecord.Entries.Count}");
                     }
 
                     break;
 
-                case ResourceForkType.ColorLookupTable:
-                case "CLUT":
+                case ResourceForkType.ColorLookupTable1:
+                case ResourceForkType.ColorLookupTable2:
                 case ResourceForkType.DialogColorLookupTable:
                 case ResourceForkType.WindowColorTable:
                 case ResourceForkType.ControlColorLookupTable:
@@ -718,54 +736,545 @@ public class ResourceForkTests
                     {
                         var clutData = fork.GetResourceData(clutResource);
                         var clutRecord = new ColorLookupTableRecord(clutData);
-                        Debug.WriteLine($"  Color Lookup Table 0x{clutResource.ID:X4}: ColorCount={clutRecord.Entries.Count}");
+                        Debug.WriteLine($"  Color Lookup Table {clutResource}: ColorCount={clutRecord.ColorTable.Entries.Count}");
+                    }
+
+                    break;
+
+                case ResourceForkType.MenuColorTable:
+                    Debug.WriteLine("mctb Resources:");
+                    foreach (var mctbResource in type.Value)
+                    {
+                        var mctbData = fork.GetResourceData(mctbResource);
+                        var menuColorTableRecord = new MenuColorTableRecord(mctbData);
+                        Debug.WriteLine($"  Menu Color Table {mctbResource}: ColorCount={menuColorTableRecord.Entries.Count}");
+                    }
+
+                    break;
+
+                case ResourceForkType.PixelPattern:
+                    Debug.WriteLine("ppat Resources:");
+                    foreach (var ppatResource in type.Value)
+                    {
+                        var ppatData = fork.GetResourceData(ppatResource);
+                        var pixelPatternRecord = new PixelPatternRecord(ppatData);
+                        Debug.WriteLine($"  Pixel Pattern {ppatResource}: PixelDataOffset offset={pixelPatternRecord.Pattern.PixelDataOffset}");
+                    }
+
+                    break;
+
+                case ResourceForkType.CommandKeys:
+                    Debug.WriteLine("CMDK Resources:");
+                    foreach (var cmdkResource in type.Value)
+                    {
+                        var cmdkData = fork.GetResourceData(cmdkResource);
+                        var commandKeysRecord = new CommandKeysRecord(cmdkData);
+                        Debug.WriteLine($"  Command Keys {cmdkResource}: Command Keys={commandKeysRecord.CommandKeys}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditCreatorSignature:
+                    Debug.WriteLine("RSED Resources:");
+                    foreach (var rsedResource in type.Value)
+                    {
+                        var rsedData = fork.GetResourceData(rsedResource);
+                        var resEditCreatorSignatureRecord = new ResEditCreatorSignatureRecord(rsedData);
+                        Debug.WriteLine($"  ResEdit Command Signature {rsedResource}: Signature={resEditCreatorSignatureRecord.Signature}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditPicker:
+                    Debug.WriteLine("PICK Resources:");
+                    foreach (var pickResource in type.Value)
+                    {
+                        var pickData = fork.GetResourceData(pickResource);
+                        var resEditPickerRecord = new ResEditPickerRecord(pickData);
+                        Debug.WriteLine($"  ResEdit Picker {pickResource}: Type={resEditPickerRecord.Type}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditMap:
+                    Debug.WriteLine("RMAP Resources:");
+                    foreach (var rmapResource in type.Value)
+                    {
+                        var rmapData = fork.GetResourceData(rmapResource);
+                        var resEditMapRecord = new ResEditMapRecord(rmapData);
+                        Debug.WriteLine($"  ResEdit Map {rmapResource}: MapToType={resEditMapRecord.MapToType}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditTemplate:
+                    Debug.WriteLine("TMPL Resources:");
+                    foreach (var tmplResource in type.Value)
+                    {
+                        var tmplData = fork.GetResourceData(tmplResource);
+                        var resEditTemplateRecord = new ResEditTemplateRecord(tmplData);
+                        Debug.WriteLine($"  ResEdit Template {tmplResource}: Entries={resEditTemplateRecord.Entries.Count}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditDecompressor:
+                    Debug.WriteLine("dcmp Resources:");
+                    foreach (var dcmpResource in type.Value)
+                    {
+                        var dcmpData = fork.GetResourceData(dcmpResource);
+                        var resEditDecompressorRecord = new ResEditDecompressorRecord(dcmpData);
+                        Debug.WriteLine($"  ResEdit Decompressor {dcmpResource}: DecompressorData={resEditDecompressorRecord.DecompressorData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditTool:
+                    Debug.WriteLine("TOOL Resources:");
+                    foreach (var toolResource in type.Value)
+                    {
+                        var toolData = fork.GetResourceData(toolResource);
+                        var resEditToolRecord = new ResEditToolRecord(toolData);
+                        Debug.WriteLine($"  ResEdit Tool {toolResource}: ToolsPerRow{resEditToolRecord.ToolsPerRow}, NumberOfRows={resEditToolRecord.NumberOfRows}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditResource:
+                    Debug.WriteLine("RSSC Resources:");
+                    foreach (var rsscResource in type.Value)
+                    {
+                        if (rsscResource.Attributes.HasFlag(ResourceAttributeFlags.Compressed))
+                        {
+                            Debug.WriteLine($"  ResEdit Resource {rsscResource}: Compressed resource data, skipping.");
+                        }
+                        else
+                        {
+                            var rsscData = fork.GetResourceData(rsscResource);
+                            var resEditResourceRecord = new ResEditResourceRecord(rsscData);
+                            Debug.WriteLine($"  ResEdit Resource {rsscResource}: ResourceType={resEditResourceRecord.ResourceType}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.ResEditDateFormatting:
+                    Debug.WriteLine("ITL1 Resources:");
+                    foreach (var toolResource in type.Value)
+                    {
+                        var toolData = fork.GetResourceData(toolResource);
+                        var dateFormattingRecord = new ResEditDateFormattingRecord(toolData);
+                        Debug.WriteLine($"  ResEdit Date Formatting {toolResource}: UseShortDatesBeforeSystem={dateFormattingRecord.UseShortDatesBeforeSystem}");
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardName:
+                    Debug.WriteLine("KBDN Resources:");
+                    foreach (var kbdnResource in type.Value)
+                    {
+                        var kbdnData = fork.GetResourceData(kbdnResource);
+                        var keyboardNameRecord = new KeyboardNameRecord(kbdnData);
+                        Debug.WriteLine($"  Keyboard Name {kbdnResource}: Name=\"{keyboardNameRecord.Name}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerFileSpec:
+                    Debug.WriteLine("infs Resources:");
+                    foreach (var infsResource in type.Value)
+                    {
+                        var infsData = fork.GetResourceData(infsResource);
+                        var installerFileSpecRecord = new InstallerFileSpecRecord(infsData);
+                        Debug.WriteLine($"  Installer File Spec {infsResource}: FileType={installerFileSpecRecord.FileType}, FileCreator={installerFileSpecRecord.FileCreator}, CreationDate={installerFileSpecRecord.CreationDate}, Flags={installerFileSpecRecord.Flags}, FileName={installerFileSpecRecord.FileName}");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerPackage:
+                    Debug.WriteLine("inpk Resources:");
+                    foreach (var inpkResource in type.Value)
+                    {
+                        var inpkData = fork.GetResourceData(inpkResource);
+                        var installerPackageRecord = new InstallerPackageRecord(inpkData);
+                        Debug.WriteLine($"  Installer Package {inpkResource}: PackageName=\"{installerPackageRecord.PackageName}\", PackageSize={installerPackageRecord.PackageSize} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerComment:
+                    Debug.WriteLine("icmt Resources:");
+                    foreach (var icmtResource in type.Value)
+                    {
+                        var icmtData = fork.GetResourceData(icmtResource);
+                        var installerCommentRecord = new InstallerCommentRecord(icmtData);
+                        Debug.WriteLine($"  Installer Comment {icmtResource}: Comment=\"{installerCommentRecord.Comment}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerFileAtom:
+                    Debug.WriteLine("infa Resources:");
+                    foreach (var infaResource in type.Value)
+                    {
+                        var infaData = fork.GetResourceData(infaResource);
+                        var installerFileAtomRecord = new InstallerFileAtomRecord(infaData);
+                        Debug.WriteLine($"  Installer File Atom {infaResource}: SourceFileSpecResourceID={installerFileAtomRecord.SourceFileSpecResourceID}, Description=\"{installerFileAtomRecord.Description}\", FileSize={installerFileAtomRecord.FileSize} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerResourceAtom:
+                    Debug.WriteLine("inra Resources:");
+                    foreach (var inraResource in type.Value)
+                    {
+                        var inraData = fork.GetResourceData(inraResource);
+                        var installerResourceAtomRecord = new InstallerResourceAtomRecord(inraData);
+                        Debug.WriteLine($"  Installer Resource Atom {inraResource}: SourceFileSpecResourceID={installerResourceAtomRecord.SourceFileSpecResourceID}, TargetFileSpecResourceID={installerResourceAtomRecord.TargetFileSpecResourceID}, ResourceType={installerResourceAtomRecord.ResourceType}, SourceResourceID={installerResourceAtomRecord.SourceResourceID}, TargetResourceID={installerResourceAtomRecord.TargetResourceID}");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerBootBlock:
+                    Debug.WriteLine("inbb Resources:");
+                    foreach (var inbbResource in type.Value)
+                    {
+                        var inbbData = fork.GetResourceData(inbbResource);
+                        var installerBootBlockRecord = new InstallerBootBlockRecord(inbbData);
+                        Debug.WriteLine($"  Installer Boot Block {inbbResource}: FormatVersion={installerBootBlockRecord.FormatVersion}, Flags={installerBootBlockRecord.Flags}, ValueKey={installerBootBlockRecord.ValueKey}, ValueDataLength={installerBootBlockRecord.ValueData.Length}");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerCreationDate:
+                    Debug.WriteLine("incr Resources:");
+                    foreach (var incrResource in type.Value)
+                    {
+                        var incrData = fork.GetResourceData(incrResource);
+                        var installerCreationDateRecord = new InstallerCreationDateRecord(incrData);
+                        Debug.WriteLine($"  Installer Creation Date {incrResource}: CreationDate={installerCreationDateRecord.CreationDate}");
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerDefaultMap:
+                    Debug.WriteLine("indm Resources:");
+                    foreach (var indmResource in type.Value)
+                    {
+                        var indmData = fork.GetResourceData(indmResource);
+                        var installerDefaultMapRecord = new InstallerDefaultMapRecord(indmData);
+                        Debug.WriteLine($"  Installer Default Map {indmResource}: Packages Count={installerDefaultMapRecord.NumberOfPackages}");
+                    }
+
+                    break;
+
+                case ResourceForkType.CitiesList:
+                    Debug.WriteLine("CTYN Resources:");
+                    foreach (var ctynResource in type.Value)
+                    {
+                        var ctynData = fork.GetResourceData(ctynResource);
+                        var citiesListRecord = new CitiesListRecord(ctynData);
+                        Debug.WriteLine($"  Cities List {ctynResource}: CityCount={citiesListRecord.Cities.Count}");
+                        foreach (var city in citiesListRecord.Cities)
+                        {
+                            Debug.WriteLine($"    City: Name=\"{city.Name}\", Numchars={city.Numchars}, Longitude={city.Longitude}, Latitude={city.Latitude}, GMTDifference={city.GMTDifference}, Reserved={city.Reserved}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.General:
+                    Debug.WriteLine("GNRL Resources:");
+                    foreach (var gneralResource in type.Value)
+                    {
+                        var generalData = fork.GetResourceData(gneralResource);
+                        if (gneralResource.ID == -4096)
+                        {
+                            var retryRecord = new NBPRetryRecord(generalData);
+                            Debug.WriteLine($"  General {gneralResource}: NBPRetryRecord: RetryCount={retryRecord.RetryCount}, RetryInterval={retryRecord.RetryInterval} seconds");
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"  General {gneralResource}: Unknown general resource of length {generalData.Length} bytes.");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardSwap:
+                    Debug.WriteLine("KSWP Resources:");
+                    foreach (var kswpResource in type.Value)
+                    {
+                        var kswpData = fork.GetResourceData(kswpResource);
+                        var keyboardSwapRecord = new KeyboardSwapRecord(kswpData);
+                        Debug.WriteLine($"  Keyboard Swap {kswpResource}: Entries Count={keyboardSwapRecord.Entries.Count}");
+                        foreach (var entry in keyboardSwapRecord.Entries)
+                        {
+                            Debug.WriteLine($"    Keyboard Swap Entry: ScriptOrNegativeCode={entry.ScriptOrNegativeCode}, VirtualKeyCode={entry.VirtualKeyCode}, ModifierState={entry.ModifierState}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyCaps:
+                    Debug.WriteLine("KCAP Resources:");
+                    foreach (var kcapResource in type.Value)
+                    {
+                        var kcapData = fork.GetResourceData(kcapResource);
+                        var keyCapsRecord = new KeyCapsRecord(kcapData);
+                        Debug.WriteLine($"  Key Caps {kcapResource}: NumberOfShapes={keyCapsRecord.NumberOfShapes}");
+                        for (int i = 0; i < keyCapsRecord.Shapes.Count; i++)
+                        {
+                            var shape = keyCapsRecord.Shapes[i];
+                            Debug.WriteLine($"    Shape {i}: NumberOfPointEntries={shape.NumberOfPointEntries}, NumberOfKeyEntries={shape.NumberOfKeyEntries}");
+                            for (int j = 0; j < shape.PointEntries.Count; j++)
+                            {
+                                var pointEntry = shape.PointEntries[j];
+                                Debug.WriteLine($"      Point Entry {j}: X={pointEntry.X}, Y={pointEntry.Y}");
+                            }
+                            for (int k = 0; k < shape.KeyEntries.Count; k++)
+                            {
+                                var keyEntry = shape.KeyEntries[k];
+                                Debug.WriteLine($"      Key Entry {k}: VirtualKeyCode={keyEntry.VirtualKeyCode}, ModifierMask={keyEntry.ModifierMask}");
+                            }
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardLayout:
+                    Debug.WriteLine("KCHR Resources:");
+                    foreach (var kchrResource in type.Value)
+                    {
+                        var kchrData = fork.GetResourceData(kchrResource);
+                        var keyboardLayoutRecord = new KeyboardLayoutRecord(kchrData);
+                        Debug.WriteLine($"  Software Keyboard Layout {kchrResource}: Version={keyboardLayoutRecord.Version}, NumberOfTables={keyboardLayoutRecord.NumberOfTables}, NumberOfDeadKeyRecords={keyboardLayoutRecord.NumberOfDeadKeyRecords}");
+                        Debug.WriteLine($"    Table Selection Index: {BitConverter.ToString(keyboardLayoutRecord.TableSelectionIndex)}");
+                        for (int i = 0; i < keyboardLayoutRecord.CharacterMappingTables.Count; i++)
+                        {
+                            var table = keyboardLayoutRecord.CharacterMappingTables[i];
+                            Debug.WriteLine($"    Character Mapping Table {i}: Length={table.Length} bytes");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyMap:
+                    Debug.WriteLine("KMAP Resources:");
+                    foreach (var kmapResource in type.Value)
+                    {
+                        var kmapData = fork.GetResourceData(kmapResource);
+                        var keyMapRecord = new KeyMapRecord(kmapData);
+                        Debug.WriteLine($"  Key Map {kmapResource}: ID={keyMapRecord.ResourceID}, Version={keyMapRecord.Version}, NumberOfExceptions={keyMapRecord.NumberOfExceptions}");
+                    }
+
+                    break;
+
+                case ResourceForkType.SystemVersion1:
+                case ResourceForkType.SystemVersion2:
+                    Debug.WriteLine("System Version Resources:");
+                    foreach (var macsResource in type.Value)
+                    {
+                        var macsData = fork.GetResourceData(macsResource);
+                        var systemVersionRecord = new SystemVersionRecord(macsData);
+                        Debug.WriteLine($"  System Version {macsResource}: Version=\"{systemVersionRecord.Version}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.NumericFormatRecord:
+                    Debug.WriteLine("itl0 Resources:");
+                    foreach (var itl0Resource in type.Value)
+                    {
+                        var itl0Data = fork.GetResourceData(itl0Resource);
+                        var numericFormatRecord = new NumericFormatRecord(itl0Data);
+                        Debug.WriteLine($"  Numeric Format {itl0Resource}: DecimalSeparator='{(char)numericFormatRecord.DecimalSeparator}', DateSeparator='{(char)numericFormatRecord.DateSeparator}', TimeSeparator='{(char)numericFormatRecord.TimeSeparator}', TwentyFourHourMorningString=\"{numericFormatRecord.TwentyFourHourMorningString}\", TwentyFourHourEveningString=\"{numericFormatRecord.TwentyFourHourEveningString}\", UnitOfMeasure={numericFormatRecord.UnitOfMeasure}");
+                    }
+
+                    break;
+
+                case ResourceForkType.LongDateFormat:
+                    Debug.WriteLine("itl1 Resources:");
+                    foreach (var itl1Resource in type.Value)
+                    {
+                        var itl1Data = fork.GetResourceData(itl1Resource);
+                        var longDateFormatRecord = new LongDateFormatRecord(itl1Data);
+                        Debug.WriteLine($"  Long Date Format {itl1Resource}: DayNamesCount={longDateFormatRecord.DayNames.Length}, MonthNamesCount={longDateFormatRecord.MonthNames.Length}");
+                        for (int i = 0; i < longDateFormatRecord.DayNames.Length; i++)
+                        {
+                            Debug.WriteLine($"    Day {i}: \"{longDateFormatRecord.DayNames[i]}\"");
+                        }
+                        for (int i = 0; i < longDateFormatRecord.MonthNames.Length; i++)
+                        {
+                            Debug.WriteLine($"    Month {i}: \"{longDateFormatRecord.MonthNames[i]}\"");
+                        }
                     }
 
                     break;
 
                 case ResourceForkType.InternationalResource:
-                case ResourceForkType.PhysicalKeyboardDescription:
-                case ResourceForkType.SoftwareKeyboardLayout:
-                case ResourceForkType.KeyboardLayout:
+                    Debug.WriteLine("INTL Resources:");
+                    foreach (var intlResource in type.Value)
+                    {
+                        var intlData = fork.GetResourceData(intlResource);
+                        if (intlResource.ID == 0)
+                        {
+                            var numericFormatRecord = new NumericFormatRecord(intlData);
+                            Debug.WriteLine($"  International Resource {intlResource}: DecimalSeparator='{(char)numericFormatRecord.DecimalSeparator}', DateSeparator='{(char)numericFormatRecord.DateSeparator}', TimeSeparator='{(char)numericFormatRecord.TimeSeparator}', TwentyFourHourMorningString=\"{numericFormatRecord.TwentyFourHourMorningString}\", TwentyFourHourEveningString=\"{numericFormatRecord.TwentyFourHourEveningString}\", UnitOfMeasure={numericFormatRecord.UnitOfMeasure}");
+                        }
+                        else if (intlResource.ID == 1)
+                        {
+                            var longDateFormatRecord = new LongDateFormatRecord(intlData);
+                            Debug.WriteLine($"  International Resource {intlResource}: DayNamesCount={longDateFormatRecord.DayNames.Length}, MonthNamesCount={longDateFormatRecord.MonthNames.Length}");
+                            for (int i = 0; i < longDateFormatRecord.DayNames.Length; i++)
+                            {
+                                Debug.WriteLine($"    Day {i}: \"{longDateFormatRecord.DayNames[i]}\"");
+                            }
+                            for (int i = 0; i < longDateFormatRecord.MonthNames.Length; i++)
+                            {
+                                Debug.WriteLine($"    Month {i}: \"{longDateFormatRecord.MonthNames[i]}\"");
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"  International Resource {intlResource}: Unknown international resource of length {intlData.Length} bytes.");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.CacheTable:
+                    Debug.WriteLine("CTAB Resources:");
+                    foreach (var ctabResource in type.Value)
+                    {
+                        var ctabData = fork.GetResourceData(ctabResource);
+                        var cacheTableRecord = new CacheTableRecord(ctabData);
+                        Debug.WriteLine($"  Cache Table {ctabResource}: Entries Count={cacheTableRecord.Entries.Count}");
+                        foreach (var entry in cacheTableRecord.Entries)
+                        {
+                            Debug.WriteLine($"    Cache Table Entry: Key={entry.Key}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.PrinterAccessProtocolAddress:
+                    Debug.WriteLine("PAPA Resources:");
+                    foreach (var papaResource in type.Value)
+                    {
+                        var papaData = fork.GetResourceData(papaResource);
+                        var papaRecord = new PrinterAccessProtocolAddressRecord(papaData);
+                        Debug.WriteLine($"  Printer Access Protocol Address {papaResource}: Name=\"{papaRecord.Name}\", Type={papaRecord.Type}, Zone=\"{papaRecord.Zone}\", AddressBlock=\"{papaRecord.AddressBlock}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.PixelPatternList:
+                    Debug.WriteLine("ppt# Resources:");
+                    foreach (var pptResource in type.Value)
+                    {
+                        var pptData = fork.GetResourceData(pptResource);
+                        var pixelPatternListRecord = new PixelPatternListRecord(pptData);
+                        Debug.WriteLine($"  Pixel Pattern List {pptResource}: Patterns Count={pixelPatternListRecord.Patterns.Count}");
+                    }
+
+                    break;
+
+                case ResourceForkType.MakeInverseTableQueueSizes:
+                    Debug.WriteLine("mitq Resources:");
+                    foreach (var mitqResource in type.Value)
+                    {
+                        var mitqData = fork.GetResourceData(mitqResource);
+                        var mitqRecord = new MakeInverseTableQueueSizesRecord(mitqData);
+                        Debug.WriteLine($"  Make Inverse Table Queue Sizes {mitqResource}: QueueSize3Bit={mitqRecord.QueueSize3Bit}, QueueSize4Bit={mitqRecord.QueueSize4Bit}, QueueSize5Bit={mitqRecord.QueueSize5Bit}");
+                    }
+
+                    break;
+
+                case ResourceForkType.PrinterRecord:
+                    Debug.WriteLine("PREC Resources:");
+                    foreach (var precResource in type.Value)
+                    {
+                        var precData = fork.GetResourceData(precResource);
+                        var printRecord = new PrinterRecord(precData);
+                        Debug.WriteLine($"  Printer Record {precResource}: PrivateData Length={printRecord.PrivateData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.PostScript:
+                    Debug.WriteLine("POST Resources:");
+                    foreach (var postResource in type.Value)
+                    {
+                        var postData = fork.GetResourceData(postResource);
+                        var postScriptRecord = new PostScriptRecord(postData);
+                        Debug.WriteLine($"  PostScript Record {postResource}: NumberOfCommands={postScriptRecord.NumberOfCommands}");
+                        for (int i = 0; i < postScriptRecord.Commands.Count; i++)
+                        {
+                            Debug.WriteLine($"    Command {i}: \"{postScriptRecord.Commands[i]}\"");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.Preferences:
+                    Debug.WriteLine("PREF Resources:");
+                    foreach (var prefResource in type.Value)
+                    {
+                        var prefData = fork.GetResourceData(prefResource);
+                        var preferencesRecord = new PreferencesRecord(prefData);
+                        Debug.WriteLine($"  Preferences Record {prefResource}: Data=\"{preferencesRecord.Data}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.Tokens:
+                    Debug.WriteLine("itl4 Resources:");
+                    foreach (var itl4Resource in type.Value)
+                    {
+                        var itl4Data = fork.GetResourceData(itl4Resource);
+                        var tokensRecord = new TokensRecord(itl4Data);
+                        Debug.WriteLine($"  Tokens Record {itl4Resource}: ResourceType={tokensRecord.ResourceType}, ResourceID={tokensRecord.ResourceID}, VersionNumber={tokensRecord.VersionNumber}, FormatCode={tokensRecord.FormatCode}");
+                    }
+
+                    break;
+
+                case ResourceForkType.InternationalConfiguration:
+                    Debug.WriteLine("itlc Resources:");
+                    foreach (var itlcResource in type.Value)
+                    {
+                        var itlcData = fork.GetResourceData(itlcResource);
+                        var internationalConfigurationRecord = new InternationalConfigurationRecord(itlcData);
+                        Debug.WriteLine($"  International Configuration {itlcResource}: SystemScriptCode={internationalConfigurationRecord.SystemScriptCode}");
+                    }
+
+                    break;
+
+                case ResourceForkType.InternationalBundle:
+                    Debug.WriteLine("itlb Resources:");
+                    foreach (var itlbResource in type.Value)
+                    {
+                        var itlbData = fork.GetResourceData(itlbResource);
+                        var internationalBundleRecord = new InternationalBundleRecord(itlbData);
+                        Debug.WriteLine($"  International Bundle {itlbResource}: NumericFormatResourceID={internationalBundleRecord.NumericFormatResourceID}, LongDateFormatResourceID={internationalBundleRecord.DateFormatResourceID}");
+                    }
+
+                    break;
+
+                case ResourceForkType.StringManipulation:
+                    Debug.WriteLine("itl2 Resources:");
+                    foreach (var itl2Resource in type.Value)
+                    {
+                        var itl2Data = fork.GetResourceData(itl2Resource);
+                        var stringManipulationRecord = new StringManipulationRecord(itl2Data);
+                        Debug.WriteLine($"  String Manipulation {itl2Resource}: Data Length={itl2Data.Length} bytes");
+                    }
+
+                    break;
+
                 case ResourceForkType.MacroMakerInformation1:
                 case ResourceForkType.MacroMakerInformation2:
                 case ResourceForkType.MacroMakerInformation3:
-                case ResourceForkType.PrintRecord:
-                case "GNRL":
-                case ResourceForkType.CodeToDrivePrinters:
-                case ResourceForkType.PostScript:
-                case ResourceForkType.PrinterAccessProtocolAddress:
-                case ResourceForkType.Preferences:
-                case ResourceForkType.CacheTable:
-                case ResourceForkType.ADBDriver:
-                case ResourceForkType.PixelPattern:
-                case ResourceForkType.PixelPatternList:
-                case ResourceForkType.InternationalConfiguration:
-                case ResourceForkType.InternationalScriptBundle:
-                case ResourceForkType.InternationalFormattingInformation:
-                case ResourceForkType.InternationalDateFormattingInformation:
-                case ResourceForkType.InternationalStringComparisonPackageHooks:
-                case ResourceForkType.InternationalTokenize:
-                case ResourceForkType.KeyboardSwapping:
-                case ResourceForkType.KeyboardMapping:
-                case ResourceForkType.MakeInverseTableQueueSizes:
-                    // Documented as existing but format unknown.
-                    break;
-
-                case ResourceForkType.CitiesList:
-                case "infs":
-                case "inra":
-                case "inbb":
-                case "ERRS":
-                case "icmt":
-                case "infa":
-                case "inpk":
-                case "indm":
-                    // TODO, not documented but reverse engineered.
-                    break;
-
-                case "MACS":
-                case "macs":
                 case "TTXT":
                 case "PCOD":
                 case "RFIL":
@@ -808,7 +1317,6 @@ public class ResourceForkTests
                 case "rtab":
                 case "soun":
                 case "colr":
-                case "incd":
                 case "afps":
                 case "EXFS":
                 case "sysz":
@@ -869,6 +1377,8 @@ public class ResourceForkTests
                 case "bst#":
                 case "INT#":
                 case "bvrs":
+                case "PATC":
+                case "ERRS":
                     // Unknown.
                     break;
 

@@ -12,9 +12,9 @@ public enum ResourceAttributeFlags : byte
     None = 0x00,
 
     /// <summary>
-    /// Reserved bit 1.
+    /// Resource is compressed.
     /// </summary>
-    Reserved1 = 0x01,
+    Compressed = 0x01,
 
     /// <summary>
     /// Resource has been changed.

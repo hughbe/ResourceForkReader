@@ -16,7 +16,7 @@ public readonly struct LayoutRecord
     /// <summary>
     /// Gets the font resource ID used in the layout.
     /// </summary>
-    public ushort FontResourceID { get; }
+    public short FontResourceID { get; }
 
     /// <summary>
     /// Gets the font size used in the layout.
@@ -193,7 +193,7 @@ public readonly struct LayoutRecord
         // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/master/src/SystemTemplates.cc#L824-L876
         int offset = 0;
         
-        FontResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        FontResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         FontSize = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));

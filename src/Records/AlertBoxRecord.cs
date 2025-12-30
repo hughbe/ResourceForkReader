@@ -21,7 +21,7 @@ public struct AlertBoxRecord
     /// <summary>
     /// Gets the item list resource ID.
     /// </summary>
-    public ushort ItemListResourceID { get; }
+    public short ItemListResourceID { get; }
 
     /// <summary>
     /// Gets the fourth-stage alert information.
@@ -73,7 +73,7 @@ public struct AlertBoxRecord
         // Item list resource ID. The ID of the item list resource that
         // specifies the items—such as buttons and static text—to display
         // in the alert box.
-        ItemListResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        ItemListResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         // Fourth-stage alert information. This specifies the response when the user repeats the

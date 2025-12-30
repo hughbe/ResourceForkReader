@@ -26,7 +26,7 @@ public struct FontAssociationTableEntry
     /// <summary>
     /// Gets the resource ID of the font association.
     /// </summary>
-    public ushort ResourceID { get; }
+    public short ResourceID { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FontAssociationTableEntry"/> struct by reading from the specified data span.
@@ -51,7 +51,7 @@ public struct FontAssociationTableEntry
         Style = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        ResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        ResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         Debug.Assert(offset == data.Length, "Did not consume all data for FontAssociationTableEntry");

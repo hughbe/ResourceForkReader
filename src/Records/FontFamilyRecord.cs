@@ -7,7 +7,7 @@ namespace ResourceForkReader.Records;
 /// <summary>
 /// Represents a Font Family Record ('FOND') in a resource fork.
 /// </summary>
-public readonly partial struct FontFamilyRecord
+public readonly struct FontFamilyRecord
 {
     /// <summary>
     /// The minimum size of a Font Family Record.

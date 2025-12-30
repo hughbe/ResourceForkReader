@@ -6,7 +6,7 @@ namespace ResourceForkReader.Records;
 /// <summary>
 /// Gets the minimum size of a Font Association Table.
 /// </summary>
-public partial struct FontAssociationTable
+public struct FontAssociationTable
 {
     /// <summary>
     /// The minimum size of a Font Association Table.

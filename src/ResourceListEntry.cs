@@ -16,7 +16,7 @@ public struct ResourceListEntry
     /// <summary>
     /// Gets the resource ID.
     /// </summary>
-    public ushort ID { get; }
+    public short ID { get; }
 
     /// <summary>
     /// Gets the offset from the beginning of the resource name list to the resource name.
@@ -53,7 +53,7 @@ public struct ResourceListEntry
         int offset = 0;
 
         // Resource ID
-        ID = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
+        ID = BinaryPrimitives.ReadInt16BigEndian(data[offset..]);
         offset += 2;
 
         // Offset from beginning of resource name list to resource name

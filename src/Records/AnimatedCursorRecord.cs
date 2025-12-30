@@ -78,7 +78,7 @@ public readonly struct AnimatedCursorRecord
         /// <summary>
         /// Gets the cursor resource ID for this frame.
         /// </summary>
-        public ushort CursorResourceId { get; }
+        public short CursorResourceId { get; }
 
         /// <summary>
         /// Gets the padding bytes.
@@ -99,7 +99,7 @@ public readonly struct AnimatedCursorRecord
 
             int offset = 0;
 
-            CursorResourceId = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+            CursorResourceId = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
             offset += 2;
 
             Padding = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));

@@ -22,7 +22,7 @@ public readonly struct WindowRecord
     /// <summary>
     /// Gets the resource ID of the window definition.
     /// </summary>
-    public ushort DefinitionResourceID { get; }
+    public short DefinitionResourceID { get; }
 
     /// <summary>
     /// Gets a value indicating whether the window is visible.
@@ -108,7 +108,7 @@ public readonly struct WindowRecord
         // rDocProc + 2 4, 4
         // rDocProc + 4 6, 6
         // rDocProc + 6 10, 10
-        DefinitionResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        DefinitionResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         // A specification that determines whether the window is visible

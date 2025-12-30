@@ -16,22 +16,32 @@ public struct RECT
     /// <summary>
     /// Gets the top coordinate.
     /// </summary>
-    public ushort Top { get; }
+    public short Top { get; }
 
     /// <summary>
     /// Gets the bottom coordinate.
     /// </summary>
-    public ushort Left { get; }
+    public short Left { get; }
 
     /// <summary>
     /// Gets the bottom coordinate.
     /// </summary>
-    public ushort Bottom { get; }
+    public short Bottom { get; }
 
     /// <summary>
     /// Gets the right coordinate.
     /// </summary>
-    public ushort Right { get; }
+    public short Right { get; }
+
+    /// <summary>
+    /// Gets the height of the rectangle.
+    /// </summary>
+    public readonly int Width => Math.Abs(Right - Left);
+
+    /// <summary>
+    /// Gets the width of the rectangle.
+    /// </summary>
+    public readonly int Height => Math.Abs(Bottom - Top);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RECT"/> struct by parsing binary data.
@@ -47,16 +57,16 @@ public struct RECT
 
         int offset = 0;
 
-        Top = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        Top = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Left = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        Left = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Bottom = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        Bottom = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Right = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        Right = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         Debug.Assert(offset == data.Length, "Did not parse the entire RECT data.");

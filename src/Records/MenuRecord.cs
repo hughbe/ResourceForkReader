@@ -27,7 +27,7 @@ public readonly struct MenuRecord
     /// <summary>
     /// Gets the resource ID of the menu definition procedure.
     /// </summary>
-    public ushort DefinitionProcedureResourceID { get; }
+    public short DefinitionProcedureResourceID { get; }
 
     /// <summary>
     /// Gets the placeholder value.
@@ -104,7 +104,7 @@ public readonly struct MenuRecord
         // reads in the menu definition procedure, if necessary.
         // The Menu Manager stores a handle to the menu’s menu definition
         // procedure in the menuProc field of the menu record. 
-        DefinitionProcedureResourceID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
+        DefinitionProcedureResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
         // Placeholder (an integer containing 0).
@@ -158,7 +158,9 @@ public readonly struct MenuRecord
             offset += 1;
         }
 
-        Debug.Assert(offset == data.Length, "Did not consume all data for MenuRecord.");
+        // Seen additional data in some resources, ignore it.
+
+        Debug.Assert(offset <= data.Length, "Did not consume all data for MenuRecord.");
 #endif
     }
 
