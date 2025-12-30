@@ -99,6 +99,28 @@ public class ResourceForkTests
     [InlineData("System4.1/Startup Device.res")]
     [InlineData("System4.1/System.res")]
     [InlineData("System4.1/TeachText.res")]
+    [InlineData("System6/AppleTalk ImageWriter.res")]
+    [InlineData("System6/Backgrounder.res")]
+    [InlineData("System6/DA Handler.res")]
+    [InlineData("System6/DeskTop.res")]
+    [InlineData("System6/Easy Access.res")]
+    [InlineData("System6/Finder.res")]
+    [InlineData("System6/General.res")]
+    [InlineData("System6/ImageWriter.res")]
+    [InlineData("System6/Key Layout.res")]
+    [InlineData("System6/Keyboard.res")]
+    [InlineData("System6/LQ AppleTalk ImageWriter.res")]
+    [InlineData("System6/LQ ImageWriter.res")]
+    [InlineData("System6/Laser Prep.res")]
+    [InlineData("System6/LaserWriter.res")]
+    [InlineData("System6/Mouse.res")]
+    [InlineData("System6/MultiFinder.res")]
+    [InlineData("System6/Personal LaserWriter SC.res")]
+    [InlineData("System6/PrintMonitor.res")]
+    [InlineData("System6/Scrapbook File.res")]
+    [InlineData("System6/Sound.res")]
+    [InlineData("System6/StuffIt Expander Preferences.res")]
+    [InlineData("System6/System.res")]
     public void Ctor_Stream(string fileName)
     {
         var filePath = Path.Combine("Samples", fileName);
@@ -1458,6 +1480,8 @@ public class ResourceForkTests
                 case "MrBK": // "System 4.1/HDBackup.res" and "System 4.1/DeskTop.res"
                 case "LWRT": // "System 4.1/LaserWriter.res"
                 case "FAST": // "System 4.1/Finder.res"
+                case "ExpP": // "System 6/StuffIt Epxander Preferences.res"
+                case "Page": // "System 6/StuffIt Epxander Preferences.res"
                     // Unknown.
                     break;
 
