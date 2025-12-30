@@ -9,6 +9,11 @@ namespace ResourceForkReader.Records;
 public readonly struct LayoutRecord
 {
     /// <summary>
+    /// The size in bytes of a small LayoutRecord.
+    /// </summary>
+    public const int SizeSmall = 62;
+
+    /// <summary>
     /// The size in bytes of a LayoutRecord.
     /// </summary>
     public const int Size = 66;
@@ -185,7 +190,7 @@ public readonly struct LayoutRecord
     /// <exception cref="ArgumentException">Thrown when <paramref name="data"/> is not the correct size.</exception>
     public LayoutRecord(Span<byte> data)
     {
-        if (data.Length != Size)
+        if (data.Length != Size && data.Length != SizeSmall)
         {
             throw new ArgumentException($"Data must be at least {Size} bytes.", nameof(data));
         }
@@ -282,6 +287,15 @@ public readonly struct LayoutRecord
 
         WatchThreshold = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
+
+        if (data.Length == SizeSmall)
+        {
+            // Set default values for fields not present in the small layout record.
+            Flags2 = 0;
+            ColorStyle = 0;
+            MaximumNumberOfWindows = 0;
+            return;
+        }
 
         Flags2 = (LayoutRecordFlags2)data[offset];
         offset += 1;

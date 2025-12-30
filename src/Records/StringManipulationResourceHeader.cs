@@ -11,7 +11,7 @@ public readonly struct StringManipulationResourceHeader
     /// <summary>
     /// The minimum size of the header in bytes.
     /// </summary>
-    public const int MinSize = 64;
+    public const int MinSize = 10;
 
     /// <summary>
     /// Gets the offset to the init hook.

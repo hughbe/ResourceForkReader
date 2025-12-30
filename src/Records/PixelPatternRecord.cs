@@ -44,9 +44,11 @@ public readonly struct PixelPatternRecord
             throw new ArgumentException($"Data is too short to be a valid Pixel Pattern Record. Minimum size is {MinSize} bytes.", nameof(data));
         }
 
+        // Structure documented in https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf
+        // 4-103.
         int offset = 0;
 
-        //  A pattern record. This is similar to the PixPat record (described
+        // A pattern record. This is similar to the PixPat record (described
         // on page 4-58), except that the resource contains an offset (rather
         // than a handle) to a PixMap record (which is included in the
         // resource), and it contains an offset (rather than a handle) to the
@@ -57,12 +59,24 @@ public readonly struct PixelPatternRecord
         // A pixel map. This is similar to the PixMap record (described on
         // page 4-46), except that the resource contains an offset (rather
         // than a handle) to a color table (which is included in the resource).
+        if (Pattern.PixelMapOffset >= data.Length)
+        {
+            throw new ArgumentException("Pixel Map offset is outside the bounds of the Pixel Pattern Record data.", nameof(data));
+        }
+
+        offset = (int)Pattern.PixelMapOffset;
         PixelMap = new PixelMap(data.Slice(offset, PixelMap.Size));
         offset += PixelMap.Size;
 
         // Pattern image data. The size of the image data is calculated by
         // subtracting the offset to the image data from the offset to the
         // color table data.
+        if (Pattern.PixelDataOffset >= data.Length)
+        {
+            throw new ArgumentException("Pixel Data offset is outside the bounds of the Pixel Pattern Record data.", nameof(data));
+        }
+
+        offset = (int)Pattern.PixelDataOffset;
         int pixelMapDataSize = PixelMap.DataSize;
         PixelMapData = data.Slice(offset, pixelMapDataSize).ToArray();
         offset += pixelMapDataSize;

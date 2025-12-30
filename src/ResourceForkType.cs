@@ -43,6 +43,11 @@ public static class ResourceForkType
     public const string CacheTable = "CTAB";
 
     /// <summary>
+    /// The 'clst' resource type for cached icon lists.
+    /// </summary>
+    public const string CachedIconList = "clst";
+
+    /// <summary>
     /// The 'CTY#' resource type for cities list.
     /// </summary>
     public const string CitiesList = "CTY#";
@@ -233,6 +238,11 @@ public static class ResourceForkType
     public const string InstallerResourceAtom = "inra";
 
     /// <summary>
+    /// The 'insc' resource type for installer scripts.
+    /// </summary>
+    public const string InstallerScript = "insc";
+
+    /// <summary>
     /// The 'itlb' resource type for international bundles.
     /// </summary>
     public const string InternationalBundle = "itlb";
@@ -366,6 +376,11 @@ public static class ResourceForkType
     /// The 'mcky' resource type for mouse tracking resources.
     /// </summary>
     public const string MouseTracking = "mcky";
+
+    /// <summary>
+    /// The 'NBPC' resource type for name binding protocol code.
+    /// </summary>
+    public const string NameBindingProtocolCode = "NBPC";
 
     /// <summary>
     /// The 'itl0' resource type for international formatting information.

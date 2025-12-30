@@ -120,7 +120,7 @@ public readonly struct PixelMap
         Version = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-       // Packing format
+        // Packing format
         PackType = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 

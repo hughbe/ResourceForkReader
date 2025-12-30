@@ -75,6 +75,30 @@ public class ResourceForkTests
     [InlineData("System Additions/Read Me for Apple Color.res")]
     [InlineData("System Additions/Responder.res")]
     [InlineData("System Additions/TeachText.res")]
+    [InlineData("System4.1/Apple File Exchange.res")]
+    [InlineData("System4.1/Apple HD SC Setup.res")]
+    [InlineData("System4.1/AppleTalk ImageWriter.res")]
+    [InlineData("System4.1/DCA-RFT_MacWrite.res")]
+    [InlineData("System4.1/Desk Accessories.res")]
+    [InlineData("System4.1/DeskTop.res")]
+    [InlineData("System4.1/Disk First Aid.res")]
+    [InlineData("System4.1/Easy Access.res")]
+    [InlineData("System4.1/Finder.res")]
+    [InlineData("System4.1/Font_DA Mover.res")]
+    [InlineData("System4.1/Fonts.res")]
+    [InlineData("System4.1/General.res")]
+    [InlineData("System4.1/HDBackup.res")]
+    [InlineData("System4.1/ImageWriter.res")]
+    [InlineData("System4.1/Key Layout.res")]
+    [InlineData("System4.1/Keyboard.res")]
+    [InlineData("System4.1/Laser Prep.res")]
+    [InlineData("System4.1/LaserWriter.res")]
+    [InlineData("System4.1/Monitors.res")]
+    [InlineData("System4.1/Mouse.res")]
+    [InlineData("System4.1/Sound.res")]
+    [InlineData("System4.1/Startup Device.res")]
+    [InlineData("System4.1/System.res")]
+    [InlineData("System4.1/TeachText.res")]
     public void Ctor_Stream(string fileName)
     {
         var filePath = Path.Combine("Samples", fileName);
@@ -157,6 +181,7 @@ public class ResourceForkTests
                 case ResourceForkType.KeyboardConfiguration:
                 case ResourceForkType.AppleDesktopBusServiceRoutine:
                 case ResourceForkType.PrinterDefinitionFunction:
+                case ResourceForkType.NameBindingProtocolCode:
                     Debug.WriteLine("CODE Resources:");
                     foreach (var entry in type.Value)
                     {
@@ -1291,6 +1316,33 @@ public class ResourceForkTests
 
                     break;
 
+                case ResourceForkType.CachedIconList:
+                    Debug.WriteLine("clst Resources:");
+                    foreach (var clstResource in type.Value)
+                    {
+                        var clstData = fork.GetResourceData(clstResource);
+                        var cachedIconListRecord = new CachedIconListRecord(clstData);
+                        Debug.WriteLine($"  Cached Icon List {clstResource}: NumberOfEntries={cachedIconListRecord.NumberOfEntries}");
+                        for (int i = 0; i < cachedIconListRecord.Entries.Count; i++)
+                        {
+                            var entry = cachedIconListRecord.Entries[i];
+                            Debug.WriteLine($"    Entry {i}: Unknown={entry.Unknown1}, Type={entry.Type}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.InstallerScript:
+                    Debug.WriteLine("insc Resources:");
+                    foreach (var inscResource in type.Value)
+                    {
+                        var inscData = fork.GetResourceData(inscResource);
+                        var installerConfigurationRecord = new InstallerScriptRecord(inscData);
+                        Debug.WriteLine($"  Installer Configuration {inscResource}: Version={installerConfigurationRecord.Version}, Flags={installerConfigurationRecord.Flags}, Name=\"{installerConfigurationRecord.Name}\", HelpString=\"{installerConfigurationRecord.HelpString}\"");
+                    }
+
+                    break;
+
                 case ResourceForkType.MacroMakerInformation1:
                 case ResourceForkType.MacroMakerInformation2:
                 case ResourceForkType.MacroMakerInformation3:
@@ -1402,6 +1454,10 @@ public class ResourceForkTests
                 case "QUIK": // "System 1.1/Disk Copy.res"
                 case "FVIS": // "System 1.1/Finder.res"
                 case "TAB#": // "System 1.1/Finder.res"
+                case "sdev": // "System 4.1/Apple HD SC Setup.res"
+                case "MrBK": // "System 4.1/HDBackup.res" and "System 4.1/DeskTop.res"
+                case "LWRT": // "System 4.1/LaserWriter.res"
+                case "FAST": // "System 4.1/Finder.res"
                     // Unknown.
                     break;
 

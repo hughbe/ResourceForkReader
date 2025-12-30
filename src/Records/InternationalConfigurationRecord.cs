@@ -9,7 +9,12 @@ namespace ResourceForkReader.Records;
 public readonly struct InternationalConfigurationRecord
 {
     /// <summary>
-    /// Gets the system script code.
+    /// Gets the size of a small International Configuration Record in bytes.
+    /// </summary>
+    public const int SizeSmall = 6;
+
+    /// <summary>
+    /// Gets the size of an International Configuration Record in bytes.
     /// </summary>
     public const int Size = 48;
 
@@ -71,7 +76,7 @@ public readonly struct InternationalConfigurationRecord
     /// <summary>
     /// Gets the reserved bytes.
     /// </summary>
-    public byte[] Reserved { get; }
+    public byte[]? Reserved { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InternationalConfigurationRecord"/> struct by parsing binary data.
@@ -80,7 +85,7 @@ public readonly struct InternationalConfigurationRecord
     /// <exception cref="ArgumentException">>Thrown when data is less than 48 bytes long.</exception>
     public InternationalConfigurationRecord(ReadOnlySpan<byte> data)
     {
-        if (data.Length < Size)
+        if (data.Length != Size && data.Length != SizeSmall)
         {
             throw new ArgumentException($"Data is too short to be a valid International Configuration Record. Minimum size is {Size} bytes.", nameof(data));
         }
@@ -120,6 +125,14 @@ public readonly struct InternationalConfigurationRecord
         // accessed through the selector smIntlForce..
         InternationalResourcesForce = data[offset] != 0x00;
         offset += 1;
+
+        if (data.Length == SizeSmall)
+        {
+            // Seen examples in System 4.1 where only the first 6 bytes are
+            // present.
+            Reserved = null;
+            return;
+        }
 
         // The initial setting for the international keyboard flag for use
         // by the Macintosh Plus computer. In addition to the standard
