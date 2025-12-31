@@ -32,8 +32,8 @@ public readonly struct TextItemData
         // ■ For an editable text item, this can be an empty string (in which case the editable text
         // item contains no text), or it can be a string that appears as the default string in the
         // editable text item.
-        Text = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Text.Length;
+        Text = SpanUtilities.ReadPascalString(data[offset..], out var textBytesRead);
+        offset += textBytesRead;
 
         bytesRead = offset;
         Debug.Assert(offset <= data.Length, "Did not consume all data for TextItemData.");

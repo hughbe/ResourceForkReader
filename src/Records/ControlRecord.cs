@@ -199,8 +199,8 @@ public readonly struct ControlRecord
         // For controls—such as buttons, checkboxes, radio buttons, and
         // pop-up menus—that need a title, the string for that title;
         // for controls that don’t use titles, an empty string.
-        Title = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Title.Length;
+        Title = SpanUtilities.ReadPascalString(data[offset..], out var titleBytesRead);
+        offset += titleBytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for ControlRecord.");
     }

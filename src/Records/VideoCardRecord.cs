@@ -34,8 +34,8 @@ public readonly struct VideoCardRecord
         // 8-87
         int offset = 0;
 
-        Name = SpanUtilities.ReadPascalString(data);
-        offset += 1 + Name.Length;
+        Name = SpanUtilities.ReadPascalString(data, out var nameBytesRead);
+        offset += nameBytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for VideoCardRecord.");
     }

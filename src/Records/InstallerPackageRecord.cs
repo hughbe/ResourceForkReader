@@ -78,8 +78,8 @@ public readonly struct InstallerPackageRecord
         PackageSize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        PackageName = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + PackageName.Length;
+        PackageName = SpanUtilities.ReadPascalString(data[offset..], out var packageNameBytesRead);
+        offset += packageNameBytesRead;
 
         if (offset % 2 != 0)
         {

@@ -26,8 +26,8 @@ public struct FileCommentRecord
     {
         int offset = 0;
 
-        Comment = SpanUtilities.ReadPascalString(data);
-        offset += 1 + Comment.Length;
+        Comment = SpanUtilities.ReadPascalString(data, out var commentBytesRead);
+        offset += commentBytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all data for FileCommentRecord.");
     }

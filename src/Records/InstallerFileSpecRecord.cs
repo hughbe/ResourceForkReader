@@ -67,8 +67,8 @@ public readonly struct InstallerFileSpecRecord
         Flags = (InstallerFileSpecRecordFlags)BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        FileName = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + FileName.Length;
+        FileName = SpanUtilities.ReadPascalString(data[offset..], out var fileNameBytesRead);
+        offset += fileNameBytesRead;
 
         if (offset < data.Length && offset % 2 != 0)
         {

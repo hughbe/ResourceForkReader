@@ -44,8 +44,8 @@ public readonly struct FileReferenceRecord
         LocalIconID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Name = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Name.Length;
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
+        offset += nameBytesRead;
 
         Debug.Assert(offset <= data.Length, "Parsed beyond the end of the data span.");
     }

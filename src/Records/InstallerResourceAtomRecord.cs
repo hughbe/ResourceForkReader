@@ -107,16 +107,16 @@ public readonly struct InstallerResourceAtomRecord
         ResourceSize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Description = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Description.Length;
+        Description = SpanUtilities.ReadPascalString(data[offset..], out var descriptionBytesRead);
+        offset += descriptionBytesRead;
 
         if (offset % 2 != 0)
         {
             offset += 1; // Padding byte to align to even size
         }
 
-        Name = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Name.Length;
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
+        offset += nameBytesRead;
 
         if (offset % 2 != 0)
         {

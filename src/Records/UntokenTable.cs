@@ -86,7 +86,7 @@ public readonly struct UntokenTable
                 throw new ArgumentException("Invalid Untoken Table: token offset is out of bounds.", nameof(data));
             }
 
-            tokens[i] = SpanUtilities.ReadPascalString(data[tokenOffset..]);
+            tokens[i] = SpanUtilities.ReadPascalString(data[tokenOffset..], out _);
         }
 
         Tokens = tokens;

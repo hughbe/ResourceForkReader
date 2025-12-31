@@ -115,8 +115,8 @@ public readonly struct InstallerDefaultMapRecord
 
         // The User Description is an even-padded Pascal string that the
         // Installer displays on the "Easy Install screen".
-        UserDescription = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + UserDescription.Length;
+        UserDescription = SpanUtilities.ReadPascalString(data.Slice(offset), out var userDescriptionBytesRead);
+        offset += userDescriptionBytesRead;
 
         if (offset % 2 != 0)
         {

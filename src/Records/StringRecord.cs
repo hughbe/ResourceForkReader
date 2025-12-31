@@ -23,8 +23,8 @@ public readonly struct StringRecord
     {
         int offset = 0;
 
-        Value = SpanUtilities.ReadPascalString(data);
-        offset += 1 + Value.Length;
+        Value = SpanUtilities.ReadPascalString(data, out var valueBytesRead);
+        offset += valueBytesRead;
 
         // Seen cases where string length is odd, followed by a padding byte.
         // Or there are additional zero bytes after the string.

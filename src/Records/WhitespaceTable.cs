@@ -81,7 +81,7 @@ public readonly struct WhitespaceTable
                 throw new ArgumentException("Invalid Whitespace Table: string offset is beyond the length of the table.", nameof(data));
             }
 
-            strings.Add(SpanUtilities.ReadPascalString(data[stringOffset..]));
+            strings.Add(SpanUtilities.ReadPascalString(data[stringOffset..], out _));
         }
 
         Strings = strings;

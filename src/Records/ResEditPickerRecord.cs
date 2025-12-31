@@ -98,8 +98,8 @@ public readonly struct ResEditPickerRecord
         LDEFType = Encoding.ASCII.GetString(data.Slice(offset, 4));
         offset += 4;
 
-        OptionString = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + OptionString.Length;
+        OptionString = SpanUtilities.ReadPascalString(data[offset..], out var optionStringBytesRead);
+        offset += optionStringBytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all data for ResEdit Picker Record.");
     }

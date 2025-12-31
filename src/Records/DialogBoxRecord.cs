@@ -144,8 +144,8 @@ public readonly struct DialogBoxRecord
 
         // Window title. This is a Pascal string displayed in the
         // dialog box’s title bar only when the dialog box is modeless.
-        WindowTitle = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + WindowTitle.Length;
+        WindowTitle = SpanUtilities.ReadPascalString(data[offset..], out var windowTitleBytesRead);
+        offset += windowTitleBytesRead;
 
         if (offset + 2 < data.Length)
         {

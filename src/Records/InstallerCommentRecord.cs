@@ -60,8 +60,8 @@ public readonly struct InstallerCommentRecord
         IconResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Comment = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Comment.Length;
+        Comment = SpanUtilities.ReadPascalString(data[offset..], out var commentBytesRead);
+        offset += commentBytesRead;
 
         if (offset % 2 != 0)
         {

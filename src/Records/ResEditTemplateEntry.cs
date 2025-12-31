@@ -39,8 +39,8 @@ public readonly struct ResEditTemplateEntry
 
         int offset = 0;
 
-        Label = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Label.Length;
+        Label = SpanUtilities.ReadPascalString(data[offset..], out var labelBytesRead);
+        offset += labelBytesRead;
 
         Type = Encoding.ASCII.GetString(data.Slice(offset, 4));
         offset += 4;

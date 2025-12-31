@@ -59,8 +59,8 @@ public readonly struct PostScriptRecord
                 break;
             }
 
-            commands.Add(SpanUtilities.ReadPascalString(data.Slice(offset)));
-            offset += 1 + commands[i].Length;
+            commands.Add(SpanUtilities.ReadPascalString(data.Slice(offset), out var commandBytesRead));
+            offset += commandBytesRead;
 
             if (offset % 2 != 0)
             {

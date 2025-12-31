@@ -47,9 +47,9 @@ public readonly struct SystemVersionRecord
         }
         else
         {
-            Version = SpanUtilities.ReadPascalString(data);
+            Version = SpanUtilities.ReadPascalString(data, out var versionBytesRead);
             RawData = null;
-            offset += 1 + Version.Length;
+            offset += versionBytesRead;
         }
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for SystemVersionRecord.");

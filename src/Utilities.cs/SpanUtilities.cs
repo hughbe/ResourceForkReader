@@ -10,12 +10,14 @@ internal static class SpanUtilities
     /// Reads a Pascal-style string from the given span.
     /// </summary>
     /// <param name="data">The span containing the Pascal string.</param>
+    /// <param name="bytesRead">Outputs the total number of bytes read from the span.</param>
     /// <returns>The extracted string.</returns>
-    public static string ReadPascalString(ReadOnlySpan<byte> data)
+    /// <exception cref="ArgumentException">Thrown when the data is too short to contain the specified Pascal string.</exception>
+    public static string ReadPascalString(ReadOnlySpan<byte> data, out int bytesRead)
     {
-        if (data.Length == 0)
+        if (data.Length < 1)
         {
-            return string.Empty;
+            throw new ArgumentException("Data is too short to contain a Pascal string length.", nameof(data));
         }
 
         var strLength = data[0];
@@ -24,6 +26,7 @@ internal static class SpanUtilities
             throw new ArgumentException("Data is too short to contain the specified Pascal string.", nameof(data));
         }
 
+        bytesRead = 1 + strLength;
         return Encoding.ASCII.GetString(data.Slice(1, strLength));
     }
 

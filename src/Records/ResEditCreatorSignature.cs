@@ -44,9 +44,9 @@ public readonly struct ResEditCreatorSignatureRecord
         byte stringLength = data[0];
         if (1 + stringLength == data.Length)
         {
-            Signature = SpanUtilities.ReadPascalString(data[offset..]);
+            Signature = SpanUtilities.ReadPascalString(data[offset..], out var signatureBytesRead);
             RawData = null;
-            offset += 1 + Signature.Length;
+            offset += signatureBytesRead;
         }
         else
         {

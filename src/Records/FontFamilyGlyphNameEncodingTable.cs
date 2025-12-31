@@ -48,9 +48,9 @@ public readonly struct FontFamilyGlyphNameEncodingTable
         var entries = new List<string>(NumberOfEntries);
         for (int i = 0; i < NumberOfEntries; i++)
         {
-            string entry = SpanUtilities.ReadPascalString(data[offset..]);
+            string entry = SpanUtilities.ReadPascalString(data[offset..], out var entryBytesRead);
             entries.Add(entry);
-            offset += 1 + entry.Length;
+            offset += entryBytesRead;
         }
 
         Entries = entries;

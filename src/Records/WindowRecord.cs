@@ -143,8 +143,8 @@ public readonly struct WindowRecord
         // the string specifies the length of the string (that is, the
         // number of characters in the title plus 1 byte for the length),
         // in bytes.
-        Title = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Title.Length;
+        Title = SpanUtilities.ReadPascalString(data[offset..], out var titleBytesRead);
+        offset += titleBytesRead;
 
         // An optional positioning specification that overrides the
         // window position established by the rectangle in the first

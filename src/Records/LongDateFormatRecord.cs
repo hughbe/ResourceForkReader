@@ -112,7 +112,7 @@ public readonly struct LongDateFormatRecord
         var dayNames = new string[7];
         for (int i = 0; i < 7; i++)
         {
-            dayNames[i] = SpanUtilities.ReadPascalString(data.Slice(offset, 16));
+            dayNames[i] = SpanUtilities.ReadPascalString(data.Slice(offset, 16), out _);
             offset += 16;
         }
 
@@ -124,7 +124,7 @@ public readonly struct LongDateFormatRecord
         var monthNames = new string[12];
         for (int i = 0; i < 12; i++)
         {
-            monthNames[i] = SpanUtilities.ReadPascalString(data.Slice(offset, 16));
+            monthNames[i] = SpanUtilities.ReadPascalString(data.Slice(offset, 16), out _);
             offset += 16;
         }
 

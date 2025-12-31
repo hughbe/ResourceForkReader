@@ -33,8 +33,8 @@ public readonly struct CommandKeysRecord
         // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/master/src/SystemTemplates.cc#L317-L319
         int offset = 0;
 
-        CommandKeys = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + CommandKeys.Length;
+        CommandKeys = SpanUtilities.ReadPascalString(data[offset..], out var commandKeysBytesRead);
+        offset += commandKeysBytesRead;
 
         Debug.Assert(offset == data.Length, "Parsed beyond the end of the Command Keys Record data.");
     }

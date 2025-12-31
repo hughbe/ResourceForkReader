@@ -70,8 +70,8 @@ public readonly struct InstallerScriptRecord
         Flags = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Name = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + Name.Length;
+        Name = SpanUtilities.ReadPascalString(data.Slice(offset), out var nameBytesRead);
+        offset += nameBytesRead;
 
         if (offset % 2 != 0)
         {

@@ -55,8 +55,8 @@ public readonly struct FontFamilyNameTable
         // Base font name. The font family name in a 256 byte long Pascal
         // string. This value is represented by the baseFontName field of the
         // NameTable data type.
-        BaseFontName = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + BaseFontName.Length;
+        BaseFontName = SpanUtilities.ReadPascalString(data[offset..], out var baseFontNameBytesRead);
+        offset += baseFontNameBytesRead;
 
         // Strings. A variable length array of Pascal strings, each of which
         // contains the suffixes or numbers specifying which suffixes to put
@@ -67,8 +67,8 @@ public readonly struct FontFamilyNameTable
         var suffixes = new List<string>(NumberOfSuffixes);
         for (int i = 0; i < NumberOfSuffixes; i++)
         {
-            var suffix = SpanUtilities.ReadPascalString(data[offset..]);
-            offset += 1 + suffix.Length;
+            var suffix = SpanUtilities.ReadPascalString(data[offset..], out var suffixBytesRead);
+            offset += suffixBytesRead;
             suffixes.Add(suffix);
         }
 

@@ -80,8 +80,8 @@ public readonly struct HelpWindowComponent
                 throw new ArgumentException("Data is too short for the specified string length.", nameof(data));
             }
 
-            WindowTitleString = SpanUtilities.ReadPascalString(data.Slice(offset, 1 + LengthOfComparisonStringOrWindowKind));
-            offset += 1 + WindowTitleString.Length;
+            WindowTitleString = SpanUtilities.ReadPascalString(data.Slice(offset, 1 + LengthOfComparisonStringOrWindowKind), out var windowTitleStringBytesRead);
+            offset += windowTitleStringBytesRead;
         }
         else
         {

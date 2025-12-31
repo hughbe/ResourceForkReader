@@ -69,8 +69,8 @@ public readonly struct KeyMapException
         Xor = (flags & 0b1000_0000) != 0;
         ADBOpCode = (byte)(flags & 0b0000_1111);
 
-        ADBArgument = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + ADBArgument.Length;
+        ADBArgument = SpanUtilities.ReadPascalString(data.Slice(offset), out var adbArgumentBytesRead);
+        offset += adbArgumentBytesRead;
 
         bytesRead = offset;
         Debug.Assert(offset <= data.Length, "Parsed more data than is available.");

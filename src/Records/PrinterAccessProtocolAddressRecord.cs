@@ -54,14 +54,14 @@ public readonly struct PrinterAccessProtocolAddressRecord
         // Structure documented in 
         int offset = 0;
 
-        Name = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + Name.Length;
+        Name = SpanUtilities.ReadPascalString(data.Slice(offset), out var nameBytesRead);
+        offset += nameBytesRead;
         
-        Type = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + Type.Length;
+        Type = SpanUtilities.ReadPascalString(data.Slice(offset), out var typeBytesRead);
+        offset += typeBytesRead;
 
-        Zone = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + Zone.Length;
+        Zone = SpanUtilities.ReadPascalString(data.Slice(offset), out var zoneBytesRead);
+        offset += zoneBytesRead;
 
         AddressBlock = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;

@@ -34,8 +34,8 @@ public readonly struct FinderVersionRecord
         // But present in System 1.1 Finder resource fork.
         int offset = 0;
 
-        VersionString = SpanUtilities.ReadPascalString(data.Slice(offset));
-        offset += 1 + VersionString.Length;
+        VersionString = SpanUtilities.ReadPascalString(data.Slice(offset), out var versionStringBytesRead);
+        offset += versionStringBytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all data for FinderVersionRecord.");
     }

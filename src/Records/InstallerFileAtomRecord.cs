@@ -75,8 +75,8 @@ public readonly struct InstallerFileAtomRecord
         FileSize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
         
-        Description = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Description.Length;
+        Description = SpanUtilities.ReadPascalString(data[offset..], out var descriptionBytesRead);
+        offset += descriptionBytesRead;
 
         if (offset % 2 != 0)
         {

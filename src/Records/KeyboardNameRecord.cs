@@ -33,8 +33,8 @@ public readonly struct KeyboardNameRecord
 
         int offset = 0;
 
-        Name = SpanUtilities.ReadPascalString(data[offset..]);
-        offset += 1 + Name.Length;
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
+        offset += nameBytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all data for Keyboard Name Record.");
     }
