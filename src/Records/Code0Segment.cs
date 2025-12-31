@@ -9,6 +9,11 @@ namespace ResourceForkReader.Records;
 public class Code0Segment
 {
     /// <summary>
+    /// The minimum size of the CODE 0 segment header in bytes.
+    /// </summary>
+    public const int MinSize = 16;
+
+    /// <summary>
     /// Gets the size (in bytes) from the location pointed to by A5 to the upper end of the application space.
     /// </summary>
     public uint AboveA5Size { get; }
@@ -43,8 +48,11 @@ public class Code0Segment
     {
         ArgumentNullException.ThrowIfNull(stream);
 
-        Span<byte> data = stackalloc byte[16];
-        stream.ReadExactly(data);
+        Span<byte> data = stackalloc byte[MinSize];
+        if (stream.Read(data) != MinSize)
+        {
+            throw new ArgumentException($"Stream is too small to contain a valid CODE 0 segment. Minimum size is {MinSize} bytes.", nameof(stream));
+        }
 
         int offset = 0;
 
@@ -66,7 +74,15 @@ public class Code0Segment
 
         Debug.Assert(offset == 16);
 
-        if (stream.Position + JumpTableSize > stream.Length)
+        if (JumpTableOffset >= stream.Length)
+        {
+            throw new ArgumentException("Jump table offset is out of bounds.", nameof(stream));
+        }
+        if (JumpTableSize % 8 != 0)
+        {
+            throw new ArgumentException("Jump table size must be a multiple of 8 bytes.", nameof(stream));
+        }
+        if (stream.Position + JumpTableSize * 8 > stream.Length)
         {
             throw new ArgumentException("Stream is too small to contain the jump table.", nameof(stream));
         }
@@ -76,12 +92,17 @@ public class Code0Segment
         for (int i = 0; i < JumpTableSize; i += 8)
         {
             // Each jump table entry is 8 bytes.
-            stream.ReadExactly(entryData);
+            if (stream.Read(entryData) != 8)
+            {
+                throw new ArgumentException("Unable to read complete jump table entry.", nameof(stream));
+            }
 
-            ulong entry = BinaryPrimitives.ReadUInt64BigEndian(entryData);
+            var entry = BinaryPrimitives.ReadUInt64BigEndian(entryData);
             entries.Add(entry);
         }
 
         JumpTableEntries = entries;
+
+        Debug.Assert(stream.Position == stream.Length, "Did not consume all data for Code0Segment.");
     }
 }

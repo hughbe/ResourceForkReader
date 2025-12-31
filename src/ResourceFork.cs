@@ -39,20 +39,29 @@ public class ResourceFork
 
         // Read the header
         Span<byte> headerData = stackalloc byte[ResourceForkHeader.Size];
-        if (_stream.Length < ResourceForkHeader.Size)
+        if (_stream.Read(headerData) != ResourceForkHeader.Size)
         {
-            throw new ArgumentException("Stream is too small to contain a valid resource fork header.", nameof(stream));
+            throw new ArgumentException("Unable to read complete resource fork header from stream.", nameof(stream));
         }
 
-        _stream.ReadExactly(headerData);
         Header = new ResourceForkHeader(headerData);
 
         // Read the resource map
-        _stream.Seek(_baseOffset + Header.MapOffset, SeekOrigin.Begin);
+        var mapOffset = _baseOffset + Header.MapOffset;
+        if (mapOffset >= _stream.Length)
+        {
+            throw new ArgumentException("Resource fork map offset is out of bounds.", nameof(stream));
+        }
+
+        _stream.Seek(mapOffset, SeekOrigin.Begin);
         Span<byte> mapData = Header.MapLength <= 1024
             ? stackalloc byte[(int)Header.MapLength]
             : new byte[Header.MapLength];
-        _stream.ReadExactly(mapData);
+        if (_stream.Read(mapData) != Header.MapLength)
+        {
+            throw new ArgumentException("Unable to read complete resource fork map from stream.", nameof(stream));
+        }
+
         Map = new ResourceForkMap(mapData);
     }
 
@@ -80,12 +89,20 @@ public class ResourceFork
         ArgumentNullException.ThrowIfNull(outputStream);
 
         // Calculate the absolute offset of the resource data
-        long dataOffset = Header.DataOffset + entry.DataOffset;
+        long dataOffset = _baseOffset + Header.DataOffset + entry.DataOffset;
+        if (dataOffset >= _stream.Length)
+        {
+            throw new ArgumentException("Resource data offset is out of bounds.", nameof(entry));
+        }
 
         // Length of following resource data
-        _stream.Seek(_baseOffset + dataOffset, SeekOrigin.Begin);
+        _stream.Seek(dataOffset, SeekOrigin.Begin);
         Span<byte> sizeData = stackalloc byte[4];
-        _stream.ReadExactly(sizeData);
+        if (_stream.Read(sizeData) != 4)
+        {
+            throw new ArgumentException("Unable to read resource data size.", nameof(entry));
+        }
+        
         int dataSize = BinaryPrimitives.ReadInt32BigEndian(sizeData);
 
         // Read the resource data
@@ -95,8 +112,12 @@ public class ResourceFork
         int remaining = dataSize;
         while (remaining > 0)
         {
-            int toRead = Math.Min(remaining, BufferSize);
-            _stream.ReadExactly(buffer[..toRead]);
+            var toRead = Math.Min(remaining, BufferSize);
+            if (_stream.Read(buffer[..toRead]) != toRead)
+            {
+                throw new ArgumentException("Unable to read complete resource data.", nameof(entry));
+            }
+
             outputStream.Write(buffer[..toRead]);
             remaining -= toRead;
         }

@@ -757,7 +757,7 @@ public class ResourceForkTests
                     foreach (var sndResource in type.Value)
                     {
                         var sndData = fork.GetResourceData(sndResource);
-                        if (sndResource.Attributes.HasFlag(ResourceAttributeFlags.Compressed))
+                        if (sndResource.Attributes.HasFlag(ResourceAttributes.Compressed))
                         {
                             Debug.WriteLine($"  Sound {sndResource}: Compressed sound data of length {sndData.Length} bytes.");
                         }
@@ -899,7 +899,7 @@ public class ResourceForkTests
                     Debug.WriteLine("RSSC Resources:");
                     foreach (var rsscResource in type.Value)
                     {
-                        if (rsscResource.Attributes.HasFlag(ResourceAttributeFlags.Compressed))
+                        if (rsscResource.Attributes.HasFlag(ResourceAttributes.Compressed))
                         {
                             Debug.WriteLine($"  ResEdit Resource {rsscResource}: Compressed resource data, skipping.");
                         }

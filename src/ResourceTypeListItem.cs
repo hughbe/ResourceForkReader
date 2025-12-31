@@ -52,6 +52,6 @@ public struct ResourceTypeListItem
         ResourceListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
-        Debug.Assert(offset == Size);
+        Debug.Assert(offset == Size, "Did not consume all data for ResourceTypeListItem.");
     }
 }

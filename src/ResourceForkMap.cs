@@ -14,34 +14,9 @@ public struct ResourceForkMap
     public const int MinSize = 28;
 
     /// <summary>
-    /// Gets the reserved copy of the resource header.
+    /// Gets the header of the resource fork map.
     /// </summary>
-    public ResourceForkHeader Reserved1 { get; }
-
-    /// <summary>
-    /// Gets the reserved handle to the next resource map.
-    /// </summary>
-    public uint Reserved2 { get; }
-
-    /// <summary>
-    /// Gets the reserved file reference number.
-    /// </summary>
-    public ushort Reserved3 { get; }
-
-    /// <summary>
-    /// Gets the resource map attributes.
-    /// </summary>
-    public ushort Attributes { get; }
-
-    /// <summary>
-    /// Gets the offset from the beginning of the map to the resource type list.
-    /// </summary>
-    public ushort ResourceTypeListOffset { get; }
-
-    /// <summary>
-    /// Gets the offset from the beginning of the map to the resource name list.
-    /// </summary>
-    public ushort ResourceNameListOffset { get; }
+    public ResourceForkMapHeader Header { get; }
 
     /// <summary>
     /// Gets the number of resource types in the map.
@@ -67,39 +42,18 @@ public struct ResourceForkMap
 
         int offset = 0;
 
-        // Reserved for copy of resource header
-        Reserved1 = new ResourceForkHeader(data);
-        offset += ResourceForkHeader.Size;
+        Header = new ResourceForkMapHeader(data.Slice(offset, ResourceForkMapHeader.Size));
+        offset += ResourceForkMapHeader.Size;
 
-        // Reserved for handle to next resource map
-        Reserved2 = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
-        offset += 4;
+        Debug.Assert(offset == ResourceForkMapHeader.Size, "Did not consume all data for ResourceForkMap header.");
 
-        // Reserved for file reference number
-        Reserved3 = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
-        offset += 2;
-
-        // Reserved for attributes
-        Attributes = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
-        offset += 2;
-
-        // Offset from beginning of map to resource type list
-        ResourceTypeListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
-        offset += 2;
-
-        if (ResourceTypeListOffset >= data.Length)
+        // Move to the resource type list.
+        if (Header.ResourceTypeListOffset >= data.Length)
         {
             throw new ArgumentException("Resource type list offset is out of bounds.", nameof(data));
         }
 
-        // Offset from beginning of map to resource name list
-        ResourceNameListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
-        offset += 2;
-
-        Debug.Assert(offset == 28);
-
-        // Move to the resource type list.
-        offset = ResourceTypeListOffset;
+        offset = Header.ResourceTypeListOffset;
 
         // The documentation incorrectly states that this is part of the 
         // header when it is actually part of the list.
@@ -114,7 +68,12 @@ public struct ResourceForkMap
             var resourceType = new ResourceTypeListItem(data.Slice(offset, ResourceTypeListItem.Size));
             offset += ResourceTypeListItem.Size;
 
-            var resourceListOffset = ResourceTypeListOffset + resourceType.ResourceListOffset;
+            var resourceListOffset = Header.ResourceTypeListOffset + resourceType.ResourceListOffset;
+            if (resourceListOffset >= data.Length)
+            {
+                throw new ArgumentException("Resource list offset is out of bounds.", nameof(data));
+            }
+
             for (int j = 0; j < resourceType.ResourceCount + 1; j++)
             {
                 var entry = new ResourceListEntry(data.Slice(resourceListOffset, ResourceListEntry.Size));
@@ -132,5 +91,7 @@ public struct ResourceForkMap
         }
 
         Types = types;
+
+        Debug.Assert(offset <= data.Length, "Did not consume all data for ResourceForkMap.");
     }
 }

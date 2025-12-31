@@ -1,10 +1,10 @@
 namespace ResourceForkReader;
 
 /// <summary>
-/// Represents resource attributes (flags) that control resource behavior in classic Mac OS.
+/// Represents resource attributes that control resource behavior in classic Mac OS.
 /// </summary>
 [Flags]
-public enum ResourceAttributeFlags : byte
+public enum ResourceAttributes : byte
 {
     /// <summary>
     /// No attributes set.

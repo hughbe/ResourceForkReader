@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using System.Diagnostics;
+using System.Text;
 
 namespace ResourceForkReader;
 
@@ -26,7 +27,7 @@ public struct ResourceListEntry
     /// <summary>
     /// Gets the resource attributes (flags such as Protected, Locked, Purgeable, etc.).
     /// </summary>
-    public ResourceAttributeFlags Attributes { get; }
+    public ResourceAttributes Attributes { get; }
 
     /// <summary>
     /// Gets the offset from the beginning of the resource data section to this resource's data.
@@ -63,7 +64,7 @@ public struct ResourceListEntry
         // 1 byte: Resource attributes and
         // 3 bytes: Offset from beginning of resource data to data for this resource
         var attributesAndOffset = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
-        Attributes = (ResourceAttributeFlags)(attributesAndOffset >> 24);
+        Attributes = (ResourceAttributes)(attributesAndOffset >> 24);
         DataOffset = attributesAndOffset & 0x00FFFFFF;
         offset += 4;
 
@@ -71,7 +72,7 @@ public struct ResourceListEntry
         ReservedHandle = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
-        Debug.Assert(offset == Size);
+        Debug.Assert(offset == Size, "Did not consume all data for ResourceListEntry.");
     }
 
     /// <summary>
@@ -86,15 +87,21 @@ public struct ResourceListEntry
             return string.Empty;
         }
 
-        // Calculate the absolute offset of the resource name
-        long nameListOffset = fork.Header.MapOffset + fork.Map.ResourceNameListOffset;
+        // Calculate the absolute offset of the resource name.
+        long nameListOffset = fork._baseOffset
+            + fork.Header.MapOffset
+            + fork.Map.Header.ResourceNameListOffset;
         long absoluteNameOffset = nameListOffset + NameOffset;
+        if (absoluteNameOffset >= fork._stream.Length)
+        {
+            throw new ArgumentException("Resource name offset is out of bounds.", nameof(fork));
+        }
 
         // Read the name length (Pascal string format - first byte is length)
-        fork._stream.Seek(fork._baseOffset + absoluteNameOffset, SeekOrigin.Begin);
+        fork._stream.Seek(absoluteNameOffset, SeekOrigin.Begin);
         
-        int nameLength = fork._stream.ReadByte();
-        if (nameLength <= 0)
+        var nameLength = fork._stream.ReadByte();
+        if (nameLength == 0)
         {
             return string.Empty;
         }
@@ -105,6 +112,6 @@ public struct ResourceListEntry
             throw new ArgumentException("Failed to read the full resource name from the stream.", nameof(fork));
         }
         
-        return System.Text.Encoding.ASCII.GetString(nameBytes);
+        return Encoding.ASCII.GetString(nameBytes);
     }
 }

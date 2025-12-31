@@ -37,8 +37,14 @@ public struct ResourceForkHeader
     /// Initializes a new instance of the <see cref="ResourceForkHeader"/> struct by parsing binary data.
     /// </summary>
     /// <param name="data">A 16-byte span containing the resource fork header data.</param>
+    /// <exception cref="ArgumentException">Thrown when data is not exactly 16 bytes long.</exception>
     public ResourceForkHeader(ReadOnlySpan<byte> data)
     {
+        if (data.Length != Size)
+        {
+            throw new ArgumentException($"Data must be exactly {Size} bytes long.", nameof(data));
+        }
+
         int offset = 0;
 
         // Offset from beginning of resource fork to resource data.
@@ -57,6 +63,6 @@ public struct ResourceForkHeader
         MapLength = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
-        Debug.Assert(offset == Size);
+        Debug.Assert(offset == Size, "Did not consume all data for ResourceForkHeader.");
     }
 }
