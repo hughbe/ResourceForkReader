@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
@@ -15,12 +16,7 @@ public struct MiniIconListRecord
     /// <summary>
     /// Gets the icon list data.
     /// </summary>
-    public byte[] IconData { get; }
-
-    /// <summary>
-    /// Gets the mask data for the icon.
-    /// </summary>
-    public byte[] MaskData { get; }
+    public List<byte[]> Icons { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MiniIconListRecord"/> struct by parsing binary data.
@@ -36,11 +32,8 @@ public struct MiniIconListRecord
 
         int offset = 0;
 
-        IconData = data.Slice(offset, 24).ToArray();
-        offset += IconData.Length;
-
-        MaskData = data.Slice(offset, 24).ToArray();
-        offset += MaskData.Length;
+        Icons = SpanUtilities.ReadMonochromeImageList(data, 16, 12, out var bytesRead);
+        offset += bytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for IconListRecord.");
     }

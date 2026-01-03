@@ -9,7 +9,7 @@ namespace ResourceForkReader.Records;
 public readonly struct SystemVersionRecord
 {
     /// <summary>
-    /// The minimum size of a video card record in bytes.
+    /// The minimum size of a system version record in bytes.
     /// </summary>
     public const int MinSize = 1;
 
@@ -30,6 +30,13 @@ public readonly struct SystemVersionRecord
     /// <exception cref="ArgumentException">Thrown when data is too short to contain the system version record.</exception>
     public SystemVersionRecord(ReadOnlySpan<byte> data)
     {
+        // Seen cases with zero-length data.
+        if (data.Length == 0)
+        {
+            Version = null;
+            RawData = [];
+            return;
+        }
         if (data.Length < MinSize)
         {
             throw new ArgumentException($"Data must be at least {MinSize} bytes long.", nameof(data));

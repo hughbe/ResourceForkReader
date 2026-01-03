@@ -7,119 +7,135 @@ namespace ResourceForkReader.Tests;
 public class ResourceForkTests
 {
     [Theory]
-    //[InlineData("System1.1/DeskTop.res")]
-    //[InlineData("System1.1/Disk Copy.res")]
-    //[InlineData("System1.1/Finder.res")]
-    //[InlineData("System1.1/Font Mover.res")]
-    //[InlineData("System1.1/Fonts.res")]
-    //[InlineData("System1.1/Imagewriter.res")]
-    //[InlineData("System1.1/Scrapbook File.res")]
-    //[InlineData("System1.1/System.res")]
-    //[InlineData("Microsoft Excel.res")]
-    //[InlineData("ResEdit.res")]
-    //[InlineData("Read Me.res")]
-    //[InlineData("Desktop.res")]
-    //[InlineData("OneEmptyFolder_Locked.res")]
-    //[InlineData("OneEmptyFolder_Unlocked.res")]
-    //[InlineData("Testing/Desktop_NoComment.res")]
-    //[InlineData("Testing/Desktop_Comment.res")]
-    //[InlineData("Testing/Desktop_MultiComments.res")]
-    //[InlineData("System Startup/Access Privileges.res")]
-    //[InlineData("System Startup/Apple HD SC Setup.res")]
-    //[InlineData("System Startup/AppleShare.res")]
-    //[InlineData("System Startup/Backgrounder.res")]
-    //[InlineData("System Startup/Brightness.res")]
-    //[InlineData("System Startup/Clipboard File.res")]
-    //[InlineData("System Startup/Color.res")]
-    //[InlineData("System Startup/DA Handler.res")]
-    //[InlineData("System Startup/DeskTop.res")]
-    //[InlineData("System Startup/Disk First Aid.res")]
-    //[InlineData("System Startup/Easy Access.res")]
-    //[InlineData("System Startup/Finder.res")]
-    //[InlineData("System Startup/General.res")]
-    //[InlineData("System Startup/Installer Script.res")]
-    //[InlineData("System Startup/Installer.res")]
-    //[InlineData("System Startup/Key Layout.res")]
-    //[InlineData("System Startup/Keyboard.res")]
-    //[InlineData("System Startup/Map.res")]
-    //[InlineData("System Startup/Monitors.res")]
-    //[InlineData("System Startup/Mouse.res")]
-    //[InlineData("System Startup/Multifinder.res")]
-    //[InlineData("System Startup/Portable.res")]
-    //[InlineData("System Startup/Read Me.res")]
-    //[InlineData("System Startup/Scrapbook File.res")]
-    //[InlineData("System Startup/Sound.res")]
-    //[InlineData("System Startup/Startup Device.res")]
-    //[InlineData("System Startup/System.res")]
-    //[InlineData("System Startup/TeachText.res")]
-    //[InlineData("System Additions/32-Bit QuickDraw.res")]
-    //[InlineData("System Additions/Apple File Exchange.res")]
-    //[InlineData("System Additions/AppleTalk ImageWriter.res")]
-    //[InlineData("System Additions/CloseView.res")]
-    //[InlineData("System Additions/DCA-RFT_MacWrite.res")]
-    //[InlineData("System Additions/Desk Accessories.res")]
-    //[InlineData("System Additions/DeskTop.res")]
-    //[InlineData("System Additions/Font_DA Mover.res")]
-    //[InlineData("System Additions/Fonts.res")]
-    //[InlineData("System Additions/ImageWriter.res")]
-    //[InlineData("System Additions/LQ AppleTalk ImageWriter.res")]
-    //[InlineData("System Additions/LQ ImageWriter.res")]
-    //[InlineData("System Additions/Laser Prep.res")]
-    //[InlineData("System Additions/LaserWriter.res")]
-    //[InlineData("System Additions/MacroMaker Help.res")]
-    //[InlineData("System Additions/MacroMaker.res")]
-    //[InlineData("System Additions/Macros.res")]
-    //[InlineData("System Additions/Personal LaserWriter SC.res")]
-    //[InlineData("System Additions/PrintMonitor.res")]
-    //[InlineData("System Additions/Read Me for Apple Color.res")]
-    //[InlineData("System Additions/Responder.res")]
-    //[InlineData("System Additions/TeachText.res")]
-    //[InlineData("System4.1/Apple File Exchange.res")]
-    //[InlineData("System4.1/Apple HD SC Setup.res")]
-    //[InlineData("System4.1/AppleTalk ImageWriter.res")]
-    //[InlineData("System4.1/DCA-RFT_MacWrite.res")]
-    //[InlineData("System4.1/Desk Accessories.res")]
-    //[InlineData("System4.1/DeskTop.res")]
-    //[InlineData("System4.1/Disk First Aid.res")]
-    //[InlineData("System4.1/Easy Access.res")]
-    //[InlineData("System4.1/Finder.res")]
-    //[InlineData("System4.1/Font_DA Mover.res")]
-    //[InlineData("System4.1/Fonts.res")]
-    //[InlineData("System4.1/General.res")]
-    //[InlineData("System4.1/HDBackup.res")]
-    //[InlineData("System4.1/ImageWriter.res")]
-    //[InlineData("System4.1/Key Layout.res")]
-    //[InlineData("System4.1/Keyboard.res")]
-    //[InlineData("System4.1/Laser Prep.res")]
-    //[InlineData("System4.1/LaserWriter.res")]
-    //[InlineData("System4.1/Monitors.res")]
-    //[InlineData("System4.1/Mouse.res")]
-    //[InlineData("System4.1/Sound.res")]
-    //[InlineData("System4.1/Startup Device.res")]
-    //[InlineData("System4.1/System.res")]
-    //[InlineData("System4.1/TeachText.res")]
-    //[InlineData("System6/AppleTalk ImageWriter.res")]
-    //[InlineData("System6/Backgrounder.res")]
-    //[InlineData("System6/DA Handler.res")]
-    //[InlineData("System6/DeskTop.res")]
-    //[InlineData("System6/Easy Access.res")]
-    //[InlineData("System6/Finder.res")]
-    //[InlineData("System6/General.res")]
-    //[InlineData("System6/ImageWriter.res")]
-    //[InlineData("System6/Key Layout.res")]
-    //[InlineData("System6/Keyboard.res")]
-    //[InlineData("System6/LQ AppleTalk ImageWriter.res")]
-    //[InlineData("System6/LQ ImageWriter.res")]
-    //[InlineData("System6/Laser Prep.res")]
-    //[InlineData("System6/LaserWriter.res")]
-    //[InlineData("System6/Mouse.res")]
-    //[InlineData("System6/MultiFinder.res")]
-    //[InlineData("System6/Personal LaserWriter SC.res")]
-    //[InlineData("System6/PrintMonitor.res")]
-    //[InlineData("System6/Scrapbook File.res")]
-    //[InlineData("System6/Sound.res")]
-    //[InlineData("System6/StuffIt Expander Preferences.res")]
-    //[InlineData("System6/System.res")]
+    [InlineData("Microsoft Excel.res")]
+    [InlineData("ResEdit.res")]
+    [InlineData("Read Me.res")]
+    [InlineData("Desktop.res")]
+    [InlineData("OneEmptyFolder_Locked.res")]
+    [InlineData("OneEmptyFolder_Unlocked.res")]
+    [InlineData("Testing/Desktop_NoComment.res")]
+    [InlineData("Testing/Desktop_Comment.res")]
+    [InlineData("Testing/Desktop_MultiComments.res")]
+    [InlineData("System1.1/DeskTop.res")]
+    [InlineData("System1.1/Disk Copy.res")]
+    [InlineData("System1.1/Finder.res")]
+    [InlineData("System1.1/Font Mover.res")]
+    [InlineData("System1.1/Fonts.res")]
+    [InlineData("System1.1/Imagewriter.res")]
+    [InlineData("System1.1/Scrapbook File.res")]
+    [InlineData("System1.1/System.res")]
+    [InlineData("System2/128K Disk Copy.res")]
+    [InlineData("System2/Desktop.res")]
+    [InlineData("System2/Finder.res")]
+    [InlineData("System2/Font_DA Mover.res")]
+    [InlineData("System2/Fonts.res")]
+    [InlineData("System2/ImageWriter.res")]
+    [InlineData("System2/Scrapbook File.res")]
+    [InlineData("System2/System.res")]
+    [InlineData("System3.2/Desktop.res")]
+    [InlineData("System3.2/Font_DA Mover.res")]
+    [InlineData("System3.2/HD 20 Test.res")]
+    [InlineData("System3.2/System Folder/Finder.res")]
+    [InlineData("System3.2/System Folder/Hard Disk 20.res")]
+    [InlineData("System3.2/System Folder/ImageWriter.res")]
+    [InlineData("System3.2/System Folder/Scrapbook File.res")]
+    [InlineData("System3.2/System Folder/System.res")]
+    [InlineData("System Startup/Access Privileges.res")]
+    [InlineData("System Startup/Apple HD SC Setup.res")]
+    [InlineData("System Startup/AppleShare.res")]
+    [InlineData("System Startup/Backgrounder.res")]
+    [InlineData("System Startup/Brightness.res")]
+    [InlineData("System Startup/Clipboard File.res")]
+    [InlineData("System Startup/Color.res")]
+    [InlineData("System Startup/DA Handler.res")]
+    [InlineData("System Startup/DeskTop.res")]
+    [InlineData("System Startup/Disk First Aid.res")]
+    [InlineData("System Startup/Easy Access.res")]
+    [InlineData("System Startup/Finder.res")]
+    [InlineData("System Startup/General.res")]
+    [InlineData("System Startup/Installer Script.res")]
+    [InlineData("System Startup/Installer.res")]
+    [InlineData("System Startup/Key Layout.res")]
+    [InlineData("System Startup/Keyboard.res")]
+    [InlineData("System Startup/Map.res")]
+    [InlineData("System Startup/Monitors.res")]
+    [InlineData("System Startup/Mouse.res")]
+    [InlineData("System Startup/Multifinder.res")]
+    [InlineData("System Startup/Portable.res")]
+    [InlineData("System Startup/Read Me.res")]
+    [InlineData("System Startup/Scrapbook File.res")]
+    [InlineData("System Startup/Sound.res")]
+    [InlineData("System Startup/Startup Device.res")]
+    [InlineData("System Startup/System.res")]
+    [InlineData("System Startup/TeachText.res")]
+    [InlineData("System Additions/32-Bit QuickDraw.res")]
+    [InlineData("System Additions/Apple File Exchange.res")]
+    [InlineData("System Additions/AppleTalk ImageWriter.res")]
+    [InlineData("System Additions/CloseView.res")]
+    [InlineData("System Additions/DCA-RFT_MacWrite.res")]
+    [InlineData("System Additions/Desk Accessories.res")]
+    [InlineData("System Additions/DeskTop.res")]
+    [InlineData("System Additions/Font_DA Mover.res")]
+    [InlineData("System Additions/Fonts.res")]
+    [InlineData("System Additions/ImageWriter.res")]
+    [InlineData("System Additions/LQ AppleTalk ImageWriter.res")]
+    [InlineData("System Additions/LQ ImageWriter.res")]
+    [InlineData("System Additions/Laser Prep.res")]
+    [InlineData("System Additions/LaserWriter.res")]
+    [InlineData("System Additions/MacroMaker Help.res")]
+    [InlineData("System Additions/MacroMaker.res")]
+    [InlineData("System Additions/Macros.res")]
+    [InlineData("System Additions/Personal LaserWriter SC.res")]
+    [InlineData("System Additions/PrintMonitor.res")]
+    [InlineData("System Additions/Read Me for Apple Color.res")]
+    [InlineData("System Additions/Responder.res")]
+    [InlineData("System Additions/TeachText.res")]
+    [InlineData("System4.1/Apple File Exchange.res")]
+    [InlineData("System4.1/Apple HD SC Setup.res")]
+    [InlineData("System4.1/AppleTalk ImageWriter.res")]
+    [InlineData("System4.1/DCA-RFT_MacWrite.res")]
+    [InlineData("System4.1/Desk Accessories.res")]
+    [InlineData("System4.1/DeskTop.res")]
+    [InlineData("System4.1/Disk First Aid.res")]
+    [InlineData("System4.1/Easy Access.res")]
+    [InlineData("System4.1/Finder.res")]
+    [InlineData("System4.1/Font_DA Mover.res")]
+    [InlineData("System4.1/Fonts.res")]
+    [InlineData("System4.1/General.res")]
+    [InlineData("System4.1/HDBackup.res")]
+    [InlineData("System4.1/ImageWriter.res")]
+    [InlineData("System4.1/Key Layout.res")]
+    [InlineData("System4.1/Keyboard.res")]
+    [InlineData("System4.1/Laser Prep.res")]
+    [InlineData("System4.1/LaserWriter.res")]
+    [InlineData("System4.1/Monitors.res")]
+    [InlineData("System4.1/Mouse.res")]
+    [InlineData("System4.1/Sound.res")]
+    [InlineData("System4.1/Startup Device.res")]
+    [InlineData("System4.1/System.res")]
+    [InlineData("System4.1/TeachText.res")]
+    [InlineData("System6/AppleTalk ImageWriter.res")]
+    [InlineData("System6/Backgrounder.res")]
+    [InlineData("System6/DA Handler.res")]
+    [InlineData("System6/DeskTop.res")]
+    [InlineData("System6/Easy Access.res")]
+    [InlineData("System6/Finder.res")]
+    [InlineData("System6/General.res")]
+    [InlineData("System6/ImageWriter.res")]
+    [InlineData("System6/Key Layout.res")]
+    [InlineData("System6/Keyboard.res")]
+    [InlineData("System6/LQ AppleTalk ImageWriter.res")]
+    [InlineData("System6/LQ ImageWriter.res")]
+    [InlineData("System6/Laser Prep.res")]
+    [InlineData("System6/LaserWriter.res")]
+    [InlineData("System6/Mouse.res")]
+    [InlineData("System6/MultiFinder.res")]
+    [InlineData("System6/Personal LaserWriter SC.res")]
+    [InlineData("System6/PrintMonitor.res")]
+    [InlineData("System6/Scrapbook File.res")]
+    [InlineData("System6/Sound.res")]
+    [InlineData("System6/StuffIt Expander Preferences.res")]
+    [InlineData("System6/System.res")]
     [InlineData("System7/About System 7.5.5 Update.res")]
     [InlineData("System7/About System 7.5.res")]
     [InlineData("System7/Desktop.res")]
@@ -462,15 +478,25 @@ public class ResourceForkTests
                     }
                     break;
 
-                case ResourceForkType.Version1:
-                case ResourceForkType.Version2:
-                    Debug.WriteLine("VERS Resources:");
+                case ResourceForkType.Version:
+                    Debug.WriteLine("vers Resources:");
                     foreach (var versResource in type.Value)
                     {
                         var versData = fork.GetResourceData(versResource);
                         var versionRecord = new VersionRecord(versData);
                         Debug.WriteLine($"  Version {versResource}: {versionRecord.Major}.{versionRecord.Minor}");
                     }
+                    break;
+
+                case ResourceForkType.VersionString:
+                    Debug.WriteLine("VERS Resources:");
+                    foreach (var versStringResource in type.Value)
+                    {
+                        var versStringData = fork.GetResourceData(versStringResource);
+                        var versionStringRecord = new VersionStringRecord(versStringData);
+                        Debug.WriteLine($"  Version String {versStringResource}: Major={versionStringRecord.Major}, Minor={versionStringRecord.Minor}");
+                    }
+
                     break;
 
                 case ResourceForkType.FileReference:
@@ -587,7 +613,11 @@ public class ResourceForkTests
 
                         var iconListData = fork.GetResourceData(iconListResource);
                         var iconListRecord = new IconListRecord(iconListData);
-                        Debug.WriteLine($"  IconList {iconListResource}: IconData Length={iconListRecord.IconData.Length}, MaskData Length={iconListRecord.MaskData.Length}");
+                        Debug.WriteLine($"  Icon List {iconListResource}: IconCount={iconListRecord.Icons.Count}");
+                        foreach (var icon in iconListRecord.Icons)
+                        {
+                            Debug.WriteLine($"    Icon: Data Length={icon.Length}");
+                        }
                     }
 
                     break;
@@ -1026,7 +1056,11 @@ public class ResourceForkTests
 
                         var iclData = fork.GetResourceData(iclResource);
                         var smallIconListRecord = new SmallIconListRecord(iclData);
-                        Debug.WriteLine($"  Small Icon List {iclResource}: IconData Length={smallIconListRecord.IconData.Length}, MaskData Length={smallIconListRecord.MaskData.Length}");
+                        Debug.WriteLine($"  Small Icon List {iclResource}: IconCount={smallIconListRecord.Icons.Count}");
+                        foreach (var icon in smallIconListRecord.Icons)
+                        {
+                            Debug.WriteLine($"    Icon: Data Length={icon.Length}");
+                        }
                     }
 
                     break;
@@ -1506,7 +1540,8 @@ public class ResourceForkTests
 
                     break;
 
-                case ResourceForkType.CacheTable:
+                case ResourceForkType.CacheTable1:
+                case ResourceForkType.CacheTable2:
                     Debug.WriteLine("CTAB Resources:");
                     foreach (var ctabResource in type.Value)
                     {
@@ -1834,7 +1869,8 @@ public class ResourceForkTests
 
                     break;
 
-                case ResourceForkType.Bitmap:
+                case ResourceForkType.Bitmap1:
+                case ResourceForkType.Bitmap2:
                     Debug.WriteLine("BMAP Resources:");
                     foreach (var bmapResource in type.Value)
                     {
@@ -1913,7 +1949,12 @@ public class ResourceForkTests
                     {
                         var icmData = fork.GetResourceData(icmResource);
                         var miniIconListRecord = new MiniIconListRecord(icmData);
-                        Debug.WriteLine($"  Mini Icon List {icmResource}: IconData Length={miniIconListRecord.IconData.Length} bytes, MaskData Length={miniIconListRecord.MaskData.Length} bytes");
+                        Debug.WriteLine($"  Mini Icon List {icmResource}: Icons Count={miniIconListRecord.Icons.Count}");
+                        for (int i = 0; i < miniIconListRecord.Icons.Count; i++)
+                        {
+                            var icon = miniIconListRecord.Icons[i];
+                            Debug.WriteLine($"    Icon {i}: Data Length={icon.Length} bytes");
+                        }
                     }
 
                     break;
@@ -1946,7 +1987,12 @@ public class ResourceForkTests
                     {
                         var kcsData = fork.GetResourceData(kcsResource);
                         var keyboardColorIconListRecord = new KeyboardColorIconListRecord(kcsData);
-                        Debug.WriteLine($"  Keyboard Color Icon List {kcsResource}: IconData Length={keyboardColorIconListRecord.IconData.Length} bytes, MaskData Length={keyboardColorIconListRecord.MaskData.Length} bytes");
+                        Debug.WriteLine($"  Keyboard Color Icon List {kcsResource}: Icons Count={keyboardColorIconListRecord.Icons.Count}");
+                        for (int i = 0; i < keyboardColorIconListRecord.Icons.Count; i++)
+                        {
+                            var icon = keyboardColorIconListRecord.Icons[i];
+                            Debug.WriteLine($"    Icon {i}: Data Length={icon.Length} bytes");
+                        }
                     }
 
                     break;
@@ -1984,7 +2030,7 @@ public class ResourceForkTests
 
                     break;
 
-                case ResourceForkType.TitleList:
+                case ResourceForkType.TitleList2:
                     Debug.WriteLine("Tlst Resources:");
                     foreach (var tlstResource in type.Value)
                     {
@@ -2082,6 +2128,22 @@ public class ResourceForkTests
                         {
                             var table = outlineFontRecord.FontDirectory.Tables[i];
                             Debug.WriteLine($"    Font Table {i}: TagName=\"{table.TagName}\", Checksum={table.Checksum}, Offset={table.Offset}, Length={table.Length}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.ApplicationList:
+                    Debug.WriteLine("APPL Resources:");
+                    foreach (var applResource in type.Value)
+                    {
+                        var applData = fork.GetResourceData(applResource);
+                        var applicationListRecord = new ApplicationListRecord(applData);
+                        Debug.WriteLine($"  Application List Record {applResource}: Applications Count={applicationListRecord.Entries.Count}");
+                        for (int i = 0; i < applicationListRecord.Entries.Count; i++)
+                        {
+                            var entry = applicationListRecord.Entries[i];
+                            Debug.WriteLine($"    Application Entry {i}: Creator=\"{entry.Creator}\", DirectoryID={entry.DirectoryID}, Application=\"{entry.Application}\"");
                         }
                     }
 
@@ -2548,6 +2610,10 @@ public class ResourceForkTests
                 case "WITL": // "System7/Apple Extras/AppleScript?/Script Editor.res"
                 case "hVew": // "System7/Apple Extras/AppleScript?/Script Editor.res"
                 case "time": // "System7/System Folder/Control Panels/Date & Time.res"
+                case "ZSYS": // "System3.2/HD 20 Test.res"
+                case "HDTS": // "System3.2/HD 20 Test.res"
+                case ResourceForkType.ConstantsList: // "System3.2/System Folder/System.res"
+                case ResourceForkType.TitleList1: // "System3.2/System Folder/System.res"
                     // Unknown.
                     break;
 

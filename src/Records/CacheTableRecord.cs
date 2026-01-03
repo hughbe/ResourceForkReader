@@ -1,3 +1,4 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
 
 namespace ResourceForkReader.Records;
@@ -19,11 +20,6 @@ public readonly struct CacheTableRecord
     /// <exception cref="ArgumentException">Thrown when data size is not a multiple of Cache Table Entry size.</exception>
     public CacheTableRecord(ReadOnlySpan<byte> data)
     {
-        if (data.Length % CacheTableEntry.Size != 0)
-        {
-            throw new ArgumentException($"Data size is not a multiple of Cache Table Entry size ({CacheTableEntry.Size} bytes).", nameof(data));
-        }
-
         // Structure not documented but easy to reverse engineer.
         // Series of Cache Table Entries.
         int offset = 0;
@@ -38,6 +34,15 @@ public readonly struct CacheTableRecord
 
         Entries = entries;
 
-        Debug.Assert(offset == data.Length, "Did not consume all bytes for Cache Table Record.");
+        // Seen cases with incomplete last entry.
+        if (offset == data.Length - 2)
+        {
+            Span<byte> incompleteEntryData = stackalloc byte[CacheTableEntry.Size];
+            data.Slice(offset, 2).CopyTo(incompleteEntryData);
+            entries.Add(new CacheTableEntry(incompleteEntryData));
+            offset += 2;
+        }
+
+        Debug.Assert(offset <= data.Length, "Did not consume all bytes for Cache Table Record.");
     }   
 }

@@ -4,7 +4,7 @@ using ResourceForkReader.Utilities;
 namespace ResourceForkReader.Records;
 
 /// <summary>
-/// Represents a Pascal-style string resource with a length prefix.
+/// Represents a string record ('STR ') in a resource fork.
 /// </summary>
 public readonly struct StringRecord
 {
@@ -12,6 +12,11 @@ public readonly struct StringRecord
     /// Gets the string value.
     /// </summary>
     public string Value { get; }
+
+    /// <summary>
+    /// Gets the remaining data after the string.
+    /// </summary>
+    public byte[] RemainingData { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StringRecord"/> struct by parsing binary data.
@@ -27,7 +32,9 @@ public readonly struct StringRecord
 
         // Seen cases where string length is odd, followed by a padding byte.
         // Or there are additional zero bytes after the string.
-        Debug.Assert(offset == data.Length || offset + 1 == data.Length || (offset < data.Length && data[offset] == 0));
+        RemainingData = data.Slice(offset).ToArray();
+        offset += RemainingData.Length;
 
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for StringRecord.");
     }
 }

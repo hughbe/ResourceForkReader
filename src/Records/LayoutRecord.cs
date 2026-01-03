@@ -9,6 +9,11 @@ namespace ResourceForkReader.Records;
 public readonly struct LayoutRecord
 {
     /// <summary>
+    /// The size in bytes of an extra small LayoutRecord.
+    /// </summary>
+    public const int SizeExtraSmall = 56;
+
+    /// <summary>
     /// The size in bytes of a small LayoutRecord.
     /// </summary>
     public const int SizeSmall = 62;
@@ -190,7 +195,7 @@ public readonly struct LayoutRecord
     /// <exception cref="ArgumentException">Thrown when <paramref name="data"/> is not the correct size.</exception>
     public LayoutRecord(Span<byte> data)
     {
-        if (data.Length != Size && data.Length != SizeSmall)
+        if (data.Length != Size && data.Length != SizeSmall && data.Length != SizeExtraSmall)
         {
             throw new ArgumentException($"Data must be at least {Size} bytes.", nameof(data));
         }
@@ -282,6 +287,17 @@ public readonly struct LayoutRecord
         IconTextGap = data[offset];
         offset += 1;
 
+        if (data.Length == SizeExtraSmall)
+        {
+            // Set default values for fields not present in the extra small layout record.
+            SortStyle = 0;
+            WatchThreshold = 0;
+            Flags2 = 0;
+            ColorStyle = 0;
+            MaximumNumberOfWindows = 0;
+            return;
+        }
+
         SortStyle = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
@@ -307,99 +323,5 @@ public readonly struct LayoutRecord
         offset += 2;
 
         Debug.Assert(offset == data.Length, "Did not read all data for LayoutRecord.");
-    }
-
-    /// <summary>
-    /// Flags for the LayoutRecord.
-    /// </summary>
-    [Flags]
-    public enum LayoutRecordFlags1 : byte
-    {
-        /// <summary>
-        /// Indicates whether zoom rectangles are used.
-        /// </summary>
-        UseZoomRectangles = 1 << 7,
-
-        /// <summary>
-        /// Indicates whether to skip trash warning.
-        /// </summary>
-        SkipTrashWarning = 1 << 6,
-
-        /// <summary>
-        /// Indicates whether grid drags are always enabled.
-        /// </summary>
-        AlwaysGridDrags = 1 << 5,
-
-        /// <summary>
-        /// Unused flag 4.
-        /// </summary>
-        Unused4 = 1 << 4,
-
-        /// <summary>
-        /// Unused flag 3.
-        /// </summary>
-        Unused3 = 1 << 3,
-
-        /// <summary>
-        /// Unused flag 2.
-        /// </summary>
-        Unused2 = 1 << 2,
-
-        /// <summary>
-        /// Unused flag 1.
-        /// </summary>
-        Unused1 = 1 << 1,
-
-        /// <summary>
-        /// Unused flag 0.
-        /// </summary>
-        Unused0 = 1 << 0,
-    }
-    
-    /// <summary>
-    /// Flags2 for the LayoutRecord.
-    /// </summary>
-    [Flags]
-    public enum LayoutRecordFlags2 : byte
-    {
-        /// <summary>
-        /// Unused flag 7.
-        /// </summary>
-        Unused7 = 1 << 7,
-
-        /// <summary>
-        /// Unused flag 6.
-        /// </summary>
-        Unused6 = 1 << 6,
-
-        /// <summary>
-        /// Unused flag 5.
-        /// </summary>
-        Unused5 = 1 << 5,
-
-        /// <summary>
-        /// Unused flag 4.
-        /// </summary>
-        Unused4 = 1 << 4,
-
-        /// <summary>
-        /// Indicates whether to use physical icons.
-        /// </summary>
-        UsePhysicalIcon = 1 << 3,
-
-        /// <summary>
-        /// Indicates whether the title is clickable.
-        /// </summary>
-        TitleClickable = 1 << 2,
-
-        /// <summary>
-        /// Indicates whether to copy on inherit.
-        /// </summary>
-        CopyInherit = 1 << 1,
-
-        /// <summary>
-        /// Indicates whether to new fold inherit.
-        /// </summary>
-        NewFoldInherit = 1 << 0,
     }
 }

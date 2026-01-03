@@ -24,6 +24,11 @@ public static class ResourceForkType
     /// The 'ADBS' resource type for ADB drivers.
     /// </summary>
     public const string AppleDesktopBusServiceRoutine = "ADBS";
+
+    /// <summary>
+    /// The 'APPL' resource type for applications.
+    /// </summary>
+    public const string ApplicationList = "APPL";
     
     /// <summary>
     /// The 'acur' resource type for animated cursors.
@@ -43,7 +48,12 @@ public static class ResourceForkType
     /// <summary>
     /// The 'BMAP' resource type for bitmaps.
     /// </summary>
-    public const string Bitmap = "BMAP";
+    public const string Bitmap1 = "BMAP";
+
+    /// <summary>
+    /// The 'bmap' resource type for bitmaps.
+    /// </summary>
+    public const string Bitmap2 = "bmap";
 
     /// <summary>
     /// The 'boot' resource type for boot resources.
@@ -63,7 +73,12 @@ public static class ResourceForkType
     /// <summary>
     /// The 'CTAB' resource type for cache tables.
     /// </summary>
-    public const string CacheTable = "CTAB";
+    public const string CacheTable1 = "CTAB";
+
+    /// <summary>
+    /// The 'ctab' resource type for cache tables.
+    /// </summary>
+    public const string CacheTable2 = "ctab";
 
     /// <summary>
     /// The 'clst' resource type for cached icon lists.
@@ -154,6 +169,11 @@ public static class ResourceForkType
     /// The 'thn#' resource type for component lists.
     /// </summary>
     public const string ComponentList = "thn#";
+
+    /// <summary>
+    /// The 'ncts' resource type for constants list.
+    /// </summary>
+    public const string ConstantsList = "ncts";
 
     /// <summary>
     /// The 'CNTL' resource type for controls.
@@ -905,9 +925,14 @@ public static class ResourceForkType
     public const string TextStyle = "TxSt";
 
     /// <summary>
+    /// The 'tlst' resource type for title list resources.
+    /// </summary>
+    public const string TitleList1 = "tlst";
+
+    /// <summary>
     /// The 'Tlst' resource type for title list resources.
     /// </summary>
-    public const string TitleList = "Tlst";
+    public const string TitleList2 = "Tlst";
 
     /// <summary>
     /// The 'itl4' resource type for international tokenize resources.
@@ -920,14 +945,14 @@ public static class ResourceForkType
     public const string vdig = "vdig";
 
     /// <summary>
-    /// The 'VERS' resource type for version resources.
-    /// </summary>
-    public const string Version1 = "VERS";
-
-    /// <summary>
     /// The 'vers' resource type for version resources.
     /// </summary>
-    public const string Version2 = "vers";
+    public const string Version = "vers";
+
+    /// <summary>
+    /// The 'VERS' resource type for version string resources.
+    /// </summary>
+    public const string VersionString = "VERS";
 
     /// <summary>
     /// The 'card' resource type for video card resources.

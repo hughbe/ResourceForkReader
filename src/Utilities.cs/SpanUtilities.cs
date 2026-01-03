@@ -87,4 +87,37 @@ internal static class SpanUtilities
         var epoch = new DateTime(1904, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         return epoch.AddSeconds(timestamp);
     }
+
+    /// <summary>
+    /// Reads a list of monochrome images from the given span.
+    /// </summary>
+    /// <param name="data">The span containing the image data.</param>
+    /// <param name="width">The width of each image in pixels.</param>
+    /// <param name="height">The height of each image in pixels.</param>
+    /// <param name="bytesRead">Outputs the total number of bytes read from the span.</param>
+    /// <returns>>A list of byte arrays, each representing a monochrome image.</returns>
+    /// <exception cref="ArgumentException">Thrown when the width is not a multiple of 8.</exception>
+    public static List<byte[]> ReadMonochromeImageList(ReadOnlySpan<byte> data, int width, int height, out int bytesRead)
+    {
+        if (width % 8 != 0)
+        {
+            throw new ArgumentException("Width must be a multiple of 8 for monochrome images.", nameof(width));
+        }
+
+        int imageSize = (width + 7) / 8 * height;
+        var numberOfImages = data.Length / imageSize;
+
+        var images = new List<byte[]>(numberOfImages);
+        int offset = 0;
+
+        for (int i = 0; i < numberOfImages; i++)
+        {
+            var imageData = data.Slice(offset, imageSize).ToArray();
+            images.Add(imageData);
+            offset += imageSize;
+        }
+
+        bytesRead = offset;
+        return images;
+    }
 }

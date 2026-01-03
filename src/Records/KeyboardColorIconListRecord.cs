@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
@@ -13,14 +14,9 @@ public struct KeyboardColorIconListRecord
     public const int Size = 64;
 
     /// <summary>
-    /// Gets the icon list data.
+    /// Gets the icon data.
     /// </summary>
-    public byte[] IconData { get; }
-
-    /// <summary>
-    /// Gets the mask data for the icon.
-    /// </summary>
-    public byte[] MaskData { get; }
+    public List<byte[]> Icons { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="KeyboardColorIconListRecord"/> struct by parsing binary data.
@@ -36,11 +32,8 @@ public struct KeyboardColorIconListRecord
 
         int offset = 0;
 
-        IconData = data.Slice(offset, 32).ToArray();
-        offset += IconData.Length;
-
-        MaskData = data.Slice(offset, 32).ToArray();
-        offset += MaskData.Length;
+        Icons = SpanUtilities.ReadMonochromeImageList(data, 16, 16, out int bytesRead);
+        offset += bytesRead;
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for IconListRecord.");
     }
