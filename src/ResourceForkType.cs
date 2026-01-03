@@ -865,6 +865,11 @@ public static class ResourceForkType
     public const string String = "STR ";
 
     /// <summary>
+    /// The 'WSTR' resource type for string word count resources.
+    /// </summary>
+    public const string StringWordCount = "WSTR";
+
+    /// <summary>
     /// The 'STR#' resource type for string list resources.
     /// </summary>
     public const string StringList = "STR#";
@@ -938,6 +943,11 @@ public static class ResourceForkType
     /// The 'itl4' resource type for international tokenize resources.
     /// </summary>
     public const string Tokens = "itl4";
+
+    /// <summary>
+    /// The 'TYP#' resource type for type list resources.
+    /// </summary>
+    public const string TypeList = "TYP#";
 
     /// <summary>
     /// The 'vdig' resource type for vdig resources.

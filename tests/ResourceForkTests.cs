@@ -40,6 +40,75 @@ public class ResourceForkTests
     [InlineData("System3.2/System Folder/ImageWriter.res")]
     [InlineData("System3.2/System Folder/Scrapbook File.res")]
     [InlineData("System3.2/System Folder/System.res")]
+    [InlineData("System5/Desktop.res")]
+    [InlineData("System5/System Tools 1/TeachText.res")]
+    [InlineData("System5/System Tools 1/System Folder/Color.res")]
+    [InlineData("System5/System Tools 1/System Folder/DA?Handler.res")]
+    [InlineData("System5/System Tools 1/System Folder/Easy Access.res")]
+    [InlineData("System5/System Tools 1/System Folder/Finder.res")]
+    [InlineData("System5/System Tools 1/System Folder/General.res")]
+    [InlineData("System5/System Tools 1/System Folder/Key Layout.res")]
+    [InlineData("System5/System Tools 1/System Folder/Keyboard.res")]
+    [InlineData("System5/System Tools 1/System Folder/Monitors.res")]
+    [InlineData("System5/System Tools 1/System Folder/Mouse.res")]
+    [InlineData("System5/System Tools 1/System Folder/MultiFinder.res")]
+    [InlineData("System5/System Tools 1/System Folder/Scrapbook File.res")]
+    [InlineData("System5/System Tools 1/System Folder/Sound.res")]
+    [InlineData("System5/System Tools 1/System Folder/Startup Device.res")]
+    [InlineData("System5/System Tools 1/System Folder/System.res")]
+    [InlineData("System5/System Tools 1/Update Folder/Read Me.res")]
+    [InlineData("System5/System Tools 1/Utilities Folder/Apple HD SC Setup.res")]
+    [InlineData("System5/System Tools 1/Utilities Folder/Installer.res")]
+    [InlineData("System5/System Tools 1/Utilities Folder/Installer Scripts/Macintosh II Script.res")]
+    [InlineData("System5/System Tools 1/Utilities Folder/Installer Scripts/Macintosh Plus Script.res")]
+    [InlineData("System5/System Tools 1/Utilities Folder/Installer Scripts/Macintosh SE Script.res")]
+    [InlineData("System5/System Tools 2/Installer.res")]
+    [InlineData("System5/System Tools 2/TeachText.res")]
+    [InlineData("System5/System Tools 2/System Folder/AppleTalk ImageWriter.res")]
+    [InlineData("System5/System Tools 2/System Folder/Background Printing.res")]
+    [InlineData("System5/System Tools 2/System Folder/Backgrounder.res")]
+    [InlineData("System5/System Tools 2/System Folder/Color.res")]
+    [InlineData("System5/System Tools 2/System Folder/DA?Handler.res")]
+    [InlineData("System5/System Tools 2/System Folder/Easy Access.res")]
+    [InlineData("System5/System Tools 2/System Folder/Finder.res")]
+    [InlineData("System5/System Tools 2/System Folder/General.res")]
+    [InlineData("System5/System Tools 2/System Folder/ImageWriter.res")]
+    [InlineData("System5/System Tools 2/System Folder/Key Layout.res")]
+    [InlineData("System5/System Tools 2/System Folder/Keyboard.res")]
+    [InlineData("System5/System Tools 2/System Folder/Laser Prep.res")]
+    [InlineData("System5/System Tools 2/System Folder/LaserWriter.res")]
+    [InlineData("System5/System Tools 2/System Folder/Mouse.res")]
+    [InlineData("System5/System Tools 2/System Folder/MultiFinder.res")]
+    [InlineData("System5/System Tools 2/System Folder/PrintMonitor.res")]
+    [InlineData("System5/System Tools 2/System Folder/Scrapbook File.res")]
+    [InlineData("System5/System Tools 2/System Folder/Sound.res")]
+    [InlineData("System5/System Tools 2/System Folder/Startup Device.res")]
+    [InlineData("System5/System Tools 2/System Folder/System.res")]
+    [InlineData("System5/System Tools 2/Update Folder/Read Me.res")]
+    [InlineData("System5/Utilities 1/Apple HD SC Setup.res")]
+    [InlineData("System5/Utilities 1/Disk First Aid.res")]
+    [InlineData("System5/Utilities 1/HDBackup.res")]
+    [InlineData("System5/Utilities 1/TeachText.res")]
+    [InlineData("System5/Utilities 1/System Folder/Color.res")]
+    [InlineData("System5/Utilities 1/System Folder/DA?Handler.res")]
+    [InlineData("System5/Utilities 1/System Folder/Easy Access.res")]
+    [InlineData("System5/Utilities 1/System Folder/Finder.res")]
+    [InlineData("System5/Utilities 1/System Folder/General.res")]
+    [InlineData("System5/Utilities 1/System Folder/Key Layout.res")]
+    [InlineData("System5/Utilities 1/System Folder/Keyboard.res")]
+    [InlineData("System5/Utilities 1/System Folder/Monitors.res")]
+    [InlineData("System5/Utilities 1/System Folder/Mouse.res")]
+    [InlineData("System5/Utilities 1/System Folder/MultiFinder.res")]
+    [InlineData("System5/Utilities 1/System Folder/Scrapbook File.res")]
+    [InlineData("System5/Utilities 1/System Folder/Sound.res")]
+    [InlineData("System5/Utilities 1/System Folder/Startup Device.res")]
+    [InlineData("System5/Utilities 1/System Folder/System.res")]
+    [InlineData("System5/Utilities 1/Update Folder/Read Me.res")]
+    [InlineData("System5/Utilities 2/Apple File Exchange Folder/Apple File Exchange.res")]
+    [InlineData("System5/Utilities 2/Apple File Exchange Folder/DCA-RFT_MacWrite.res")]
+    [InlineData("System5/Utilities 2/Font_DA Mover Folder/Desk Accessories.res")]
+    [InlineData("System5/Utilities 2/Font_DA Mover Folder/Font_DA Mover.res")]
+    [InlineData("System5/Utilities 2/Font_DA Mover Folder/Fonts.res")]
     [InlineData("System Startup/Access Privileges.res")]
     [InlineData("System Startup/Apple HD SC Setup.res")]
     [InlineData("System Startup/AppleShare.res")]
@@ -2149,6 +2218,32 @@ public class ResourceForkTests
 
                     break;
 
+                case ResourceForkType.TypeList:
+                    Debug.WriteLine("TYP# Resources:");
+                    foreach (var typResource in type.Value)
+                    {
+                        var typData = fork.GetResourceData(typResource);
+                        var typeListRecord = new TypeList(typData);
+                        Debug.WriteLine($"  Type List Record {typResource}: NumberOfTypes={typeListRecord.NumberOfTypes}");
+                        for (int i = 0; i < typeListRecord.Types.Count; i++)
+                        {
+                            Debug.WriteLine($"    Type {i}: \"{typeListRecord.Types[i]}\"");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.StringWordCount:
+                    Debug.WriteLine("WSTR Resources:");
+                    foreach (var wstrResource in type.Value)
+                    {
+                        var wstrData = fork.GetResourceData(wstrResource);
+                        var stringWordCountRecord = new StringWordCountRecord(wstrData);
+                        Debug.WriteLine($"  String Word Count Record {wstrResource}: Value={stringWordCountRecord.Value}");
+                    }
+
+                    break;
+
                 case ResourceForkType.MacroMakerInformation1:
                 case ResourceForkType.MacroMakerInformation2:
                 case ResourceForkType.MacroMakerInformation3:
@@ -2614,6 +2709,7 @@ public class ResourceForkTests
                 case "HDTS": // "System3.2/HD 20 Test.res"
                 case ResourceForkType.ConstantsList: // "System3.2/System Folder/System.res"
                 case ResourceForkType.TitleList1: // "System3.2/System Folder/System.res"
+                case "uins": // "System5/Desktop.res"
                     // Unknown.
                     break;
 

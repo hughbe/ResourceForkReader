@@ -62,7 +62,7 @@ public readonly struct PostScriptRecord
             commands.Add(SpanUtilities.ReadPascalString(data[offset..], out var commandBytesRead));
             offset += commandBytesRead;
 
-            if (offset % 2 != 0)
+            if (offset < data.Length && offset % 2 != 0)
             {
                 // Align to even byte boundary
                 offset += 1;

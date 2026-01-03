@@ -9,14 +9,19 @@ namespace ResourceForkReader.Records;
 public readonly struct LayoutRecord
 {
     /// <summary>
-    /// The size in bytes of an extra small LayoutRecord.
+    /// The size in bytes of an v1 LayoutRecord.
     /// </summary>
-    public const int SizeExtraSmall = 56;
+    public const int SizeV1 = 56;
 
     /// <summary>
-    /// The size in bytes of a small LayoutRecord.
+    /// The size in bytes of a v2 LayoutRecord.
     /// </summary>
-    public const int SizeSmall = 62;
+    public const int SizeV2 = 62;
+
+    /// <summary>
+    /// The size in bytes of a v3 LayoutRecord.
+    /// </summary>
+    public const int SizeV3 = 64;
 
     /// <summary>
     /// The size in bytes of a LayoutRecord.
@@ -195,7 +200,7 @@ public readonly struct LayoutRecord
     /// <exception cref="ArgumentException">Thrown when <paramref name="data"/> is not the correct size.</exception>
     public LayoutRecord(Span<byte> data)
     {
-        if (data.Length != Size && data.Length != SizeSmall && data.Length != SizeExtraSmall)
+        if (data.Length != Size && data.Length != SizeV1 && data.Length != SizeV2 && data.Length != SizeV3)
         {
             throw new ArgumentException($"Data must be at least {Size} bytes.", nameof(data));
         }
@@ -287,9 +292,9 @@ public readonly struct LayoutRecord
         IconTextGap = data[offset];
         offset += 1;
 
-        if (data.Length == SizeExtraSmall)
+        if (data.Length == SizeV1)
         {
-            // Set default values for fields not present in the extra small layout record.
+            // Set default values for fields not present in the v1 layout record.
             SortStyle = 0;
             WatchThreshold = 0;
             Flags2 = 0;
@@ -304,9 +309,9 @@ public readonly struct LayoutRecord
         WatchThreshold = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        if (data.Length == SizeSmall)
+        if (data.Length == SizeV2)
         {
-            // Set default values for fields not present in the small layout record.
+            // Set default values for fields not present in the v2 layout record.
             Flags2 = 0;
             ColorStyle = 0;
             MaximumNumberOfWindows = 0;
@@ -318,6 +323,13 @@ public readonly struct LayoutRecord
 
         ColorStyle = data[offset];
         offset += 1;
+
+        if (data.Length == SizeV3)
+        {
+            // Set default value for field not present in the v3 layout record.
+            MaximumNumberOfWindows = 0;
+            return;
+        }
 
         MaximumNumberOfWindows = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
