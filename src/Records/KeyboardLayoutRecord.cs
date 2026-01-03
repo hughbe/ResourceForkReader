@@ -62,7 +62,7 @@ public readonly struct KeyboardLayoutRecord
         offset += 2;
 
         TableSelectionIndex = data.Slice(offset, 256).ToArray();
-        offset += 256;
+        offset += TableSelectionIndex.Length;
 
         NumberOfTables = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
@@ -72,7 +72,7 @@ public readonly struct KeyboardLayoutRecord
         {
             byte[] table = data.Slice(offset, 128).ToArray();
             characterMappingTables.Add(table);
-            offset += 128;
+            offset += table.Length;
         }
 
         CharacterMappingTables = characterMappingTables;
@@ -83,7 +83,7 @@ public readonly struct KeyboardLayoutRecord
         var deadKeyRecords = new List<DeadKeyRecord>(NumberOfDeadKeyRecords);
         for (int i = 0; i < NumberOfDeadKeyRecords; i++)
         {
-            deadKeyRecords.Add(new DeadKeyRecord(data.Slice(offset), out int bytesRead));
+            deadKeyRecords.Add(new DeadKeyRecord(data[offset..], out int bytesRead));
             offset += bytesRead;
         }
 

@@ -5,7 +5,7 @@ namespace ResourceForkReader.Records;
 /// <summary>
 /// Represents an large 4 bit icon resource ('icl4').
 /// </summary>
-public readonly struct LargeIcon4bitRecord
+public readonly struct LargeIcon4BitRecord
 {
     /// <summary>
     /// The size of an icon record in bytes.
@@ -18,11 +18,11 @@ public readonly struct LargeIcon4bitRecord
     public byte[] IconData { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LargeIcon4bitRecord"/> struct by parsing binary data.
+    /// Initializes a new instance of the <see cref="LargeIcon4BitRecord"/> struct by parsing binary data.
     /// </summary>
     /// <param name="data">A span containing exactly 512 bytes of icon data.</param>
     /// <exception cref="ArgumentException">Thrown when data is not exactly 512 bytes long.</exception>
-    public LargeIcon4bitRecord(ReadOnlySpan<byte> data)
+    public LargeIcon4BitRecord(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size)
         {
@@ -30,9 +30,10 @@ public readonly struct LargeIcon4bitRecord
         }
 
         int offset = 0;
-        IconData = data[..512].ToArray();
-        offset += 512;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for IconRecord.");
+        IconData = data.Slice(offset, 512).ToArray();
+        offset += IconData.Length;
+
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for IconRecord.");
     }
 }

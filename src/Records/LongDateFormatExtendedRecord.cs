@@ -210,7 +210,7 @@ public readonly struct LongDateFormatExtendedRecord
             var names = new List<string>(count);
             for (int i = 0; i < count; i++)
             {
-                string name = SpanUtilities.ReadPascalString(tableData.Slice(tableDataOffset), out var nameBytesRead);
+                string name = SpanUtilities.ReadPascalString(tableData[tableDataOffset..], out var nameBytesRead);
                 names.Add(name);
                 tableDataOffset += nameBytesRead;
             }

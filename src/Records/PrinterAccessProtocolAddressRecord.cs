@@ -54,19 +54,19 @@ public readonly struct PrinterAccessProtocolAddressRecord
         // Structure documented in 
         int offset = 0;
 
-        Name = SpanUtilities.ReadPascalString(data.Slice(offset), out var nameBytesRead);
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
         offset += nameBytesRead;
         
-        Type = SpanUtilities.ReadPascalString(data.Slice(offset), out var typeBytesRead);
+        Type = SpanUtilities.ReadPascalString(data[offset..], out var typeBytesRead);
         offset += typeBytesRead;
 
-        Zone = SpanUtilities.ReadPascalString(data.Slice(offset), out var zoneBytesRead);
+        Zone = SpanUtilities.ReadPascalString(data[offset..], out var zoneBytesRead);
         offset += zoneBytesRead;
 
         AddressBlock = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Data = data.Slice(offset).ToArray();
+        Data = data[offset..].ToArray();
         offset += Data.Length;
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for Printer Access Protocol Address Record.");

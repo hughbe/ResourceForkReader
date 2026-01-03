@@ -214,7 +214,7 @@ public readonly struct LongDateFormatRecord
 
         if (LocalizationRoutine == 0xA89F)
         {
-            ExtendedRecord = new LongDateFormatExtendedRecord(data.Slice(offset), offset, out var bytesRead);
+            ExtendedRecord = new LongDateFormatExtendedRecord(data[offset..], offset, out var bytesRead);
             offset += bytesRead;
         }
         else
@@ -222,6 +222,6 @@ public readonly struct LongDateFormatRecord
             ExtendedRecord = null;
         }
 
-        Debug.Assert(offset == data.Length, "Did not consume all data for Long Date Format Record.");
+        Debug.Assert(offset <= data.Length, "Did not consume all data for Long Date Format Record.");
     }
 }

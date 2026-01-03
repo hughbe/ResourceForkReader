@@ -54,6 +54,6 @@ public readonly struct WideCharArr
 
         Characters = characters;
 
-        Debug.Assert(offset == Size, "Did not consume all data for WideCharArr.");
+        Debug.Assert(offset == data.Length, "Did not consume all data for WideCharArr.");
     }
 }

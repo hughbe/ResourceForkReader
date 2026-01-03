@@ -133,13 +133,13 @@ public struct ColorCursorRecord
         // Cursor data. This field contains a 16-by-16 pixel 1-bit image to be
         // displayed when the cursor is on 1-bit or 2-bit screens. 
         CursorData = data.Slice(offset, 32).ToArray();
-        offset += 32;
+        offset += CursorData.Length;
 
         // Cursor mask. A bitmap for the cursor’s mask. QuickDraw uses the
         // mask to crop the cursor’s outline into a background color or
         // pattern. QuickDraw then draws the cursor into this shape.
         CursorMask = data.Slice(offset, 32).ToArray();
-        offset += 32;
+        offset += CursorMask.Length;
 
         // Hot spot. The cursor’s hot spot.
         HotSpotY = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));

@@ -75,7 +75,7 @@ public readonly struct City
         Reserved = BinaryPrimitives.ReadInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Name = SpanUtilities.ReadPascalString(data.Slice(offset), out var nameBytesRead);
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
         offset += nameBytesRead;
 
         bytesRead = offset;

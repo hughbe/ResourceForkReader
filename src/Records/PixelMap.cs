@@ -169,7 +169,7 @@ public readonly struct PixelMap
         Reserved = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Debug.Assert(offset == Size, "Did not read the expected number of bytes for Pixel Map.");
+        Debug.Assert(offset == data.Length, "Did not read the expected number of bytes for Pixel Map.");
     }
 
     /// <summary>

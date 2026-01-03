@@ -93,7 +93,7 @@ public readonly struct StringManipulationRecord
         int offset = 0;
 
         // Header.
-        Header = new StringManipulationResourceHeader(data.Slice(offset), out var bytesRead);
+        Header = new StringManipulationResourceHeader(data[offset..], out var bytesRead);
         offset += bytesRead;
 
         // String comparison routines (sorting hooks)

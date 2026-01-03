@@ -140,7 +140,7 @@ public readonly struct MenuRecord
         var menuItems = new List<StandardMenuItem>();
         while (data[offset] != 0)
         {
-            var menuItem = new StandardMenuItem(data[offset..], out int itemBytesRead);
+            var menuItem = new StandardMenuItem(data[offset..], out var itemBytesRead);
             offset += itemBytesRead;
             menuItems.Add(menuItem);
         }

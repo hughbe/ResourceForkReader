@@ -47,6 +47,6 @@ public readonly struct MachineRecord
         HardMask = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for MachineRecord.");
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for MachineRecord.");
     }
 }

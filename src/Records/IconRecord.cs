@@ -30,9 +30,10 @@ public readonly struct IconRecord
         }
 
         int offset = 0;
-        IconData = data[..128].ToArray();
-        offset += 128;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for IconRecord.");
+        IconData = data.Slice(offset, 128).ToArray();
+        offset += IconData.Length;
+
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for IconRecord.");
     }
 }

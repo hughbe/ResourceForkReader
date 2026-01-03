@@ -11,6 +11,11 @@ namespace ResourceForkReader.Records;
 public readonly struct FileReferenceRecord
 {
     /// <summary>
+    /// The minimum size of a File Reference Record in bytes.
+    /// </summary>
+    public const int MinSize = 7;
+
+    /// <summary>
     /// Gets the file reference type.
     /// </summary>
     public string Type { get; }
@@ -31,7 +36,7 @@ public readonly struct FileReferenceRecord
     /// <param name="data">A span containing the file reference data.</param>
     public FileReferenceRecord(ReadOnlySpan<byte> data)
     {
-        if (data.Length < 7)
+        if (data.Length < MinSize)
         {
             throw new ArgumentException("Data is too short to be a valid FileReferenceRecord.", nameof(data));
         }
@@ -44,9 +49,18 @@ public readonly struct FileReferenceRecord
         LocalIconID = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
-        offset += nameBytesRead;
+        // Seen not enough data for name.
+        var nameLength = data[offset];
+        if (offset + 1 + nameLength > data.Length)
+        {
+            Name = string.Empty;
+        }
+        else
+        {
+            Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
+            offset += nameBytesRead;
+        }
 
-        Debug.Assert(offset <= data.Length, "Parsed beyond the end of the data span.");
+        Debug.Assert(offset <= data.Length, "Did not consume all data for FileReferenceRecord.");
     }
 }

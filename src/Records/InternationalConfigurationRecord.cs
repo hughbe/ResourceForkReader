@@ -194,8 +194,8 @@ public readonly struct InternationalConfigurationRecord
 
         // An array of 32 bytes that is reserved for future use.
         Reserved = data.Slice(offset, 32).ToArray();
-        offset += 32;
+        offset += Reserved.Length;
 
-        Debug.Assert(offset == Size, "Did not parse all bytes of International Configuration Record.");
+        Debug.Assert(offset == data.Length, "Did not parse all bytes of International Configuration Record.");
     }
 }

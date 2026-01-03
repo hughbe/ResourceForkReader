@@ -1,6 +1,5 @@
 using System.Buffers.Binary;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace ResourceForkReader.Records;
@@ -310,7 +309,7 @@ public readonly struct TokensRecord
 
             // UntokenTable length is ignored as seen examples where it is
             // too short.
-            UntokenTable = new UntokenTable(data.Slice((int)UntokenTableOffset));
+            UntokenTable = new UntokenTable(data[(int)UntokenTableOffset..]);
         }
         else
         {

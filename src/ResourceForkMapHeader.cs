@@ -86,6 +86,6 @@ public struct ResourceForkMapHeader
         ResourceNameListOffset = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not consume all data for ResourceForkMapHeader.");
+        Debug.Assert(offset == data.Length, "Did not consume all data for ResourceForkMapHeader.");
     }
 }

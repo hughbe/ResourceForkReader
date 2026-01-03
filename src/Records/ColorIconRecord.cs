@@ -1,6 +1,5 @@
 using System.Buffers.Binary;
 using System.Diagnostics;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ResourceForkReader.Records;
 

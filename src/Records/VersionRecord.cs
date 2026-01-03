@@ -1,5 +1,7 @@
+using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Text;
+using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;
 
@@ -9,19 +11,44 @@ namespace ResourceForkReader.Records;
 public struct VersionRecord
 {
     /// <summary>
-    /// The size of a version record in bytes.
+    /// The minimum size of a version record in bytes.
     /// </summary>
-    public const int Size = 4;
+    public const int MinSize = 6;
 
     /// <summary>
-    /// Gets the major version string (2 characters).
+    /// Gets the major version byte.
     /// </summary>
-    public string Major { get; }
+    public byte Major { get; }
 
     /// <summary>
-    /// Gets the minor version string (2 characters).
+    /// Gets the minor version byte.
     /// </summary>
-    public string Minor { get; }
+    public byte Minor { get; }
+
+    /// <summary>
+    /// Gets the development stage byte.
+    /// </summary>
+    public byte DevelopmentStage { get; }
+
+    /// <summary>
+    /// Gets the pre-release version level byte.
+    /// </summary>
+    public byte PreReleaseVersionLevel { get; }
+
+    /// <summary>
+    /// Gets the region code.
+    /// </summary>
+    public ushort RegionCode { get; }
+
+    /// <summary>
+    /// Gets the version number as a string.
+    /// </summary>
+    public string VersionNumber { get; }
+
+    /// <summary>
+    /// Gets the version message.
+    /// </summary>
+    public string VersionMessage { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="VersionRecord"/> struct by parsing binary data.
@@ -30,18 +57,34 @@ public struct VersionRecord
     /// <exception cref="ArgumentException">Thrown when data is too short.</exception>
     public VersionRecord(ReadOnlySpan<byte> data)
     {
-        if (data.Length < Size)
+        if (data.Length < MinSize)
         {
-            throw new ArgumentException($"Data must be at least {Size} bytes long.", nameof(data));
+            throw new ArgumentException($"Data must be at least {MinSize} bytes long.", nameof(data));
         }
 
         int offset = 0;
-        Major = Encoding.ASCII.GetString(data.Slice(offset, 2));
+
+        Major = data[offset];
+        offset += 1;
+
+        Minor = data[offset];
+        offset += 1;
+
+        DevelopmentStage = data[offset];
+        offset += 1;
+
+        PreReleaseVersionLevel = data[offset];
+        offset += 1;
+
+        RegionCode = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Minor = Encoding.ASCII.GetString(data.Slice(offset, 2));
-        offset += 2;
+        VersionNumber = SpanUtilities.ReadPascalString(data[offset..], out int versionNumberLength);
+        offset += versionNumberLength;
 
-        Debug.Assert(offset == Size);
+        VersionMessage = SpanUtilities.ReadPascalString(data[offset..], out int versionMessageLength);
+        offset += versionMessageLength;
+
+        Debug.Assert(offset <= data.Length);
     }
 }

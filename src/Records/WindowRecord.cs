@@ -146,6 +146,12 @@ public readonly struct WindowRecord
         Title = SpanUtilities.ReadPascalString(data[offset..], out var titleBytesRead);
         offset += titleBytesRead;
 
+        if (offset < data.Length && offset % 2 != 0)
+        {
+            // Align to even byte boundary.
+            offset++;
+        }
+
         // An optional positioning specification that overrides the
         // window position established by the rectangle in the first
         // field. The positioning value can be one of the integers

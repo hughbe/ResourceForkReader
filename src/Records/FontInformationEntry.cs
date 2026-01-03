@@ -56,6 +56,6 @@ public readonly struct FontInformationEntry
         FontSize = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for FontInformationRecord");
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for FontInformationRecord");
     }
 }

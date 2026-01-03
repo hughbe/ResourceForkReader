@@ -164,7 +164,7 @@ public readonly struct BundleRecord
             ActualResourceID = BinaryPrimitives.ReadInt16BigEndian(data.Slice(offset, 2));
             offset += 2;
 
-            Debug.Assert(offset == Size);
+            Debug.Assert(offset == data.Length);
         }
     }
 }

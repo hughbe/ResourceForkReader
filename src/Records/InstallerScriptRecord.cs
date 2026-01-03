@@ -70,7 +70,7 @@ public readonly struct InstallerScriptRecord
         Flags = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Name = SpanUtilities.ReadPascalString(data.Slice(offset), out var nameBytesRead);
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
         offset += nameBytesRead;
 
         if (offset % 2 != 0)
@@ -79,7 +79,7 @@ public readonly struct InstallerScriptRecord
             offset++;
         }
 
-        HelpString = SpanUtilities.ReadPascalStringWordCount(data.Slice(offset), out var bytesRead);
+        HelpString = SpanUtilities.ReadPascalStringWordCount(data[offset..], out var bytesRead);
         offset += bytesRead;
 
         if (offset % 2 != 0)
@@ -94,7 +94,7 @@ public readonly struct InstallerScriptRecord
         var files = new List<InstallerScriptFile>(NumberOfFiles);
         for (int i = 0; i < NumberOfFiles; i++)
         {
-            files.Add(new InstallerScriptFile(data.Slice(offset), out var fileBytesRead));
+            files.Add(new InstallerScriptFile(data[offset..], out var fileBytesRead));
             offset += fileBytesRead;
 
             if (offset % 2 != 0)
@@ -112,7 +112,7 @@ public readonly struct InstallerScriptRecord
         var resourceFiles = new List<InstallerScriptResourceFile>(NumberOfResourceFiles);
         for (int i = 0; i < NumberOfResourceFiles; i++)
         {
-            resourceFiles.Add(new InstallerScriptResourceFile(data.Slice(offset), out var resourceFileBytesRead));
+            resourceFiles.Add(new InstallerScriptResourceFile(data[offset..], out var resourceFileBytesRead));
             offset += resourceFileBytesRead;
             
             if (offset % 2 != 0)
@@ -124,7 +124,7 @@ public readonly struct InstallerScriptRecord
 
         ResourceFiles = resourceFiles;
 
-        RemainingData = data.Slice(offset).ToArray();
+        RemainingData = data[offset..].ToArray();
         offset += RemainingData.Length;
 
         Debug.Assert(offset == data.Length, "Did not consume all data for Installer Script Record.");

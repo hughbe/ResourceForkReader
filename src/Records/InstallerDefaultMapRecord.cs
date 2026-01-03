@@ -90,7 +90,7 @@ public readonly struct InstallerDefaultMapRecord
 
         // Infonnation about the minimal hardware needed to install a specific
         // package is contained in the HW Requirements field.
-        HardwareRequirements = new InstallerDefaultMapHardwareRequirements(data.Slice(offset), out int hardwareRequirementsBytesRead);;
+        HardwareRequirements = new InstallerDefaultMapHardwareRequirements(data[offset..], out int hardwareRequirementsBytesRead);;
         offset += hardwareRequirementsBytesRead;
 
         // Some installations may be dependent on the existence of certain
@@ -99,7 +99,7 @@ public readonly struct InstallerDefaultMapRecord
         // installed on the target system. The Installer looks at the System
         // file in the blessed folder on the chosen target volume and compares
         // the following fields to the values found in the System's resource fork.
-        SoftwareRequirements = new InstallerDefaultMapSoftwareRequirements(data.Slice(offset), out int softwareRequirementsBytesRead);
+        SoftwareRequirements = new InstallerDefaultMapSoftwareRequirements(data[offset..], out int softwareRequirementsBytesRead);
         offset += softwareRequirementsBytesRead;
 
         // The Target Volume Requirements field (8 bytes) contains information
@@ -115,7 +115,7 @@ public readonly struct InstallerDefaultMapRecord
 
         // The User Description is an even-padded Pascal string that the
         // Installer displays on the "Easy Install screen".
-        UserDescription = SpanUtilities.ReadPascalString(data.Slice(offset), out var userDescriptionBytesRead);
+        UserDescription = SpanUtilities.ReadPascalString(data[offset..], out var userDescriptionBytesRead);
         offset += userDescriptionBytesRead;
 
         if (offset % 2 != 0)

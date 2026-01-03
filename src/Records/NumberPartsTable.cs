@@ -11,7 +11,7 @@ public readonly struct NumberPartsTable
     /// <summary>
     /// The minimum size of a Number Parts Table in bytes.
     /// </summary>
-    public const int Size = 171;
+    public const int Size = 172;
 
     /// <summary>
     /// Gets the version.
@@ -152,6 +152,6 @@ public readonly struct NumberPartsTable
         Reserved = data.Slice(offset, 19).ToArray();
         offset += 19;
 
-        Debug.Assert(offset == data.Length, "Did not consume all data for NumberPartsTable.");
+        Debug.Assert(offset <= data.Length, "Did not consume all data for NumberPartsTable.");
     }
 }

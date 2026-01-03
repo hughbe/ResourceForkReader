@@ -1,5 +1,3 @@
-using System.Data;
-
 namespace ResourceForkReader;
 
 /// <summary>
@@ -7,6 +5,21 @@ namespace ResourceForkReader;
 /// </summary>
 public static class ResourceForkType
 {
+    /// <summary>
+    /// The 'alis' resource type for aliases.
+    /// </summary>
+    public const string Alias = "alis";
+
+    /// <summary>
+    /// The 'AINI' resource type for Apple Installer initialization resources.
+    /// </summary>
+    public const string AINI = "AINI";
+
+    /// <summary>
+    /// The 'aplt' resource type for AppleScript applets.
+    /// </summary>
+    public const string Applet = "aplt";
+
     /// <summary>
     /// The 'ADBS' resource type for ADB drivers.
     /// </summary>
@@ -28,9 +41,19 @@ public static class ResourceForkType
     public const string AlertBox = "ALRT";
 
     /// <summary>
+    /// The 'BMAP' resource type for bitmaps.
+    /// </summary>
+    public const string Bitmap = "BMAP";
+
+    /// <summary>
     /// The 'boot' resource type for boot resources.
     /// </summary>
-    public const string Boot = "boot";
+    public const string Boot1 = "boot";
+
+    /// <summary>
+    /// The 'Boot' resource type for boot resources.
+    /// </summary>
+    public const string Boot2 = "Boot";
 
     /// <summary>
     /// The 'BNDL' resource type for bundles.
@@ -50,7 +73,22 @@ public static class ResourceForkType
     /// <summary>
     /// The 'CTY#' resource type for cities list.
     /// </summary>
-    public const string CitiesList = "CTY#";
+    public const string CitiesList1 = "CTY#";
+
+    /// <summary>
+    /// The 'cty#' resource type for cities list.
+    /// </summary>
+    public const string CitiesList2 = "cty#";
+
+    /// <summary>
+    /// The 'citt' resource type for citt resources.
+    /// </summary>
+    public const string citt = "citt";
+
+    /// <summary>
+    /// The 'cmtb' resource type for cmtb resources.
+    /// </summary>
+    public const string cmtb = "cmtb";
 
     /// <summary>
     /// The 'CODE' resource type for code resources.
@@ -61,6 +99,21 @@ public static class ResourceForkType
     /// The 'Code' resource type for code resources.
     /// </summary>
     public const string Code2 = "Code";
+
+    /// <summary>
+    /// The 'codE' resource type for code resources.
+    /// </summary>
+    public const string Code3 = "codE";
+
+    /// <summary>
+    /// The 'CODe' resource type for code resources.
+    /// </summary>
+    public const string Code4 = "CODe";
+
+    /// <summary>
+    /// The 'code' resource type for code resources.
+    /// </summary>
+    public const string Code5 = "code";
 
     /// <summary>
     /// The 'crsr' resource type for color cursors.
@@ -83,9 +136,24 @@ public static class ResourceForkType
     public const string ColorIcon = "cicn";
 
     /// <summary>
+    /// The 'cpkr' resource type for color pickers.
+    /// </summary>
+    public const string ColorPickerCode = "cpkr";
+
+    /// <summary>
     /// The 'CMDK' resource type for command keys.
     /// </summary>
     public const string CommandKeys = "CMDK";
+
+    /// <summary>
+    /// The 'thng' resource type for components.
+    /// </summary>
+    public const string Component = "thng";
+
+    /// <summary>
+    /// The 'thn#' resource type for component lists.
+    /// </summary>
+    public const string ComponentList = "thn#";
 
     /// <summary>
     /// The 'CNTL' resource type for controls.
@@ -113,6 +181,16 @@ public static class ResourceForkType
     public const string Cursor = "CURS";
 
     /// <summary>
+    /// The 'ddev' resource type for database extensions.
+    /// </summary>
+    public const string DatabaseExtension = "ddev";
+
+    /// <summary>
+    /// The 'rtt#' resource type for database result handlers.
+    /// </summary>
+    public const string DatabaseResultHandlers = "rtt#";
+
+    /// <summary>
     /// The 'DLOG' resource type for dialog boxes.
     /// </summary>
     public const string DialogBox = "DLOG";
@@ -123,9 +201,34 @@ public static class ResourceForkType
     public const string DialogColorLookupTable = "dctb";
 
     /// <summary>
+    /// The 'dimg' resource type for dimg resources.
+    /// </summary>
+    public const string dimg = "dimg";
+
+    /// <summary>
     /// The 'DRVR' resource type for drivers.
     /// </summary>
-    public const string Driver = "DRVR";
+    public const string Driver1 = "DRVR";
+
+    /// <summary>
+    /// The 'drvr' resource type for drivers.
+    /// </summary>
+    public const string Driver2 = "drvr";
+
+    /// <summary>
+    /// The 'dplt' resource type for AppleScript droplets.
+    /// </summary>
+    public const string Droplet = "dplt";
+
+    /// <summary>
+    /// The 'epch' resource type for epch resources.
+    /// </summary>
+    public const string epch = "epch";
+
+    /// <summary>
+    /// The 'errs' resource type for error strings.
+    /// </summary>
+    public const string ErrorString = "errs";
 
     /// <summary>
     /// The 'FCMT' resource type for file comments.
@@ -143,9 +246,19 @@ public static class ResourceForkType
     public const string FileReference = "FREF";
 
     /// <summary>
+    /// The 'fmap' resource type for Finder icon maps.
+    /// </summary>
+    public const string FinderIconMap = "fmap";
+
+    /// <summary>
     /// The 'FNDR' resource type for Finder version resources.
     /// </summary>
     public const string FinderVersion = "FNDR";
+
+    /// <summary>
+    /// The 'fld#' resource type for folder lists.
+    /// </summary>
+    public const string FolderList = "fld#";
 
     /// <summary>
     /// The 'FONT' resource type for fonts.
@@ -168,6 +281,11 @@ public static class ResourceForkType
     public const string FontInformation = "finf";
 
     /// <summary>
+    /// The 'resf' resource type for font lists.
+    /// </summary>
+    public const string FontList = "resf";
+
+    /// <summary>
     /// The 'FMTR' resource type for formatting code.
     /// </summary>
     public const string FormattingCode = "FMTR";
@@ -178,9 +296,24 @@ public static class ResourceForkType
     public const string FunctionKeyCode = "FKEY";
 
     /// <summary>
+    /// The 'gcko' resource type for gcko resources.
+    /// </summary>
+    public const string gcko = "gcko";
+
+    /// <summary>
     /// The 'GNRL' resource type for general resources.
     /// </summary>
     public const string General = "GNRL";
+
+    /// <summary>
+    /// The 'GDEF' resource type for Gestalt manager definitions.
+    /// </summary>
+    public const string GesaltManagerDefinition = "GDEF";
+
+    /// <summary>
+    /// The 'hrct' resource type for help rectangles.
+    /// </summary>
+    public const string HelpRectangles = "hrct";
 
     /// <summary>
     /// The 'hwin' resource type for help windows.
@@ -258,9 +391,34 @@ public static class ResourceForkType
     public const string InternationalResource = "INTL";
 
     /// <summary>
+    /// The 'NRVD' resource type for ISO 9660 volume descriptors.
+    /// </summary>
+    public const string ISO9660VolumeDescriptor = "NRVD";
+
+    /// <summary>
+    /// The 'ictb' resource type for item color tables.
+    /// </summary>
+    public const string ItemColorTable = "ictb";
+
+    /// <summary>
     /// The 'DITL' resource type for dialog or alert box item lists.
     /// </summary>
     public const string ItemList = "DITL";
+
+    /// <summary>
+    /// The 'kcs4' resource type for 4 bit keyboard color icons.
+    /// </summary>
+    public const string KeyboardColorIcon4Bit = "kcs4";
+
+    /// <summary>
+    /// The 'kcs8' resource type for 8 bit keyboard color icons.
+    /// </summary>
+    public const string KeyboardColorIcon8Bit = "kcs8";
+
+    /// <summary>
+    /// The 'kcs#' resource type for keyboard color icon lists.
+    /// </summary>
+    public const string KeyboardColorIconList = "kcs#";
 
     /// <summary>
     /// The 'KEYC' resource type for keyboard configuration.
@@ -278,6 +436,11 @@ public static class ResourceForkType
     public const string KeyMap = "KMAP";
 
     /// <summary>
+    /// The 'itlk' resource type for keyboard mappings.
+    /// </summary>
+    public const string KeyboardMappings = "itlk";
+
+    /// <summary>
     /// The 'KBDN' resource type for keyboard names.
     /// </summary>
     public const string KeyboardName = "KBDN";
@@ -293,14 +456,19 @@ public static class ResourceForkType
     public const string KeyCaps = "KCAP";
 
     /// <summary>
+    /// The 'kind' resource type for kind resources.
+    /// </summary>
+    public const string Kind = "kind";
+
+    /// <summary>
     /// The 'icl4' resource type for large 4 bit icons.
     /// </summary>
-    public const string LargeIcon4bit = "icl4";
+    public const string LargeIcon4Bit = "icl4";
 
     /// <summary>
     /// The 'icl8' resource type for large 8 bit icons.
     /// </summary>
-    public const string LargeIcon8bit = "icl8";
+    public const string LargeIcon8Bit = "icl8";
 
     /// <summary>
     /// The 'LAYO' resource type for layout resources.
@@ -316,6 +484,11 @@ public static class ResourceForkType
     /// The 'itl1' resource type for international date formatting information.
     /// </summary>
     public const string LongDateFormat = "itl1";
+
+    /// <summary>
+    /// The 'audt' resource type for Macintosh models.
+    /// </summary>
+    public const string MacintoshModels = "audt";
 
     /// <summary>
     /// The 'mach' resource type for machine records.
@@ -336,6 +509,11 @@ public static class ResourceForkType
     /// The 'minf' resource type for MacroMaker information.
     /// </summary>
     public const string MacroMakerInformation3 = "minf";
+
+    /// <summary>
+    /// The 'MPSR' resource type for Mac Programmer's Workshop shell resources.
+    /// </summary>
+    public const string MacProgrammersWorkshopShellResource = "MPSR";
 
     /// <summary>
     /// The 'mitq' resource type for make inverse table queue sizes.
@@ -368,6 +546,21 @@ public static class ResourceForkType
     public const string MenuColorTable = "mctb";
 
     /// <summary>
+    /// The 'icm4' resource type for 4 bit mini icons.
+    /// </summary>
+    public const string MiniIcon4Bit = "icm4";
+
+    /// <summary>
+    /// The 'icm8' resource type for 8 bit mini icons.
+    /// </summary>
+    public const string MiniIcon8Bit = "icm8";
+
+    /// <summary>
+    /// The 'micn' resource type for mini icons.
+    /// </summary>
+    public const string MiniIconList = "icm#";
+
+    /// <summary>
     /// The 'mntr' resource type for monitor resources.
     /// </summary>
     public const string MonitorCode = "mntr";
@@ -383,9 +576,59 @@ public static class ResourceForkType
     public const string NameBindingProtocolCode = "NBPC";
 
     /// <summary>
+    /// The 'ndlc' resource type for ndlc resources.
+    /// </summary>
+    public const string ndlc = "ndlc";
+
+    /// <summary>
+    /// The 'ndrv' resource type for ndrv resources.
+    /// </summary>
+    public const string ndrv = "ndrv";
+
+    /// <summary>
+    /// The 'nift' resource type for nift resources.
+    /// </summary>
+    public const string nift = "nift";
+
+    /// <summary>
+    /// The 'nitt' resource type for nitt resources.
+    /// </summary>
+    public const string nitt = "nitt";
+
+    /// <summary>
+    /// The 'nlib' resource type for nlib resources.
+    /// </summary>
+    public const string nlib = "nlib";
+
+    /// <summary>
+    /// The 'nsnd' resource type for nsnd resources.
+    /// </summary>
+    public const string nsnd = "nsnd";
+
+    /// <summary>
+    /// The 'nsrd' resource type for nsrd resources.
+    /// </summary>
+    public const string nsrd = "nsrd";
+
+    /// <summary>
     /// The 'itl0' resource type for international formatting information.
     /// </summary>
     public const string NumericFormatRecord = "itl0";
+
+    /// <summary>
+    /// The 'open' resource type for open resources.
+    /// </summary>
+    public const string Open = "open";
+
+    /// <summary>
+    /// The 'osax' resource type for Open Scripting Architecture extensions.
+    /// </summary>
+    public const string OpenScriptingArchitectureExtension = "osax";
+
+    /// <summary>
+    /// The 'sfnt' resource type for outline fonts.
+    /// </summary>
+    public const string OutlineFont = "sfnt";
 
     /// <summary>
     /// The 'PACK' resource type for packages.
@@ -422,9 +665,19 @@ public static class ResourceForkType
     public const string PixelPatternList = "ppt#";
 
     /// <summary>
+    /// The 'POST' resource type for PostScript resources.
+    /// </summary>
+    public const string PostScript = "POST";
+
+    /// <summary>
     /// The 'PREF' resource type for preferences.
     /// </summary>
     public const string Preferences = "PREF";
+
+    /// <summary>
+    /// The 'pref' resource type for preferences.
+    /// </summary>
+    public const string PreferencesFile = "pref";
 
     /// <summary>
     /// The 'PREC' resource type for printer private data records.
@@ -442,14 +695,14 @@ public static class ResourceForkType
     public const string PrinterDefinitionFunction = "PDEF";
 
     /// <summary>
-    /// The 'POST' resource type for PostScript resources.
-    /// </summary>
-    public const string PostScript = "POST";
-
-    /// <summary>
     /// The 'proc' resource type for procedure code.
     /// </summary>
     public const string ProcCode = "proc";
+
+    /// <summary>
+    /// The 'psap' resource type for Psap resources.
+    /// </summary>
+    public const string Psap = "psap";
 
     /// <summary>
     /// The 'CACH' resource type for RAM cache control code.
@@ -480,6 +733,11 @@ public static class ResourceForkType
     /// The 'dcmp' resource type for Res Edit Decompressor.
     /// </summary>
     public const string ResEditDecompressor = "dcmp";
+
+    /// <summary>
+    /// The 'ncmp' resource type for System Decompressor.
+    /// </summary>
+    public const string SystemDecompressor = "ncmp";
 
     /// <summary>
     /// The 'RMAP' resource type for Res Edit map resources.
@@ -532,6 +790,31 @@ public static class ResourceForkType
     public const string ROMPatchCode2 = "ptch";
 
     /// <summary>
+    /// The 'scpt' resource type for AppleScript scripts.
+    /// </summary>
+    public const string Script = "scpt";
+
+    /// <summary>
+    /// The 'sssz' resource type for AppleScript scripting addition size resources.
+    /// </summary>
+    public const string ScriptingAdditionSize = "osiz";
+
+    /// <summary>
+    /// The 'scsz' resource type for AppleScript scripting size resources.
+    /// </summary>
+    public const string ScriptingSize = "scsz";
+
+    /// <summary>
+    /// The 'scod' resource type for AppleScript scripting code.
+    /// </summary>
+    public const string ScriptCode = "scod";
+
+    /// <summary>
+    /// The 'shal' resource type for shal resources.
+    /// </summary>
+    public const string shal = "shal";
+
+    /// <summary>
     /// The 'SIZE' resource type for size resources.
     /// </summary>
     public const string Size = "SIZE";
@@ -539,12 +822,12 @@ public static class ResourceForkType
     /// <summary>
     /// The 'icl4' resource type for large 4 bit icons.
     /// </summary>
-    public const string SmallIcon4bit = "ics4";
+    public const string SmallIcon4Bit = "ics4";
 
     /// <summary>
     /// The 'icl8' resource type for large 8 bit icons.
     /// </summary>
-    public const string SmallIcon8bit = "ics8";
+    public const string SmallIcon8Bit = "ics8";
 
     /// <summary>
     /// The 'ics#' resource type for small icon lists.
@@ -572,9 +855,19 @@ public static class ResourceForkType
     public const string StringManipulation = "itl2";
 
     /// <summary>
+    /// The 'styl' resource type for style resources.
+    /// </summary>
+    public const string Style = "styl";
+
+    /// <summary>
     /// The 'snd ' resource type for sound resources.
     /// </summary>
     public const string Sound = "snd ";
+
+    /// <summary>
+    /// The 'slut' resource type for sound lookup tables.
+    /// </summary>
+    public const string SoundLookupTable = "slut";
 
     /// <summary>
     /// The 'snth' resource type for synthesizer resources.
@@ -607,9 +900,24 @@ public static class ResourceForkType
     public const string Text = "TEXT";
 
     /// <summary>
+    /// The 'TxSt' resource type for text style resources.
+    /// </summary>
+    public const string TextStyle = "TxSt";
+
+    /// <summary>
+    /// The 'Tlst' resource type for title list resources.
+    /// </summary>
+    public const string TitleList = "Tlst";
+
+    /// <summary>
     /// The 'itl4' resource type for international tokenize resources.
     /// </summary>
     public const string Tokens = "itl4";
+
+    /// <summary>
+    /// The 'vdig' resource type for vdig resources.
+    /// </summary>
+    public const string vdig = "vdig";
 
     /// <summary>
     /// The 'VERS' resource type for version resources.
@@ -640,4 +948,9 @@ public static class ResourceForkType
     /// The 'WDEF' resource type for window definition functions.
     /// </summary>
     public const string WindowDefinitionFunction = "WDEF";
+
+    /// <summary>
+    /// The 'WPos' resource type for window position resources.
+    /// </summary>
+    public const string WindowPosition = "WPos";
 }

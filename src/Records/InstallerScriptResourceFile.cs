@@ -102,7 +102,7 @@ public readonly struct InstallerScriptResourceFile
         AddSize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Name = SpanUtilities.ReadPascalString(data.Slice(offset), out var nameBytesRead);
+        Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
         offset += nameBytesRead;
 
         if (offset % 2 != 0)
@@ -117,7 +117,7 @@ public readonly struct InstallerScriptResourceFile
         var fromFiles = new List<InstallerScriptFromFile>();
         for (int i = 0; i < NumberOfFromFiles; i++)
         {
-            fromFiles.Add(new InstallerScriptFromFile(data.Slice(offset), out var fromFileBytesRead));
+            fromFiles.Add(new InstallerScriptFromFile(data[offset..], out var fromFileBytesRead));
             offset += fromFileBytesRead;
 
             if (offset % 2 != 0)

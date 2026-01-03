@@ -1,6 +1,5 @@
 using System.Buffers.Binary;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 
 namespace ResourceForkReader.Records;
 
@@ -105,7 +104,7 @@ public readonly struct AnimatedCursorRecord
             Padding = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
             offset += 2;
 
-            Debug.Assert(offset == Size, "Did not consume all bytes for AnimatedCursorFrame.");
+            Debug.Assert(offset == data.Length, "Did not consume all bytes for AnimatedCursorFrame.");
         }
     }
 }

@@ -101,6 +101,6 @@ public readonly struct PixelPattern
         MonochromePattern = BinaryPrimitives.ReadUInt64BigEndian(data.Slice(offset, 8));
         offset += 8;
 
-        Debug.Assert(offset == Size, "Did not parse the entire Pixel Pattern data.");
+        Debug.Assert(offset == data.Length, "Did not parse the entire Pixel Pattern data.");
     }
 }

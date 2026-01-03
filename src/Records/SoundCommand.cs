@@ -51,6 +51,6 @@ public readonly struct SoundCommand
         Param2 = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Debug.Assert(offset == Size, "Did not parse exactly 8 bytes for Sound Command.");
+        Debug.Assert(offset == data.Length, "Did not parse exactly 8 bytes for Sound Command.");
     }
 }

@@ -68,7 +68,7 @@ public readonly struct KeyMapRecord
         // key code (plus possibly an exception entry flag) for the raw
         // key code whose value equals that offset.
         KeyCodeMap = data.Slice(offset, 128).ToArray();
-        offset += 128;
+        offset += KeyCodeMap.Length;
 
         // Count of exception records. The number of entries in the exception array.
         NumberOfExceptions = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
@@ -79,7 +79,7 @@ public readonly struct KeyMapRecord
         var exceptions = new List<KeyMapException>(NumberOfExceptions);
         for (int i = 0; i < NumberOfExceptions; i++)
         {
-            exceptions.Add(new KeyMapException(data.Slice(offset), out var bytesRead));
+            exceptions.Add(new KeyMapException(data[offset..], out var bytesRead));
             offset += bytesRead;
         }
 

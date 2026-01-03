@@ -66,7 +66,7 @@ public readonly struct KeyCapsRecord
         var shapes = new List<KeyCapsShapeEntry>();
         for (int i = 0; i < NumberOfShapes; i++)
         {
-            shapes.Add(new KeyCapsShapeEntry(data.Slice(offset), out int bytesRead));
+            shapes.Add(new KeyCapsShapeEntry(data[offset..], out int bytesRead));
             offset += bytesRead;
         }
 

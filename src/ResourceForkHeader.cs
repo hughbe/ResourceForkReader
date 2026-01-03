@@ -63,6 +63,6 @@ public struct ResourceForkHeader
         MapLength = BinaryPrimitives.ReadUInt32BigEndian(data[offset..]);
         offset += 4;
 
-        Debug.Assert(offset == Size, "Did not consume all data for ResourceForkHeader.");
+        Debug.Assert(offset == data.Length, "Did not consume all data for ResourceForkHeader.");
     }
 }

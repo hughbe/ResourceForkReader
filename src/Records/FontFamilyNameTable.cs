@@ -58,21 +58,29 @@ public readonly struct FontFamilyNameTable
         BaseFontName = SpanUtilities.ReadPascalString(data[offset..], out var baseFontNameBytesRead);
         offset += baseFontNameBytesRead;
 
-        // Strings. A variable length array of Pascal strings, each of which
-        // contains the suffixes or numbers specifying which suffixes to put
-        // together to produce the real PostScript name. This array is
-        // represented by the strings field of the NameTable data type.
-        // This section describes the format of these strings and provides
-        // an example of using this subtable.
-        var suffixes = new List<string>(NumberOfSuffixes);
-        for (int i = 0; i < NumberOfSuffixes; i++)
+        if (offset == data.Length)
         {
-            var suffix = SpanUtilities.ReadPascalString(data[offset..], out var suffixBytesRead);
-            offset += suffixBytesRead;
-            suffixes.Add(suffix);
+            // Seen examples where there are no suffixes.
+            Suffixes = [];
         }
+        else
+        {
+            // Strings. A variable length array of Pascal strings, each of which
+            // contains the suffixes or numbers specifying which suffixes to put
+            // together to produce the real PostScript name. This array is
+            // represented by the strings field of the NameTable data type.
+            // This section describes the format of these strings and provides
+            // an example of using this subtable.
+            var suffixes = new List<string>(NumberOfSuffixes);
+            for (int i = 0; i < NumberOfSuffixes; i++)
+            {
+                var suffix = SpanUtilities.ReadPascalString(data[offset..], out var suffixBytesRead);
+                offset += suffixBytesRead;
+                suffixes.Add(suffix);
+            }
 
-        Suffixes = suffixes;
+            Suffixes = suffixes;
+        }
 
         bytesRead = offset;
         Debug.Assert(offset <= data.Length, "Read beyond the end of the data for FontFamilyNameTable");

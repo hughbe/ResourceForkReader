@@ -59,6 +59,6 @@ public struct ColorTableEntry
         Blue = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not consume all data for Color Table Entry.");
+        Debug.Assert(offset == data.Length, "Did not consume all data for Color Table Entry.");
     }
 }

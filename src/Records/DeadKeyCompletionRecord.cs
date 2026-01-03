@@ -1,4 +1,3 @@
-using System.Buffers.Binary;
 using System.Diagnostics;
 
 namespace ResourceForkReader.Records;

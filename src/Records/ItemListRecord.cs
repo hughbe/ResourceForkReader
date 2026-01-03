@@ -1,6 +1,5 @@
 using System.Buffers.Binary;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ResourceForkReader.Records;
 
@@ -40,21 +39,29 @@ public readonly struct ItemListRecord
         ItemCount = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        var items = new List<ItemListItem>(ItemCount + 1);
-        for (int i = 0; i < ItemCount + 1; i++)
+        if (ItemCount == 0xFFFF)
         {
-            // The format of each item depends on its type.
-            items.Add(new ItemListItem(data[offset..], out int itemBytesRead));
-            offset += itemBytesRead;
-
-            if (offset % 2 != 0)
-            {
-                // Each item starts on a word boundary.
-                offset += 1;
-            }
+            // An ItemCount of 0xFFFF indicates there are no items.
+            Items = [];
         }
+        else
+        {
+            var items = new List<ItemListItem>(ItemCount + 1);
+            for (int i = 0; i < ItemCount + 1; i++)
+            {
+                // The format of each item depends on its type.
+                items.Add(new ItemListItem(data[offset..], out int itemBytesRead));
+                offset += itemBytesRead;
 
-        Items = items;
+                if (offset % 2 != 0)
+                {
+                    // Each item starts on a word boundary.
+                    offset += 1;
+                }
+            }
+
+            Items = items;
+        }
 
         Debug.Assert(offset == data.Length, "Did not consume all data for ItemListRecord.");
     }

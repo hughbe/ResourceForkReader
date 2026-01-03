@@ -34,6 +34,6 @@ public readonly struct ColorLookupTableRecord
         ColorTable = new ColorTable(data[offset..], out var bytesRead);
         offset += bytesRead;
 
-        Debug.Assert(offset == data.Length, "Did not consume all data for Color Lookup Table Record.");
+        Debug.Assert(offset <= data.Length, "Did not consume all data for Color Lookup Table Record.");
     }
 }

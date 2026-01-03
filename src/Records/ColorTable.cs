@@ -66,25 +66,24 @@ public readonly struct ColorTable
         {
             // Special case indicating no entries.
             Entries = [];
-            Debug.Assert(offset == data.Length, "Did not consume all data for Color Lookup Table Record.");
-            bytesRead = offset;
-            return;
         }
-
-        // An array of color specification entries. Each entry contains a pixel value and a color specified by the values for the red, green, and blue components of the entry.
-        var entries = new List<ColorTableEntry>(NumberOfEntries + 1);
-        for (int i = 0; i < NumberOfEntries + 1; i++)
+        else
         {
-            if (data.Length < offset + ColorTableEntry.Size)
+            // An array of color specification entries. Each entry contains a pixel value and a color specified by the values for the red, green, and blue components of the entry.
+            var entries = new List<ColorTableEntry>(NumberOfEntries + 1);
+            for (int i = 0; i < NumberOfEntries + 1; i++)
             {
-                throw new ArgumentException("Data is too short to contain all color lookup table entries.", nameof(data));
+                if (data.Length < offset + ColorTableEntry.Size)
+                {
+                    throw new ArgumentException("Data is too short to contain all color lookup table entries.", nameof(data));
+                }
+
+                entries.Add(new ColorTableEntry(data.Slice(offset, ColorTableEntry.Size)));
+                offset += ColorTableEntry.Size;
             }
 
-            entries.Add(new ColorTableEntry(data.Slice(offset, ColorTableEntry.Size)));
-            offset += ColorTableEntry.Size;
+            Entries = entries;
         }
-
-        Entries = entries;
 
         bytesRead = offset;
         Debug.Assert(offset <= data.Length, "Did not consume all data for Color Lookup Table Record.");

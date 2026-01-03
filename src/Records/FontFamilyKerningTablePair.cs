@@ -51,6 +51,6 @@ public readonly struct FontFamilyKerningTablePair
         Width = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not read the expected number of bytes for FontFamilyKerningTablePair");
+        Debug.Assert(offset == data.Length, "Did not read the expected number of bytes for FontFamilyKerningTablePair");
     }
 }

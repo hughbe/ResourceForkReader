@@ -37,11 +37,11 @@ public struct IconListRecord
         int offset = 0;
 
         IconData = data.Slice(offset, 128).ToArray();
-        offset += 128;
+        offset += IconData.Length;
 
         MaskData = data.Slice(offset, 128).ToArray();
-        offset += 128;
+        offset += MaskData.Length;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for IconListRecord.");
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for IconListRecord.");
     }
 }

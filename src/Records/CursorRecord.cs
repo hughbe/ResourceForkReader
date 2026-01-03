@@ -48,10 +48,10 @@ public struct CursorRecord
         int offset = 0;
 
         ImageData = data.Slice(offset, 32).ToArray();
-        offset += 32;
+        offset += ImageData.Length;
 
         MaskData = data.Slice(offset, 32).ToArray();
-        offset += 32;
+        offset += MaskData.Length;
 
         HotspotX = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
@@ -59,6 +59,6 @@ public struct CursorRecord
         HotspotY = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for CursorRecord.");
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for CursorRecord.");
     }
 }

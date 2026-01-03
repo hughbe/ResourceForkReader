@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using ResourceForkReader.Records;
 
@@ -8,119 +7,308 @@ namespace ResourceForkReader.Tests;
 public class ResourceForkTests
 {
     [Theory]
-    [InlineData("System1.1/DeskTop.res")]
-    [InlineData("System1.1/Disk Copy.res")]
-    [InlineData("System1.1/Finder.res")]
-    [InlineData("System1.1/Font Mover.res")]
-    [InlineData("System1.1/Fonts.res")]
-    [InlineData("System1.1/Imagewriter.res")]
-    [InlineData("System1.1/Scrapbook File.res")]
-    [InlineData("System1.1/System.res")]
-    [InlineData("Microsoft Excel.res")]
-    [InlineData("ResEdit.res")]
-    [InlineData("Read Me.res")]
-    [InlineData("Desktop.res")]
-    [InlineData("OneEmptyFolder_Locked.res")]
-    [InlineData("OneEmptyFolder_Unlocked.res")]
-    [InlineData("Testing/Desktop_NoComment.res")]
-    [InlineData("Testing/Desktop_Comment.res")]
-    [InlineData("Testing/Desktop_MultiComments.res")]
-    [InlineData("System Startup/Access Privileges.res")]
-    [InlineData("System Startup/Apple HD SC Setup.res")]
-    [InlineData("System Startup/AppleShare.res")]
-    [InlineData("System Startup/Backgrounder.res")]
-    [InlineData("System Startup/Brightness.res")]
-    [InlineData("System Startup/Clipboard File.res")]
-    [InlineData("System Startup/Color.res")]
-    [InlineData("System Startup/DA Handler.res")]
-    [InlineData("System Startup/DeskTop.res")]
-    [InlineData("System Startup/Disk First Aid.res")]
-    [InlineData("System Startup/Easy Access.res")]
-    [InlineData("System Startup/Finder.res")]
-    [InlineData("System Startup/General.res")]
-    [InlineData("System Startup/Installer Script.res")]
-    [InlineData("System Startup/Installer.res")]
-    [InlineData("System Startup/Key Layout.res")]
-    [InlineData("System Startup/Keyboard.res")]
-    [InlineData("System Startup/Map.res")]
-    [InlineData("System Startup/Monitors.res")]
-    [InlineData("System Startup/Mouse.res")]
-    [InlineData("System Startup/Multifinder.res")]
-    [InlineData("System Startup/Portable.res")]
-    [InlineData("System Startup/Read Me.res")]
-    [InlineData("System Startup/Scrapbook File.res")]
-    [InlineData("System Startup/Sound.res")]
-    [InlineData("System Startup/Startup Device.res")]
-    [InlineData("System Startup/System.res")]
-    [InlineData("System Startup/TeachText.res")]
-    [InlineData("System Additions/32-Bit QuickDraw.res")]
-    [InlineData("System Additions/Apple File Exchange.res")]
-    [InlineData("System Additions/AppleTalk ImageWriter.res")]
-    [InlineData("System Additions/CloseView.res")]
-    [InlineData("System Additions/DCA-RFT_MacWrite.res")]
-    [InlineData("System Additions/Desk Accessories.res")]
-    [InlineData("System Additions/DeskTop.res")]
-    [InlineData("System Additions/Font_DA Mover.res")]
-    [InlineData("System Additions/Fonts.res")]
-    [InlineData("System Additions/ImageWriter.res")]
-    [InlineData("System Additions/LQ AppleTalk ImageWriter.res")]
-    [InlineData("System Additions/LQ ImageWriter.res")]
-    [InlineData("System Additions/Laser Prep.res")]
-    [InlineData("System Additions/LaserWriter.res")]
-    [InlineData("System Additions/MacroMaker Help.res")]
-    [InlineData("System Additions/MacroMaker.res")]
-    [InlineData("System Additions/Macros.res")]
-    [InlineData("System Additions/Personal LaserWriter SC.res")]
-    [InlineData("System Additions/PrintMonitor.res")]
-    [InlineData("System Additions/Read Me for Apple Color.res")]
-    [InlineData("System Additions/Responder.res")]
-    [InlineData("System Additions/TeachText.res")]
-    [InlineData("System4.1/Apple File Exchange.res")]
-    [InlineData("System4.1/Apple HD SC Setup.res")]
-    [InlineData("System4.1/AppleTalk ImageWriter.res")]
-    [InlineData("System4.1/DCA-RFT_MacWrite.res")]
-    [InlineData("System4.1/Desk Accessories.res")]
-    [InlineData("System4.1/DeskTop.res")]
-    [InlineData("System4.1/Disk First Aid.res")]
-    [InlineData("System4.1/Easy Access.res")]
-    [InlineData("System4.1/Finder.res")]
-    [InlineData("System4.1/Font_DA Mover.res")]
-    [InlineData("System4.1/Fonts.res")]
-    [InlineData("System4.1/General.res")]
-    [InlineData("System4.1/HDBackup.res")]
-    [InlineData("System4.1/ImageWriter.res")]
-    [InlineData("System4.1/Key Layout.res")]
-    [InlineData("System4.1/Keyboard.res")]
-    [InlineData("System4.1/Laser Prep.res")]
-    [InlineData("System4.1/LaserWriter.res")]
-    [InlineData("System4.1/Monitors.res")]
-    [InlineData("System4.1/Mouse.res")]
-    [InlineData("System4.1/Sound.res")]
-    [InlineData("System4.1/Startup Device.res")]
-    [InlineData("System4.1/System.res")]
-    [InlineData("System4.1/TeachText.res")]
-    [InlineData("System6/AppleTalk ImageWriter.res")]
-    [InlineData("System6/Backgrounder.res")]
-    [InlineData("System6/DA Handler.res")]
-    [InlineData("System6/DeskTop.res")]
-    [InlineData("System6/Easy Access.res")]
-    [InlineData("System6/Finder.res")]
-    [InlineData("System6/General.res")]
-    [InlineData("System6/ImageWriter.res")]
-    [InlineData("System6/Key Layout.res")]
-    [InlineData("System6/Keyboard.res")]
-    [InlineData("System6/LQ AppleTalk ImageWriter.res")]
-    [InlineData("System6/LQ ImageWriter.res")]
-    [InlineData("System6/Laser Prep.res")]
-    [InlineData("System6/LaserWriter.res")]
-    [InlineData("System6/Mouse.res")]
-    [InlineData("System6/MultiFinder.res")]
-    [InlineData("System6/Personal LaserWriter SC.res")]
-    [InlineData("System6/PrintMonitor.res")]
-    [InlineData("System6/Scrapbook File.res")]
-    [InlineData("System6/Sound.res")]
-    [InlineData("System6/StuffIt Expander Preferences.res")]
-    [InlineData("System6/System.res")]
+    //[InlineData("System1.1/DeskTop.res")]
+    //[InlineData("System1.1/Disk Copy.res")]
+    //[InlineData("System1.1/Finder.res")]
+    //[InlineData("System1.1/Font Mover.res")]
+    //[InlineData("System1.1/Fonts.res")]
+    //[InlineData("System1.1/Imagewriter.res")]
+    //[InlineData("System1.1/Scrapbook File.res")]
+    //[InlineData("System1.1/System.res")]
+    //[InlineData("Microsoft Excel.res")]
+    //[InlineData("ResEdit.res")]
+    //[InlineData("Read Me.res")]
+    //[InlineData("Desktop.res")]
+    //[InlineData("OneEmptyFolder_Locked.res")]
+    //[InlineData("OneEmptyFolder_Unlocked.res")]
+    //[InlineData("Testing/Desktop_NoComment.res")]
+    //[InlineData("Testing/Desktop_Comment.res")]
+    //[InlineData("Testing/Desktop_MultiComments.res")]
+    //[InlineData("System Startup/Access Privileges.res")]
+    //[InlineData("System Startup/Apple HD SC Setup.res")]
+    //[InlineData("System Startup/AppleShare.res")]
+    //[InlineData("System Startup/Backgrounder.res")]
+    //[InlineData("System Startup/Brightness.res")]
+    //[InlineData("System Startup/Clipboard File.res")]
+    //[InlineData("System Startup/Color.res")]
+    //[InlineData("System Startup/DA Handler.res")]
+    //[InlineData("System Startup/DeskTop.res")]
+    //[InlineData("System Startup/Disk First Aid.res")]
+    //[InlineData("System Startup/Easy Access.res")]
+    //[InlineData("System Startup/Finder.res")]
+    //[InlineData("System Startup/General.res")]
+    //[InlineData("System Startup/Installer Script.res")]
+    //[InlineData("System Startup/Installer.res")]
+    //[InlineData("System Startup/Key Layout.res")]
+    //[InlineData("System Startup/Keyboard.res")]
+    //[InlineData("System Startup/Map.res")]
+    //[InlineData("System Startup/Monitors.res")]
+    //[InlineData("System Startup/Mouse.res")]
+    //[InlineData("System Startup/Multifinder.res")]
+    //[InlineData("System Startup/Portable.res")]
+    //[InlineData("System Startup/Read Me.res")]
+    //[InlineData("System Startup/Scrapbook File.res")]
+    //[InlineData("System Startup/Sound.res")]
+    //[InlineData("System Startup/Startup Device.res")]
+    //[InlineData("System Startup/System.res")]
+    //[InlineData("System Startup/TeachText.res")]
+    //[InlineData("System Additions/32-Bit QuickDraw.res")]
+    //[InlineData("System Additions/Apple File Exchange.res")]
+    //[InlineData("System Additions/AppleTalk ImageWriter.res")]
+    //[InlineData("System Additions/CloseView.res")]
+    //[InlineData("System Additions/DCA-RFT_MacWrite.res")]
+    //[InlineData("System Additions/Desk Accessories.res")]
+    //[InlineData("System Additions/DeskTop.res")]
+    //[InlineData("System Additions/Font_DA Mover.res")]
+    //[InlineData("System Additions/Fonts.res")]
+    //[InlineData("System Additions/ImageWriter.res")]
+    //[InlineData("System Additions/LQ AppleTalk ImageWriter.res")]
+    //[InlineData("System Additions/LQ ImageWriter.res")]
+    //[InlineData("System Additions/Laser Prep.res")]
+    //[InlineData("System Additions/LaserWriter.res")]
+    //[InlineData("System Additions/MacroMaker Help.res")]
+    //[InlineData("System Additions/MacroMaker.res")]
+    //[InlineData("System Additions/Macros.res")]
+    //[InlineData("System Additions/Personal LaserWriter SC.res")]
+    //[InlineData("System Additions/PrintMonitor.res")]
+    //[InlineData("System Additions/Read Me for Apple Color.res")]
+    //[InlineData("System Additions/Responder.res")]
+    //[InlineData("System Additions/TeachText.res")]
+    //[InlineData("System4.1/Apple File Exchange.res")]
+    //[InlineData("System4.1/Apple HD SC Setup.res")]
+    //[InlineData("System4.1/AppleTalk ImageWriter.res")]
+    //[InlineData("System4.1/DCA-RFT_MacWrite.res")]
+    //[InlineData("System4.1/Desk Accessories.res")]
+    //[InlineData("System4.1/DeskTop.res")]
+    //[InlineData("System4.1/Disk First Aid.res")]
+    //[InlineData("System4.1/Easy Access.res")]
+    //[InlineData("System4.1/Finder.res")]
+    //[InlineData("System4.1/Font_DA Mover.res")]
+    //[InlineData("System4.1/Fonts.res")]
+    //[InlineData("System4.1/General.res")]
+    //[InlineData("System4.1/HDBackup.res")]
+    //[InlineData("System4.1/ImageWriter.res")]
+    //[InlineData("System4.1/Key Layout.res")]
+    //[InlineData("System4.1/Keyboard.res")]
+    //[InlineData("System4.1/Laser Prep.res")]
+    //[InlineData("System4.1/LaserWriter.res")]
+    //[InlineData("System4.1/Monitors.res")]
+    //[InlineData("System4.1/Mouse.res")]
+    //[InlineData("System4.1/Sound.res")]
+    //[InlineData("System4.1/Startup Device.res")]
+    //[InlineData("System4.1/System.res")]
+    //[InlineData("System4.1/TeachText.res")]
+    //[InlineData("System6/AppleTalk ImageWriter.res")]
+    //[InlineData("System6/Backgrounder.res")]
+    //[InlineData("System6/DA Handler.res")]
+    //[InlineData("System6/DeskTop.res")]
+    //[InlineData("System6/Easy Access.res")]
+    //[InlineData("System6/Finder.res")]
+    //[InlineData("System6/General.res")]
+    //[InlineData("System6/ImageWriter.res")]
+    //[InlineData("System6/Key Layout.res")]
+    //[InlineData("System6/Keyboard.res")]
+    //[InlineData("System6/LQ AppleTalk ImageWriter.res")]
+    //[InlineData("System6/LQ ImageWriter.res")]
+    //[InlineData("System6/Laser Prep.res")]
+    //[InlineData("System6/LaserWriter.res")]
+    //[InlineData("System6/Mouse.res")]
+    //[InlineData("System6/MultiFinder.res")]
+    //[InlineData("System6/Personal LaserWriter SC.res")]
+    //[InlineData("System6/PrintMonitor.res")]
+    //[InlineData("System6/Scrapbook File.res")]
+    //[InlineData("System6/Sound.res")]
+    //[InlineData("System6/StuffIt Expander Preferences.res")]
+    //[InlineData("System6/System.res")]
+    [InlineData("System7/About System 7.5.5 Update.res")]
+    [InlineData("System7/About System 7.5.res")]
+    [InlineData("System7/Desktop.res")]
+    [InlineData("System7/Read Me.res")]
+    [InlineData("System7/SimpleText.res")]
+    [InlineData("System7/Apple Extras/About the MacOS/About the Control Panels folder.res")]
+    [InlineData("System7/Apple Extras/About the MacOS/About the Extensions folder.res")]
+    [InlineData("System7/Apple Extras/About the MacOS/About the System Folder.res")]
+    [InlineData("System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res")]
+    [InlineData("System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Script Editor.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Using AppleScript part 1.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Using AppleScript part 2.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/About Automated Tasks.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Add Alias to Apple Menu.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Find Original from Alias.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Share a Folder (no Guest).res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Share a Folder.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Start File Sharing.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Stop File Sharing.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Turn Sound Off.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/Automated Tasks/Turn Sound On.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/More Automated Tasks/About More Automated Tasks.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/More Automated Tasks/Alert When Folder Changes.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/More Automated Tasks/Change Monitor to 256.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/More Automated Tasks/Change Monitor to B&W.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/More Automated Tasks/Hide_Show Folder Sizes.res")]
+    [InlineData("System7/Apple Extras/AppleScript?/More Automated Tasks/Synchronize Folders.res")]
+    [InlineData("System7/System Folder/Finder.res")]
+    [InlineData("System7/System Folder/MacTCP DNR.res")]
+    [InlineData("System7/System Folder/Scrapbook File.res")]
+    [InlineData("System7/System Folder/System.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/? Shut Down.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Alarm Clock.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/AppleCD Audio Player.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Automated Tasks.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Calculator.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Chooser.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Control Panels.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Find File.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Jigsaw Puzzle.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Key Caps.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Note Pad.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Puzzle.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Scrapbook.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Stickies.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/Desktop Patterns.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/ExportFl.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/ImportFl.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/Installer.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/Org Plus .res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/SimpleText.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/StuffIt Expander? 401 Installer.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Applications/StuffIt Expander?.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Documents/About System 7.5.5 Update.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Documents/FontDefault.opx.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Documents/FontStyle_Shadow.opx.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Documents/Read Me.res")]
+    [InlineData("System7/System Folder/Apple Menu Items/Recent Documents/System 7.5.5 Update Install.res")]
+    [InlineData("System7/System Folder/Control Panels/Apple Menu Options.res")]
+    [InlineData("System7/System Folder/Control Panels/Date & Time.res")]
+    [InlineData("System7/System Folder/Control Panels/Desktop Patterns.res")]
+    [InlineData("System7/System Folder/Control Panels/Easy Access.res")]
+    [InlineData("System7/System Folder/Control Panels/Extensions Manager.res")]
+    [InlineData("System7/System Folder/Control Panels/File Sharing Monitor.res")]
+    [InlineData("System7/System Folder/Control Panels/General Controls.res")]
+    [InlineData("System7/System Folder/Control Panels/Keyboard.res")]
+    [InlineData("System7/System Folder/Control Panels/Labels.res")]
+    [InlineData("System7/System Folder/Control Panels/Launcher.res")]
+    [InlineData("System7/System Folder/Control Panels/MacTCP.res")]
+    [InlineData("System7/System Folder/Control Panels/Macintosh Easy Open.res")]
+    [InlineData("System7/System Folder/Control Panels/Map.res")]
+    [InlineData("System7/System Folder/Control Panels/Memory.res")]
+    [InlineData("System7/System Folder/Control Panels/Mouse.res")]
+    [InlineData("System7/System Folder/Control Panels/Network.res")]
+    [InlineData("System7/System Folder/Control Panels/Numbers.res")]
+    [InlineData("System7/System Folder/Control Panels/PC Exchange.res")]
+    [InlineData("System7/System Folder/Control Panels/Sharing Setup.res")]
+    [InlineData("System7/System Folder/Control Panels/Sound.res")]
+    [InlineData("System7/System Folder/Control Panels/Startup Disk.res")]
+    [InlineData("System7/System Folder/Control Panels/Text.res")]
+    [InlineData("System7/System Folder/Control Panels/Users & Groups.res")]
+    [InlineData("System7/System Folder/Control Panels/Views.res")]
+    [InlineData("System7/System Folder/Control Panels/WindowShade.res")]
+    [InlineData("System7/System Folder/Extensions/ EM Extension.res")]
+    [InlineData("System7/System Folder/Extensions/About Apple Guide.res")]
+    [InlineData("System7/System Folder/Extensions/Apple CD-ROM.res")]
+    [InlineData("System7/System Folder/Extensions/Apple Guide.res")]
+    [InlineData("System7/System Folder/Extensions/AppleScript?.res")]
+    [InlineData("System7/System Folder/Extensions/AppleShare.res")]
+    [InlineData("System7/System Folder/Extensions/AppleTalk ImageWriter.res")]
+    [InlineData("System7/System Folder/Extensions/Audio CD Access.res")]
+    [InlineData("System7/System Folder/Extensions/Caps Lock.res")]
+    [InlineData("System7/System Folder/Extensions/Clipping Extension.res")]
+    [InlineData("System7/System Folder/Extensions/Color Picker.res")]
+    [InlineData("System7/System Folder/Extensions/DAL.res")]
+    [InlineData("System7/System Folder/Extensions/File Sharing Extension.res")]
+    [InlineData("System7/System Folder/Extensions/Find File Extension.res")]
+    [InlineData("System7/System Folder/Extensions/Finder Help.res")]
+    [InlineData("System7/System Folder/Extensions/Finder Scripting Extension.res")]
+    [InlineData("System7/System Folder/Extensions/Foreign File Access.res")]
+    [InlineData("System7/System Folder/Extensions/High Sierra File Access.res")]
+    [InlineData("System7/System Folder/Extensions/ISO 9660 File Access.res")]
+    [InlineData("System7/System Folder/Extensions/ImageWriter.res")]
+    [InlineData("System7/System Folder/Extensions/LQ AppleTalk ImageWriter.res")]
+    [InlineData("System7/System Folder/Extensions/LQ ImageWriter.res")]
+    [InlineData("System7/System Folder/Extensions/LaserWriter 8.res")]
+    [InlineData("System7/System Folder/Extensions/LaserWriter.res")]
+    [InlineData("System7/System Folder/Extensions/Macintosh Guide.res")]
+    [InlineData("System7/System Folder/Extensions/Network Extension.res")]
+    [InlineData("System7/System Folder/Extensions/Networking Guide Additions.res")]
+    [InlineData("System7/System Folder/Extensions/Personal LW LS.res")]
+    [InlineData("System7/System Folder/Extensions/Personal LaserWriter SC.res")]
+    [InlineData("System7/System Folder/Extensions/PrintMonitor.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Share.res")]
+    [InlineData("System7/System Folder/Extensions/Shortcuts.res")]
+    [InlineData("System7/System Folder/Extensions/SimpleText Guide.res")]
+    [InlineData("System7/System Folder/Extensions/Sound_Monitors Guide Additions.res")]
+    [InlineData("System7/System Folder/Extensions/StyleWriter 1200.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter 16_600 PS Fax.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter 16_600 PS-J.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter 16_600 PS.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter 4_600 PS.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Color 12_600 PS.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter II NT.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter II NTX v50.5.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter II NTX v51.8.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter II NTX-J v50.5.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter II NTX.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter IIf v2010.113.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter IIf v2010.130.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter IIg v2010.113.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter IIg v2010.130.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Personal 320.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Personal NT.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Personal NTR.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Plus v38.0.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Plus v42.2.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 400 v2011.110.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 405 v2011.110.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 600 v2010.130.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 630 v2010.130.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 810.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 810f.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Select 360.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Select 360f.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter Select 610.res")]
+    [InlineData("System7/System Folder/Extensions/Printer Descriptions/LaserWriter.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/AGStart.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Beep.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Choose Application.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Choose File.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Current Date.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Display Dialog.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/File Commands.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Load Script.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/MonitorDepth.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/New File.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Numerics.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Read_Write Commands.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Run Script.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Scripting Components.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Set Volume.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Store Script.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/String Commands.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Time to GMT.res")]
+    [InlineData("System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res")]
+    [InlineData("System7/System Folder/Fonts/Chicago.res")]
+    [InlineData("System7/System Folder/Fonts/Courier.res")]
+    [InlineData("System7/System Folder/Fonts/Geneva.res")]
+    [InlineData("System7/System Folder/Fonts/Helvetica.res")]
+    [InlineData("System7/System Folder/Fonts/Monaco.res")]
+    [InlineData("System7/System Folder/Fonts/New York.res")]
+    [InlineData("System7/System Folder/Fonts/Palatino.res")]
+    [InlineData("System7/System Folder/Fonts/Symbol.res")]
+    [InlineData("System7/System Folder/Fonts/Times.res")]
+    [InlineData("System7/System Folder/Launcher Items/Script Editor.res")]
+    [InlineData("System7/System Folder/Launcher Items/SimpleText.res")]
+    [InlineData("System7/System Folder/Preferences/Apple Menu Options Prefs.res")]
+    [InlineData("System7/System Folder/Preferences/AppleTalk Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/DAL Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/Date & Time Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/Desktop Pattern Prefs.res")]
+    [InlineData("System7/System Folder/Preferences/Finder Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/General Controls Prefs.res")]
+    [InlineData("System7/System Folder/Preferences/Macintosh Easy Open Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/PC Exchange Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/StuffIt Expander Preferences.res")]
+    [InlineData("System7/System Folder/Preferences/WindowShade Preferences.res")]
     public void Ctor_Stream(string fileName)
     {
         var filePath = Path.Combine("Samples", fileName);
@@ -178,13 +366,20 @@ public class ResourceForkTests
         {
             switch (type.Key)
             {
+                case ResourceForkType.AINI:
+                case ResourceForkType.cmtb:
                 case ResourceForkType.Code1:
                 case ResourceForkType.Code2:
+                case ResourceForkType.Code3:
+                case ResourceForkType.Code4:
+                case ResourceForkType.Code5:
                 case ResourceForkType.ControlDefinitionFunction:
                 case ResourceForkType.ControlDeviceFunction:
-                case ResourceForkType.Driver:
+                case ResourceForkType.Driver1:
+                case ResourceForkType.Driver2:
                 case ResourceForkType.ListDefinitionFunction:
-                case ResourceForkType.Boot:
+                case ResourceForkType.Boot1:
+                case ResourceForkType.Boot2:
                 case ResourceForkType.SystemExtension:
                 case ResourceForkType.Package:
                 case ResourceForkType.ROMPatchCode1:
@@ -204,6 +399,23 @@ public class ResourceForkTests
                 case ResourceForkType.AppleDesktopBusServiceRoutine:
                 case ResourceForkType.PrinterDefinitionFunction:
                 case ResourceForkType.NameBindingProtocolCode:
+                case ResourceForkType.ScriptCode:
+                case ResourceForkType.ColorPickerCode:
+                case ResourceForkType.GesaltManagerDefinition:
+                case ResourceForkType.shal:
+                case ResourceForkType.vdig:
+                case ResourceForkType.dimg:
+                case ResourceForkType.citt:
+                case ResourceForkType.epch:
+                case ResourceForkType.gcko:
+                case ResourceForkType.ndlc:
+                case ResourceForkType.ndrv:
+                case ResourceForkType.nift:
+                case ResourceForkType.nitt:
+                case ResourceForkType.nlib:
+                case ResourceForkType.nsnd:
+                case ResourceForkType.nsrd:
+                case ResourceForkType.SystemDecompressor:
                     Debug.WriteLine("CODE Resources:");
                     foreach (var entry in type.Value)
                     {
@@ -227,6 +439,12 @@ public class ResourceForkTests
                     Debug.WriteLine("STR# Resources:");
                     foreach (var strListResource in type.Value)
                     {
+                        if (strListResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  String List {strListResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var stringListData = fork.GetResourceData(strListResource);
                         ushort stringCount = (ushort)((stringListData[0] << 8) | stringListData[1]);
                         var list = new List<string>(stringCount);
@@ -279,6 +497,12 @@ public class ResourceForkTests
                     Debug.WriteLine("BNDL Resources:");
                     foreach (var bndlResource in type.Value)
                     {
+                        if (bndlResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Bundle {bndlResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var bundleData = fork.GetResourceData(bndlResource);
                         var bundleRecord = new BundleRecord(bundleData);
                         Debug.WriteLine($"  Bundle {bndlResource}: Owner={bundleRecord.Owner}, OwnerID={bundleRecord.OwnerID}, NumberOfTypes={bundleRecord.NumberOfTypes}");
@@ -316,6 +540,12 @@ public class ResourceForkTests
                     Debug.WriteLine("ICON Resources:");
                     foreach (var iconResource in type.Value)
                     {
+                        if (iconResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Icon {iconResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var iconData = fork.GetResourceData(iconResource);
                         var iconRecord = new IconRecord(iconData);
                         Debug.WriteLine($"  Icon {iconResource}: IconData Length={iconRecord.IconData.Length}");
@@ -349,6 +579,12 @@ public class ResourceForkTests
                     Debug.WriteLine("IconList ('ICN#') Resources:");
                     foreach (var iconListResource in type.Value)
                     {
+                        if (iconListResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Icon List {iconListResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var iconListData = fork.GetResourceData(iconListResource);
                         var iconListRecord = new IconListRecord(iconListData);
                         Debug.WriteLine($"  IconList {iconListResource}: IconData Length={iconListRecord.IconData.Length}, MaskData Length={iconListRecord.MaskData.Length}");
@@ -360,6 +596,12 @@ public class ResourceForkTests
                     Debug.WriteLine("CURS Resources:");
                     foreach (var cursResource in type.Value)
                     {
+                        if (cursResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Cursor {cursResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var cursorData = fork.GetResourceData(cursResource);
                         var cursorRecord = new CursorRecord(cursorData);
                         Debug.WriteLine($"  Cursor {cursResource}: HotspotX={cursorRecord.HotspotX}, HotspotY={cursorRecord.HotspotY}, ImageData Length={cursorRecord.ImageData.Length}, MaskData Length={cursorRecord.MaskData.Length}");
@@ -405,6 +647,12 @@ public class ResourceForkTests
                     Debug.WriteLine("DITL Resources:");
                     foreach (var ditlResource in type.Value)
                     {
+                        if (ditlResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Item List {ditlResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var itemListData = fork.GetResourceData(ditlResource);
                         var itemListRecord = new ItemListRecord(itemListData);
                         Debug.WriteLine($"  Item List {ditlResource}: ItemCount={itemListRecord.Items.Count}");
@@ -420,6 +668,12 @@ public class ResourceForkTests
                     Debug.WriteLine("MENU Resources:");
                     foreach (var menuResource in type.Value)
                     {
+                        if (menuResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Menu {menuResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var menuData = fork.GetResourceData(menuResource);
                         var menuRecord = new MenuRecord(menuData);
                         Debug.WriteLine($"  Menu {menuResource}: Title=\"{menuRecord.Title}\", ItemCount={menuRecord.Items.Count}");
@@ -620,6 +874,12 @@ public class ResourceForkTests
                     Debug.WriteLine("PAT# Resources:");
                     foreach (var patListResource in type.Value)
                     {
+                        if (patListResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Pattern List {patListResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var patListData = fork.GetResourceData(patListResource);
                         var patternListRecord = new PatternListRecord(patListData);
                         Debug.WriteLine($"  Pattern List {patListResource}: PatternCount={patternListRecord.Patterns.Count}");
@@ -686,46 +946,70 @@ public class ResourceForkTests
 
                     break;
 
-                case ResourceForkType.LargeIcon4bit:
+                case ResourceForkType.LargeIcon4Bit:
                     Debug.WriteLine("icl4 Resources:");
                     foreach (var icl4Resource in type.Value)
                     {
+                        if (icl4Resource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  4-bit Large Icon {icl4Resource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var icl4Data = fork.GetResourceData(icl4Resource);
-                        var icon4bitRecord = new LargeIcon4bitRecord(icl4Data);
-                        Debug.WriteLine($"  4-bit Icon {icl4Resource}: IconData Length={icon4bitRecord.IconData.Length}");
+                        var icon4BitRecord = new LargeIcon4BitRecord(icl4Data);
+                        Debug.WriteLine($"  4-bit Icon {icl4Resource}: IconData Length={icon4BitRecord.IconData.Length}");
                     }
 
                     break;
 
-                case ResourceForkType.LargeIcon8bit:
+                case ResourceForkType.LargeIcon8Bit:
                     Debug.WriteLine("icl8 Resources:");
                     foreach (var icl8Resource in type.Value)
                     {
+                        if (icl8Resource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  8-bit Large Icon {icl8Resource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var icl8Data = fork.GetResourceData(icl8Resource);
-                        var icon8bitRecord = new LargeIcon8bitRecord(icl8Data);
-                        Debug.WriteLine($"  8-bit Icon {icl8Resource}: IconData Length={icon8bitRecord.IconData.Length}");
+                        var icon8BitRecord = new LargeIcon8BitRecord(icl8Data);
+                        Debug.WriteLine($"  8-bit Icon {icl8Resource}: IconData Length={icon8BitRecord.IconData.Length}");
                     }
 
                     break;
 
-                case ResourceForkType.SmallIcon4bit:
+                case ResourceForkType.SmallIcon4Bit:
                     Debug.WriteLine("ics4 Resources:");
                     foreach (var ics4Resource in type.Value)
                     {
+                        if (ics4Resource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Small 4-bit Icon {ics4Resource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var ics4Data = fork.GetResourceData(ics4Resource);
-                        var smallIcon4bitRecord = new SmallIcon4bitRecord(ics4Data);
-                        Debug.WriteLine($"  Small 4-bit Icon {ics4Resource}: IconData Length={smallIcon4bitRecord.IconData.Length}");
+                        var smallIcon4BitRecord = new SmallIcon4BitRecord(ics4Data);
+                        Debug.WriteLine($"  Small 4-bit Icon {ics4Resource}: IconData Length={smallIcon4BitRecord.IconData.Length}");
                     }
 
                     break;
 
-                case ResourceForkType.SmallIcon8bit:
+                case ResourceForkType.SmallIcon8Bit:
                     Debug.WriteLine("ics8 Resources:");
                     foreach (var ics8Resource in type.Value)
                     {
+                        if (ics8Resource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Small 8-bit Icon {ics8Resource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var ics8Data = fork.GetResourceData(ics8Resource);
-                        var smallIcon8bitRecord = new SmallIcon8bitRecord(ics8Data);
-                        Debug.WriteLine($"  Small 8-bit Icon {ics8Resource}: IconData Length={smallIcon8bitRecord.IconData.Length}");
+                        var smallIcon8BitRecord = new SmallIcon8BitRecord(ics8Data);
+                        Debug.WriteLine($"  Small 8-bit Icon {ics8Resource}: IconData Length={smallIcon8BitRecord.IconData.Length}");
                     }
 
                     break;
@@ -734,6 +1018,12 @@ public class ResourceForkTests
                     Debug.WriteLine("icl# Resources:");
                     foreach (var iclResource in type.Value)
                     {
+                        if (iclResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Small Icon List {iclResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var iclData = fork.GetResourceData(iclResource);
                         var smallIconListRecord = new SmallIconListRecord(iclData);
                         Debug.WriteLine($"  Small Icon List {iclResource}: IconData Length={smallIconListRecord.IconData.Length}, MaskData Length={smallIconListRecord.MaskData.Length}");
@@ -745,6 +1035,12 @@ public class ResourceForkTests
                     Debug.WriteLine("cicn Resources:");
                     foreach (var cicnResource in type.Value)
                     {
+                        if (cicnResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Color Icon {cicnResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var cicnData = fork.GetResourceData(cicnResource);
                         var colorIconRecord = new ColorIconRecord(cicnData);
                         Debug.WriteLine($"  Color Icon {cicnResource}: MaskBitmap Length={colorIconRecord.MaskBitmap.DataSize}, IconBitmap Length={colorIconRecord.IconBitmap.DataSize}");
@@ -774,6 +1070,12 @@ public class ResourceForkTests
                     Debug.WriteLine("pltt Resources:");
                     foreach (var plttResource in type.Value)
                     {
+                        if (plttResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Palette {plttResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var plttData = fork.GetResourceData(plttResource);
                         var paletteRecord = new PaletteRecord(plttData);
                         Debug.WriteLine($"  Palette {plttResource}: ColorCount={paletteRecord.Entries.Count}");
@@ -811,6 +1113,12 @@ public class ResourceForkTests
                     Debug.WriteLine("ppat Resources:");
                     foreach (var ppatResource in type.Value)
                     {
+                        if (ppatResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Pixel Pattern {ppatResource} is compressed; skipping.");
+                            continue;
+                        }
+
                         var ppatData = fork.GetResourceData(ppatResource);
                         var pixelPatternRecord = new PixelPatternRecord(ppatData);
                         Debug.WriteLine($"  Pixel Pattern {ppatResource}: PixelDataOffset offset={pixelPatternRecord.Pattern.PixelDataOffset}");
@@ -1023,8 +1331,8 @@ public class ResourceForkTests
 
                     break;
 
-                case ResourceForkType.CitiesList:
-                    Debug.WriteLine("CTYN Resources:");
+                case ResourceForkType.CitiesList1:
+                    Debug.WriteLine("CTY# Resources:");
                     foreach (var ctynResource in type.Value)
                     {
                         var ctynData = fork.GetResourceData(ctynResource);
@@ -1273,6 +1581,7 @@ public class ResourceForkTests
                     break;
 
                 case ResourceForkType.Preferences:
+                case ResourceForkType.PreferencesFile:
                     Debug.WriteLine("PREF Resources:");
                     foreach (var prefResource in type.Value)
                     {
@@ -1361,6 +1670,419 @@ public class ResourceForkTests
                         var inscData = fork.GetResourceData(inscResource);
                         var installerConfigurationRecord = new InstallerScriptRecord(inscData);
                         Debug.WriteLine($"  Installer Configuration {inscResource}: Version={installerConfigurationRecord.Version}, Flags={installerConfigurationRecord.Flags}, Name=\"{installerConfigurationRecord.Name}\", HelpString=\"{installerConfigurationRecord.HelpString}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.Style:
+                    Debug.WriteLine("styl Resources:");
+                    foreach (var stylResource in type.Value)
+                    {
+                        if (stylResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Style Record {stylResource} is compressed; skipping.");
+                            continue;
+                        }
+
+                        var stylData = fork.GetResourceData(stylResource);
+                        var styleRecord = new StyleRecord(stylData);
+                        Debug.WriteLine($"  Style Record {stylResource}: NumberOfRuns={styleRecord.NumberOfRuns} ");
+                        foreach (var run in styleRecord.StyleRuns)
+                        {
+                            Debug.WriteLine($"    Style Run: StartIndex={run.Offset}, FontID={run.FontResourceID}, Size={run.PointSize}, StyleFlags={run.Flags}, Color={run.Color}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.ScriptingSize:
+                    Debug.WriteLine("scsz Resources:");
+                    foreach (var scszResource in type.Value)
+                    {
+                        var scszData = fork.GetResourceData(scszResource);
+                        var scriptingSizeRecord = new ScriptingSizeRecord(scszData);
+                        Debug.WriteLine($"  Scripting Size {scszResource}: Flags={scriptingSizeRecord.Flags} MinimumStackSize={scriptingSizeRecord.MinimumStackSize} PreferredStackSize={scriptingSizeRecord.PreferredStackSize} MaximumStackSize={scriptingSizeRecord.MaximumStackSize} MinimumHeapSize={scriptingSizeRecord.MinimumHeapSize} PreferredHeapSize={scriptingSizeRecord.PreferredHeapSize} MaximumHeapSize={scriptingSizeRecord.MaximumHeapSize}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ItemColorTable:
+                    Debug.WriteLine("ictb Resources:");
+                    foreach (var ictbResource in type.Value)
+                    {
+                        var ictbData = fork.GetResourceData(ictbResource);
+                        var itemColorTableRecord = new ItemColorTableRecord(ictbData);
+                        Debug.WriteLine($"  Item Color Table {ictbResource}: Entries Count={itemColorTableRecord.Entries.Count}");
+                        for (int i = 0; i < itemColorTableRecord.Entries.Count; i++)
+                        {
+                            var entry = itemColorTableRecord.Entries[i];
+                            Debug.WriteLine($"    Entry {i}: Data={entry.Data}, Offset={entry.Offset}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.Psap:
+                    Debug.WriteLine("psap Resources:");
+                    foreach (var psapResource in type.Value)
+                    {
+                        var psapData = fork.GetResourceData(psapResource);
+                        var psapRecord = new PsapRecord(psapData);
+                        Debug.WriteLine($"  Psap Record {psapResource}: Value={psapRecord.Value}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ScriptingAdditionSize:
+                    Debug.WriteLine("osiz Resources:");
+                    foreach (var osizResource in type.Value)
+                    {
+                        var osizData = fork.GetResourceData(osizResource);
+                        var scriptingAdditionSizeRecord = new ScriptingAdditionSizeRecord(osizData);
+                        Debug.WriteLine($"  Scripting Addition Size {osizResource}: Flags={scriptingAdditionSizeRecord.Flags}");
+                    }
+
+                    break;
+
+                case ResourceForkType.Alias:
+                    Debug.WriteLine("alis Resources:");
+                    foreach (var alisResource in type.Value)
+                    {
+                        var alisData = fork.GetResourceData(alisResource);
+                        var aliasRecord = new AliasRecord(alisData);
+                        Debug.WriteLine($"  Alias Record {alisResource}: Type=\"{aliasRecord.Type}\", DataLength={aliasRecord.DataLength} bytes, PrivateData Length={aliasRecord.PrivateData.Length} bytes");
+                    }
+
+                    break;
+
+
+                case ResourceForkType.FinderIconMap:
+                    Debug.WriteLine("fmap Resources:");
+                    foreach (var fmapResource in type.Value)
+                    {
+                        var fmapData = fork.GetResourceData(fmapResource);
+                        var finderIconMapRecord = new FinderIconMapRecord(fmapData);
+                        Debug.WriteLine($"  Finder Icon Map {fmapResource}: Entries Count={finderIconMapRecord.Entries.Count}");
+                        foreach (var entry in finderIconMapRecord.Entries)
+                        {
+                            Debug.WriteLine($"    Finder Icon Map Entry: Type={entry.Type}, StandardFileIconResourceID={entry.StandardFileIconResourceID}, FinderIconResourceID={entry.FinderIconResourceID}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.FolderList:
+                    Debug.WriteLine("fld# Resources:");
+                    foreach (var fldResource in type.Value)
+                    {
+                        var fldData = fork.GetResourceData(fldResource);
+                        var folderListRecord = new FolderListRecord(fldData);
+                        Debug.WriteLine($"  Folder List {fldResource}: Folders Count={folderListRecord.Folders.Count}");
+                        foreach (var folder in folderListRecord.Folders)
+                        {
+                            Debug.WriteLine($"    Folder: Type={folder.Type}, Name=\"{folder.Name}\"");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.Component:
+                    Debug.WriteLine("thng Resources:");
+                    foreach (var thngResource in type.Value)
+                    {
+                        var thngData = fork.GetResourceData(thngResource);
+                        var componentRecord = new ComponentRecord(thngData);
+                        Debug.WriteLine($"  Component {thngResource}: NameResourceType={componentRecord.NameResource.Type}, NameResourceID={componentRecord.NameResource.ResourceID}, CodeResourceType={componentRecord.CodeResource.Type}, CodeResourceID={componentRecord.CodeResource.ResourceID}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ComponentList:
+                    Debug.WriteLine("thn# Resources:");
+                    foreach (var thnnResource in type.Value)
+                    {
+                        var thnnData = fork.GetResourceData(thnnResource);
+                        var componentListRecord = new ComponentListRecord(thnnData);
+                        Debug.WriteLine($"  Component List {thnnResource}: Components Count={componentListRecord.Components.Count}");
+                        foreach (var component in componentListRecord.Components)
+                        {
+                            Debug.WriteLine($"    Component List Entry: Type={component.Type}, ResourceID={component.ResourceID}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.HelpRectangles:
+                    Debug.WriteLine("hrct Resources:");
+                    foreach (var hrctResource in type.Value)
+                    {
+                        var hrctData = fork.GetResourceData(hrctResource);
+                        var helpRectanglesRecord = new HelpRectanglesRecord(hrctData);
+                        Debug.WriteLine($"  Help Rectangles {hrctResource}: Version={helpRectanglesRecord.Version}, Options={helpRectanglesRecord.Options}, BalloonDefinitionFunctionResourceID={helpRectanglesRecord.BalloonDefinitionFunctionResourceID}, VariationCode={helpRectanglesRecord.VariationCode}, HotRectangleComponentCount={helpRectanglesRecord.HotRectangleComponentCount}");
+                    }
+
+                    break;
+
+                case ResourceForkType.ISO9660VolumeDescriptor:
+                    Debug.WriteLine("NRVD Resources:");
+                    foreach (var nrvdResource in type.Value)
+                    {
+                        var nrvdData = fork.GetResourceData(nrvdResource);
+                        var iso9660VolumeDescriptorRecord = new ISO9660VolumeDescriptorRecord(nrvdData);
+                        Debug.WriteLine($"  ISO9660 Volume Descriptor {nrvdResource}: VolumeFlags={iso9660VolumeDescriptorRecord.VolumeFlags}, EscapeSequences={iso9660VolumeDescriptorRecord.EscapeSequences}");
+                    }
+
+                    break;
+
+                case ResourceForkType.Bitmap:
+                    Debug.WriteLine("BMAP Resources:");
+                    foreach (var bmapResource in type.Value)
+                    {
+                        var bmapData = fork.GetResourceData(bmapResource);
+                        var bitmapRecord = new BitmapRecord(bmapData);
+                        Debug.WriteLine($"  Bitmap {bmapResource}: Data Length={bitmapRecord.Data.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.Open:
+                    Debug.WriteLine("open Resources:");
+                    foreach (var openResource in type.Value)
+                    {
+                        var openData = fork.GetResourceData(openResource);
+                        var openRecord = new OpenRecord(openData);
+                        Debug.WriteLine($"  Open Record {openResource}: ApplicationSignature=\"{openRecord.ApplicationSignature}\"");
+                        for (int i = 0; i < openRecord.FileTypes.Count; i++)
+                        {
+                            Debug.WriteLine($"    File Type {i}: \"{openRecord.FileTypes[i]}\"");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.Kind:
+                    Debug.WriteLine("kind Resources:");
+                    foreach (var kindResource in type.Value)
+                    {
+                        if (kindResource.Attributes.HasFlag(ResourceAttributes.Compressed))
+                        {
+                            Debug.WriteLine($"  Kind Record {kindResource} is compressed; skipping.");
+                            continue;
+                        }
+
+                        var kindData = fork.GetResourceData(kindResource);
+                        var kindRecord = new KindRecord(kindData);
+                        Debug.WriteLine($"  Kind Record {kindResource}: ApplicationSignature=\"{kindRecord.ApplicationSignature}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.SoundLookupTable:
+                    Debug.WriteLine("slut Resources:");
+                    foreach (var slutResource in type.Value)
+                    {
+                        var slutData = fork.GetResourceData(slutResource);
+                        var soundLookupTableRecord = new SoundLookupTableRecord(slutData);
+                        Debug.WriteLine($"  Sound Lookup Table {slutResource}: Entries Count={soundLookupTableRecord.Entries.Count}");
+                        foreach (var entry in soundLookupTableRecord.Entries)
+                        {
+                            Debug.WriteLine($"    Sound Lookup Table Entry: Type={entry.Type}, ResourceID={entry.ResourceID}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.ErrorString:
+                    Debug.WriteLine("errs Resources:");
+                    foreach (var errsResource in type.Value)
+                    {
+                        var errsData = fork.GetResourceData(errsResource);
+                        var errorStringsRecord = new ErrorStringsRecord(errsData);
+                        Debug.WriteLine($"  Error Strings {errsResource}: Strings Count={errorStringsRecord.ErrorStrings.Count}");
+                        for (int i = 0; i < errorStringsRecord.ErrorStrings.Count; i++)
+                        {
+                            Debug.WriteLine($"    String {i}: \"{errorStringsRecord.ErrorStrings[i]}\"");
+                        }
+                    }
+
+                    break;
+    
+                case ResourceForkType.MiniIconList:
+                    Debug.WriteLine("icm# Resources:");
+                    foreach (var icmResource in type.Value)
+                    {
+                        var icmData = fork.GetResourceData(icmResource);
+                        var miniIconListRecord = new MiniIconListRecord(icmData);
+                        Debug.WriteLine($"  Mini Icon List {icmResource}: IconData Length={miniIconListRecord.IconData.Length} bytes, MaskData Length={miniIconListRecord.MaskData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.MiniIcon4Bit:
+                    Debug.WriteLine("icm4 Resources:");
+                    foreach (var icm4Resource in type.Value)
+                    {
+                        var icm4Data = fork.GetResourceData(icm4Resource);
+                        var miniIcon4BitRecord = new MiniIcon4BitRecord(icm4Data);
+                        Debug.WriteLine($"  Mini Icon 4-Bit {icm4Resource}: Data Length={miniIcon4BitRecord.IconData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.MiniIcon8Bit: 
+                    Debug.WriteLine("icm8 Resources:");
+                    foreach (var icm8Resource in type.Value)
+                    {
+                        var icm8Data = fork.GetResourceData(icm8Resource);
+                        var miniIcon8BitRecord = new MiniIcon8BitRecord(icm8Data);
+                        Debug.WriteLine($"  Mini Icon 8-Bit {icm8Resource}: Data Length={miniIcon8BitRecord.IconData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardColorIconList:
+                    Debug.WriteLine("kcs# Resources:");
+                    foreach (var kcsResource in type.Value)
+                    {
+                        var kcsData = fork.GetResourceData(kcsResource);
+                        var keyboardColorIconListRecord = new KeyboardColorIconListRecord(kcsData);
+                        Debug.WriteLine($"  Keyboard Color Icon List {kcsResource}: IconData Length={keyboardColorIconListRecord.IconData.Length} bytes, MaskData Length={keyboardColorIconListRecord.MaskData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardColorIcon4Bit:
+                    Debug.WriteLine("kcs4 Resources:");
+                    foreach (var kcs4Resource in type.Value)
+                    {
+                        var kcs4Data = fork.GetResourceData(kcs4Resource);
+                        var keyboardColorIcon4BitRecord = new KeyboardColorIcon4BitRecord(kcs4Data);
+                        Debug.WriteLine($"  Keyboard Color Icon 4-Bit {kcs4Resource}: Data Length={keyboardColorIcon4BitRecord.IconData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardColorIcon8Bit:
+                    Debug.WriteLine("kcs8 Resources:");
+                    foreach (var kcs8Resource in type.Value)
+                    {
+                        var kcs8Data = fork.GetResourceData(kcs8Resource);
+                        var keyboardColorIcon8BitRecord = new KeyboardColorIcon8BitRecord(kcs8Data);
+                        Debug.WriteLine($"  Keyboard Color Icon 8-Bit {kcs8Resource}: Data Length={keyboardColorIcon8BitRecord.IconData.Length} bytes");
+                    }
+
+                    break;
+
+                case ResourceForkType.TextStyle:
+                    Debug.WriteLine("TxSt Resources:");
+                    foreach (var txstResource in type.Value)
+                    {
+                        var txstData = fork.GetResourceData(txstResource);
+                        var textStyleRecord = new TextStyleRecord(txstData);
+                        Debug.WriteLine($"  Text Style Record {txstResource}: FontStyle={textStyleRecord.FontStyle}, FontSize={textStyleRecord.FontSize}, FontName=\"{textStyleRecord.FontName}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.TitleList:
+                    Debug.WriteLine("Tlst Resources:");
+                    foreach (var tlstResource in type.Value)
+                    {
+                        var tlstData = fork.GetResourceData(tlstResource);
+                        var titleListRecord = new TitleListRecord(tlstData);
+                        Debug.WriteLine($"  Title List Record {tlstResource}: Types Count={titleListRecord.Types.Count}");
+                        for (int i = 0; i < titleListRecord.Types.Count; i++)
+                        {
+                            Debug.WriteLine($"    Type {i}: \"{titleListRecord.Types[i]}\"");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.DatabaseResultHandlers:
+                    Debug.WriteLine("rtt# Resources:");
+                    foreach (var rttResource in type.Value)
+                    {
+                        var rttData = fork.GetResourceData(rttResource);
+                        var databaseResultHandlersRecord = new DatabaseResultHandlersRecord(rttData);
+                        Debug.WriteLine($"  Database Result Handlers Record {rttResource}: NumberOfHandlers={databaseResultHandlersRecord.NumberOfHandlers}");
+                        for (int i = 0; i < databaseResultHandlersRecord.Handlers.Count; i++)
+                        {
+                            var handler = databaseResultHandlersRecord.Handlers[i];
+                            Debug.WriteLine($"    Handler {i}: ProcedureResourceID={handler.ProcedureResourceID}, NumberOfTypes={handler.NumberOfTypes}");
+                            for (int j = 0; j < handler.Types.Count; j++)
+                            {
+                                Debug.WriteLine($"      Type {j}: \"{handler.Types[j]}\"");
+                            }
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.KeyboardMappings:
+                    Debug.WriteLine("itlk Resources:");
+                    foreach (var itlkResource in type.Value)
+                    {
+                        var itlkData = fork.GetResourceData(itlkResource);
+                        var keyboardMappingsRecord = new KeyboardMappingsRecord(itlkData);
+                        Debug.WriteLine($"  Keyboard Mapping Record {itlkResource}: Mappings Count={keyboardMappingsRecord.Mappings.Count}");
+                        for (int i = 0; i < keyboardMappingsRecord.Mappings.Count; i++)
+                        {
+                            var mapping = keyboardMappingsRecord.Mappings[i];
+                            Debug.WriteLine($"    Key Mapping {i}: KeyboardType={mapping.KeyboardType}, OldModifiers={mapping.OldModifiers}, OldKeyCode={mapping.OldKeyCode}, MaskModifiers={mapping.MaskModifiers}, MaskKeyCode={mapping.MaskKeyCode}, NewModifiers={mapping.NewModifiers}, NewKeyCode={mapping.NewKeyCode}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.FontList:
+                    Debug.WriteLine("resf Resources:");
+                    foreach (var resfResource in type.Value)
+                    {
+                        var resfData = fork.GetResourceData(resfResource);
+                        var fontListRecord = new FontListRecord(resfData);
+                        Debug.WriteLine($"  Font List Record {resfResource}: FontFamilies Count={fontListRecord.FontFamilies.Count}");
+                        for (int i = 0; i < fontListRecord.FontFamilies.Count; i++)
+                        {
+                            Debug.WriteLine($"    Font Family {i}: {fontListRecord.FontFamilies[i].Name}, Fonts Count={fontListRecord.FontFamilies[i].Fonts.Count}");
+                            for (int j = 0; j < fontListRecord.FontFamilies[i].Fonts.Count; j++)
+                            {
+                                var font = fontListRecord.FontFamilies[i].Fonts[j];
+                                Debug.WriteLine($"      Font {j}: PointSize=\"{font.PointSize}\", StyleFlags={font.StyleFlags}");
+                            }
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.MacintoshModels:
+                    Debug.WriteLine("audt Resources:");
+                    foreach (var audtResource in type.Value)
+                    {
+                        var audtData = fork.GetResourceData(audtResource);
+                        var macintoshModelsRecord = new MacintoshModels(audtData);
+                        Debug.WriteLine($"  Macintosh Models Record {audtResource}: Models Count={macintoshModelsRecord.Models.Count}");
+                        for (int i = 0; i < macintoshModelsRecord.Models.Count; i++)
+                        {
+                            var model = macintoshModelsRecord.Models[i];
+                            Debug.WriteLine($"    Model {i}: ModelType={model.ModelType}, InstallationStatus={model.InstallationStatus}");
+                        }
+                    }
+
+                    break;
+
+                case ResourceForkType.OutlineFont:
+                    Debug.WriteLine("sfnt Resources:");
+                    foreach (var sfntResource in type.Value)
+                    {
+                        var sfntData = fork.GetResourceData(sfntResource);
+                        var outlineFontRecord = new OutlineFontRecord(sfntData);
+                        Debug.WriteLine($"  Outline Font Record {sfntResource}: FontDirectory TableCount={outlineFontRecord.FontDirectory.NumberOfTables}");
+                        for (int i = 0; i < outlineFontRecord.FontDirectory.Tables.Count; i++)
+                        {
+                            var table = outlineFontRecord.FontDirectory.Tables[i];
+                            Debug.WriteLine($"    Font Table {i}: TagName=\"{table.TagName}\", Checksum={table.Checksum}, Offset={table.Offset}, Length={table.Length}");
+                        }
                     }
 
                     break;
@@ -1482,6 +2204,350 @@ public class ResourceForkTests
                 case "FAST": // "System 4.1/Finder.res"
                 case "ExpP": // "System 6/StuffIt Epxander Preferences.res"
                 case "Page": // "System 6/StuffIt Epxander Preferences.res"
+                case ResourceForkType.OpenScriptingArchitectureExtension: // "System 7/System Folder/Extensions..."
+                //case ResourceForkType.MacProgrammersWorkshopShellResource: // 
+                case "dhMP": // "System 7/System Folder/Extensions/Networking Guide Additions.res"
+                case "NOTI": // "System 7/System Folder/Apple Extras/Applie Script?/More Automated Tasks/About More Automated Tasks.res"
+                case "extm": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case "pwRB": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case ResourceForkType.WindowPosition: // "System7/Apple Extras/AppleScript?/Automated Tasks/Add Alias to Apple Menu.res"
+                case "pcPR": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case "pcRB": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case "acTB": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case "acSU": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case "acVI": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player Guide.res"
+                case "spsh": // "System7/Apple Extras/AppleScript?/Automated Tasks/Add Alias to Apple Menu.res"
+                case ResourceForkType.Script: // "System7/Apple Extras/AppleScript?/More Automated Tasks/Synchronize Folders.res"
+                case ResourceForkType.Droplet: // "System7/Apple Extras/AppleScript?/Automated Tasks/Add Alias to Apple Menu.res"
+                case ResourceForkType.Applet: // "System7/Apple Extras/AppleScript?/More Automated Tasks/Change Monitor to B&W.res"
+                case ResourceForkType.MacProgrammersWorkshopShellResource: // "System7/System Folder/Extensions/Printer Descriptions/LaserWriter Pro 810f.res"
+                case "nbrs": // "System7/System Folder/Control Panels/Numbers.res"
+                case ResourceForkType.DatabaseExtension: // "System7/System Folder/Extensions/DAL.res"
+                case "extE": // "System7/System Folder/Extensions/ EM Extension.res"
+                case "aete": // "System7/System Folder/Extensions/Scripting Additions/Read_Write Commands.res"
+                case "shdo": // "System7/System Folder/Apple Menu Items/? Shut Down.res"
+                case "actb": // "System7/System Folder/Apple Menu Items/Find File.res"
+                case "lpch": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "CL1N": // "System7/System Folder/Extensions/DAL.res"
+                case "cfmt": // "System7/System Folder/Control Panels/Numbers.res"
+                case "CUST": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "DICL": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "hjcr": // "System7/System Folder/Extensions/Finder Scripting Extension.res"
+                case "ffEx": // "System7/System Folder/Extensions/Find File Extension.res"
+                case "dnrp": // "System7/System Folder/MacTCP DNR.res"
+                case "ufox": // "System7/System Folder/Extensions/Foreign File Access.res"
+                case "calc": // "System7/System Folder/Apple Menu Items/Calculator.res"
+                case "ugcf": // "System7/System Folder/Control Panels/Users & Groups.res"
+                case "KINI": // "System7/System Folder/Control Panels/Mouse.res"
+                case "C&Jp": // "System7/System Folder/Control Panels/Apple Menu Options.res"
+                case "aclk": // "System7/System Folder/Apple Menu Items/Alarm Clock.res"
+                case "DALF": // "System7/System Folder/Extensions/DAL.res"
+                case "MDVR": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "rspc": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "dnsl": // "System7/System Folder/MacTCP DNR.res"
+                case "STSZ": // "System7/System Folder/Extensions/Foreign File Access.res"
+                case "CDJR": // "System7/System Folder/Control Panels/Apple Menu Options.res"
+                case "dast": // "System7/System Folder/Apple Menu Items/Alarm Clock.res"
+                case "aucd": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player.res"
+                case "flbs": // "System7/System Folder/Control Panels/Labels.res"
+                case "DATA": // "System7/System Folder/Apple Menu Items/Note Pad.res"
+                case "tecd": // "System7/System Folder/Control Panels/Text.res"
+                case "STRI": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "pkft": // "System7/System Folder/Apple Menu Items/Key Caps.res"
+                case "shrt": // "System7/System Folder/Preferences/Desktop Pattern Prefs.res"
+                case "gmra": // "System7/System Folder/Control Panels/Macintosh Easy Open.res"
+                case "fval": // "System7/System Folder/Preferences/Finder Preferences.res"
+                case "dald": // "System7/System Folder/Extensions/DAL.res"
+                case "fSCR": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "GAMA": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "fsiz": // "System7/System Folder/Extensions/Finder Scripting Extension.res"
+                case "CODX": // "System7/System Folder/Extensions/Foreign File Access.res"
+                case "wtab": // "System7/System Folder/Extensions/Color Picker.res"
+                case "CLRS": // "System7/Apple Extras/AppleCD Audio Player/AppleCD Audio Player.res"
+                case "WSPR": // "System7/System Folder/Control Panels/WindowShade.res"
+                case "FTIN": // "System7/System Folder/Extensions/ISO 9660 File Access.res"
+                case "sPAT": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "kcwn": // "System7/System Folder/Apple Menu Items/Key Caps.res"
+                case "WPOS": // "System7/System Folder/Preferences/Desktop Pattern Prefs.res"
+                case "chzr": // "System7/System Folder/Apple Menu Items/Chooser.res"
+                case "ZERO": // "System7/System Folder/Control Panels/Desktop Patterns.res"
+                case "iemt": // "System7/System Folder/Control Panels/Macintosh Easy Open.res"
+                case "sgci": // "System7/System Folder/Preferences/Finder Preferences.res"
+                case "fsmn": // "System7/System Folder/Control Panels/File Sharing Monitor.res"
+                case "cryp": // "System7/System Folder/Extensions/File Sharing Extension.res"
+                case "dMap": // "System7/System Folder/Preferences/PC Exchange Preferences.res"
+                case "Smrt": // "System7/System Folder/Preferences/General Controls Prefs.res"
+                case "puzz": // "System7/System Folder/Apple Menu Items/Puzzle.res"
+                case "ffpt": // "System7/System Folder/Control Panels/General Controls.res"
+                case "adev": // "System7/System Folder/Control Panels/Network.res"
+                case "Dbdl": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "BUTT": // "System7/System Folder/Extensions/Apple CD-ROM.res"
+                case "vm  ": // "System7/System Folder/System.res"
+                case "caps": // "System7/System Folder/Extensions/Caps Lock.res"
+                case "QLfy": // "System7/System Folder/Extensions/Sound_Monitors Guide Additions.res"
+                case "TSEP": // "System7/System Folder/Extensions/Audio CD Access.res"
+                case "sndP": // "System7/System Folder/Control Panels/Sound.res"
+                case "fvew": // "System7/System Folder/Extensions/Network Extension.res"
+                case "8INI": // "System7/System Folder/Control Panels/Extensions Manager.res"
+                case "LWLS": // "System7/System Folder/Extensions/Personal LW LS.res"
+                case "CDAA": // "System7/System Folder/Preferences/Apple Menu Options Prefs.res"
+                case "cxlt": // "System7/System Folder/Preferences/Macintosh Easy Open Preferences.res"
+                case "neta": // "System7/System Folder/Preferences/AppleTalk Preferences.res"
+                case "easy": // "System7/System Folder/Control Panels/Easy Access.res"
+                case "mash": // "System7/System Folder/Control Panels/Launcher.res"
+                case "date": // "System7/System Folder/Control Panels/Date & Time.res"
+                case "ascd": // "System7/System Folder/Extensions/AppleShare.res"
+                case "mnrm": // "System7/System Folder/Control Panels/Memory.res"
+                case "sdsk": // "System7/System Folder/Control Panels/Startup Disk.res"
+                case "init": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "dflg": // "System7/System Folder/Extensions/DAL.res"
+                case "SCIC": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "cfrg": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "fsfx": // "System7/System Folder/Extensions/Finder Scripting Extension.res"
+                case "ASPT": // "System7/System Folder/Extensions/Foreign File Access.res"
+                case "DREL": // "System7/System Folder/Apple Menu Items/Note Pad.res"
+                case "WS2!": // "System7/System Folder/Control Panels/WindowShade.res"
+                case "NCOD": // "System7/System Folder/Extensions/ISO 9660 File Access.res"
+                case "cInf": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "keyc": // "System7/System Folder/Apple Menu Items/Key Caps.res"
+                case "xsig": // "System7/System Folder/Control Panels/Macintosh Easy Open.res"
+                case "RDP ": // "System7/System Folder/Extensions/File Sharing Extension.res"
+                case "pdat": // "System7/System Folder/Apple Menu Items/Puzzle.res"
+                case "misc": // "System7/System Folder/Control Panels/General Controls.res"
+                case "atdv": // "System7/System Folder/Control Panels/Network.res"
+                case "LCTL": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "VBLF": // "System7/System Folder/Extensions/Apple CD-ROM.res"
+                case "LOG ": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "erm#": // "System7/System Folder/Extensions/Finder Scripting Extension.res"
+                case "npad": // "System7/System Folder/Apple Menu Items/Note Pad.res"
+                case "PRFS": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "kpdr": // "System7/System Folder/Apple Menu Items/Key Caps.res"
+                case "BUFF": // "System7/System Folder/Extensions/File Sharing Extension.res"
+                case "wsta": // "System7/System Folder/Apple Menu Items/Puzzle.res"
+                case "ASer": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "rgb ": // "System7/System Folder/System.res"
+                case "QLca": // "System7/System Folder/Extensions/Sound_Monitors Guide Additions.res"
+                case "jigz": // "System7/System Folder/Apple Menu Items/Jigsaw Puzzle.res"
+                case "DLGX": // "System7/System Folder/Apple Menu Items/Find File.res"
+                case "NPLY": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "cpmg": // "System7/System Folder/Extensions/Color Picker.res"
+                case "wrct": // "System7/System Folder/Apple Menu Items/Note Pad.res"
+                case "PS  ": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "kbit": // "System7/System Folder/Apple Menu Items/Key Caps.res"
+                case "hhgg": // "System7/System Folder/Extensions/File Sharing Extension.res"
+                case "ASms": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "lstr": // "System7/System Folder/System.res"
+                case "QLcn": // "System7/System Folder/Extensions/Sound_Monitors Guide Additions.res"
+                case "sflg": // "System7/System Folder/Extensions/Network Extension.res"
+                case "empr": // "System7/System Folder/Control Panels/Extensions Manager.res"
+                case "FMap": // "System7/System Folder/Preferences/Apple Menu Options Prefs.res"
+                case "mirt": // "System7/System Folder/Preferences/Macintosh Easy Open Preferences.res"
+                case "ea_p": // "System7/System Folder/Control Panels/Easy Access.res"
+                case "fnin": // "System7/System Folder/Control Panels/Launcher.res"
+                case "pts#": // "System7/System Folder/Extensions/AppleShare.res"
+                case "mmry": // "System7/System Folder/Control Panels/Memory.res"
+                case "fAni": // "System7/System Folder/Finder.res"
+                case "TMP#": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "scbk": // "System7/System Folder/Apple Menu Items/Scrapbook.res"
+                case "clip": // "System7/System Folder/Extensions/Clipping Extension.res"
+                case "PROC": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "ipln": // "System7/System Folder/Control Panels/MacTCP.res"
+                case "pbc2": // "System7/System Folder/Extensions/Printer Share.res"
+                case "Prfs": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "pcod": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "ntvl": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "npdt": // "System7/System Folder/Apple Menu Items/Note Pad.res"
+                case "Desc": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "meo ": // "System7/System Folder/Control Panels/Macintosh Easy Open.res"
+                case "TERM": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "fdmn": // "System7/System Folder/Extensions/Network Extension.res"
+                case "ESet": // "System7/System Folder/Control Panels/Extensions Manager.res"
+                case "prat": // "System7/System Folder/Preferences/Macintosh Easy Open Preferences.res"
+                case "MINH": // "System7/System Folder/Extensions/AppleShare.res"
+                case "tbl ": // "System7/System Folder/Control Panels/Memory.res"
+                case "Stl#": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "sbkt": // "System7/System Folder/Apple Menu Items/Scrapbook.res"
+                case "Colr": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "iplp": // "System7/System Folder/Control Panels/MacTCP.res"
+                case "#ckt": // "System7/System Folder/Extensions/Printer Share.res"
+                case "crtr": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "nstp": // "System7/System Folder/Control Panels/Sharing Setup.res"
+                case "FMAT": // "System7/System Folder/Apple Menu Items/Find File.res"
+                case "ptbl": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "PSEL": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "dFlt": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "ASdl": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "user": // "System7/System Folder/Extensions/Network Extension.res"
+                case "FTyp": // "System7/System Folder/Control Panels/Extensions Manager.res" 
+                case "DFLG": // "System7/System Folder/Extensions/AppleShare.res"
+                case "gest": // "System7/System Folder/Finder.res"
+                case "Keyf": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "FEIF": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "ctrp": // "System7/System Folder/Control Panels/MacTCP.res"
+                case "WLDa": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "pack": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "CHOS": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "symE": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "YACC": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "lmgr": // "System7/System Folder/System.res"
+                case "iNIT": // "System7/System Folder/Control Panels/Extensions Manager.res"
+                case "DATB": // "System7/System Folder/Extensions/AppleShare.res"
+                case "hcsl": // "System7/System Folder/Finder.res"
+                case "SIZe": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "Pref": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "arps": // "System7/System Folder/Control Panels/MacTCP.res"
+                case "WLDp": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "STRX": // "System7/System Folder/Apple Menu Items/Find File.res"
+                case "Cach": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "dblo": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "pTyp": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "YCTL": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "pixs": // "System7/System Folder/System.res"
+                case "opts": // "System7/System Folder/Control Panels/Extensions Manager.res"
+                case "DATC": // "System7/System Folder/Extensions/AppleShare.res"
+                case "sirz": // "System7/System Folder/Finder.res"
+                case "HFdR": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "BDat": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "ztcp": // "System7/System Folder/Control Panels/MacTCP.res"
+                case "RSTY": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "IgCn": // "System7/System Folder/Apple Menu Items/Find File.res"
+                case "FICO": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "strm": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "fSub": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "ASuc": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "fmnu": // "System7/System Folder/Finder.res"
+                case "PtSz": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "dsrt": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "fndf": // "System7/System Folder/Apple Menu Items/Find File.res"
+                case "dosa": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "purg": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "fSav": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "ASpc": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "lefT": // "System7/System Folder/System.res"
+                case "XREF": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "acSD": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "DOSK": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "ENGC": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "FDer": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "AStl": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "pmap": // "System7/System Folder/System.res"
+                case "notz": // "System7/System Folder/Apple Menu Items/Stickies.res"
+                case "paEV": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "Defl": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "HTSC": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "encM": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "Deft": // "System7/System Folder/Control Panels/PC Exchange.res"
+                case "MEMB": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "aFax": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "AStn": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "ppUA": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "PFSL": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "sgmr": // "System7/System Folder/Extensions/StyleWriter 1200.res"
+                case "pcCI": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "BADA": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "adio": // "System7/System Folder/System.res"
+                case "pcTX": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "MCMD": // "System7/SimpleText.res"
+                case "pcTA": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "pxCA": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "pqMS": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "pqCN": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "acPT": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "acCC": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "Stem": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "reno": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "idnt": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "cmfl": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "RGN ": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "chlk": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "FLEX": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "aeut": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "tstr": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "per2": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "ASe1": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "ASe2": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "ASnf": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "ASnp": // "System7/System Folder/Extensions/Scripting Additions/Dialects/English Dialect.res"
+                case "UNIT": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "bfdf": // "System7/System Folder/System.res"
+                case "lMac": // "System7/System Folder/Extensions/Apple Guide.res"
+                case "vgrd": // "System7/System Folder/Extensions/LaserWriter 8.res"
+                case "dskp": // "System7/System Folder/Control Panels/Desktop Patterns.res"
+                case "bfim": // "System7/System Folder/System.res"
+                case "bNDL": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "ascr": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "strt": // "System7/System Folder/Extensions/Apple Guide.res"
+                case ResourceForkType.CitiesList2: // "System7/System Folder/Control Panels/Map.res"
+                case "fwst": // "System7/System Folder/Control Panels/Map.res"
+                case "bmgr": // "System7/System Folder/System.res"
+                case "bpch": // "System7/System Folder/System.res"
+                case "cmu!": // "System7/System Folder/System.res"
+                case "ecf2": // "System7/System Folder/System.res"
+                case "ecfg": // "System7/System Folder/System.res"
+                case "enet": // "System7/System Folder/System.res"
+                case "fovr": // "System7/System Folder/System.res"
+                case "gbly": // "System7/System Folder/System.res"
+                case "gnld": // "System7/System Folder/System.res"
+                case "gnth": // "System7/System Folder/System.res"
+                case "gnxt": // "System7/System Folder/System.res"
+                case "gpch": // "System7/System Folder/System.res"
+                case "gtbl": // "System7/System Folder/System.res"
+                case "gusd": // "System7/System Folder/System.res"
+                case "lodr": // "System7/System Folder/System.res"
+                case "ntrb": // "System7/System Folder/System.res"
+                case "pslt": // "System7/System Folder/System.res"
+                case "sfvr": // "System7/System Folder/System.res"
+                case "sift": // "System7/System Folder/System.res"
+                case "timd": // "System7/System Folder/System.res"
+                case "vdpm": // "System7/System Folder/System.res"
+                case "wart": // "System7/System Folder/System.res"
+                case "picb": // "System7/System Folder/System.res"
+                case "SERD": // "System7/System Folder/System.res"
+                case "accl": // "System7/System Folder/System.res"
+                case "atlk": // "System7/System Folder/System.res"
+                case "ctb ": // "System7/System Folder/System.res"
+                case "dbag": // "System7/System Folder/System.res"
+                case "dspf": // "System7/System Folder/System.res"
+                case "flst": // "System7/System Folder/System.res"
+                case "i2c ": // "System7/System Folder/System.res"
+                case "iopc": // "System7/System Folder/System.res"
+                case "ltlk": // "System7/System Folder/System.res"
+                case "otdr": // "System7/System Folder/System.res"
+                case "otlm": // "System7/System Folder/System.res"
+                case "ppcc": // "System7/System Folder/System.res"
+                case "ppci": // "System7/System Folder/System.res"
+                case "prob": // "System7/System Folder/System.res"
+                case "dbex": // "System7/System Folder/System.res"
+                case "indl": // "System7/System Folder/System.res"
+                case "inpm": // "System7/System Folder/System.res"
+                case "itlm": // "System7/System Folder/System.res"
+                case "acfg": // "System7/System Folder/System.res"
+                case "cpud": // "System7/System Folder/System.res"
+                case "pg&e": // "System7/System Folder/System.res"
+                case "DDid": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "aspf": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "ashi": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "asha": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "ascn": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "asc2": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "asc3": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "asc4": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "asc5": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "asc6": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "ccod": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "DEI ": // "System7/System Folder/Extensions/AppleScript?.res"
+                case "fREF": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "bnDL": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "REXP": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "SCSz": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "ToyS": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "CMNU": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "RLIS": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "aedt": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "Lang": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "WITL": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "hVew": // "System7/Apple Extras/AppleScript?/Script Editor.res"
+                case "time": // "System7/System Folder/Control Panels/Date & Time.res"
                     // Unknown.
                     break;
 

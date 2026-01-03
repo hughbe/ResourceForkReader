@@ -146,6 +146,6 @@ public readonly struct SizeRecord
         MinimumMemorySize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        Debug.Assert(offset == Size, "Did not consume all bytes for SizeRecord.");
+        Debug.Assert(offset == data.Length, "Did not consume all bytes for SizeRecord.");
     }
 }

@@ -306,7 +306,7 @@ public readonly struct LayoutRecord
         MaximumNumberOfWindows = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2));
         offset += 2;
 
-        Debug.Assert(offset == Size, "Did not read all data for LayoutRecord.");
+        Debug.Assert(offset == data.Length, "Did not read all data for LayoutRecord.");
     }
 
     /// <summary>

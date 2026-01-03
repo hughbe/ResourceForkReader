@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Text;
 using ResourceForkReader.Utilities;
 
 namespace ResourceForkReader.Records;

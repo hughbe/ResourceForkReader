@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -281,6 +280,6 @@ public readonly struct NumericFormatRecord
         Version = data[offset];;
         offset += 1;
 
-        Debug.Assert(offset == Size, "Did not read all data for Numeric Format Record.");
+        Debug.Assert(offset == data.Length, "Did not read all data for Numeric Format Record.");
     }
 }
