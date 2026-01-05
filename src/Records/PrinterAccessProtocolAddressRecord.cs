@@ -51,7 +51,7 @@ public readonly struct PrinterAccessProtocolAddressRecord
             throw new ArgumentException($"Data is too short to be a valid Printer Access Protocol Address Record. Minimum size is {MinSize} bytes.", nameof(data));
         }
 
-        // Structure documented in 
+        // Structure documented in https://github.com/fuzziqersoftware/resource_dasm/blob/master/src/SystemTemplates.cc#L932-L938
         int offset = 0;
 
         Name = SpanUtilities.ReadPascalString(data[offset..], out var nameBytesRead);
@@ -60,14 +60,27 @@ public readonly struct PrinterAccessProtocolAddressRecord
         Type = SpanUtilities.ReadPascalString(data[offset..], out var typeBytesRead);
         offset += typeBytesRead;
 
-        Zone = SpanUtilities.ReadPascalString(data[offset..], out var zoneBytesRead);
-        offset += zoneBytesRead;
+        byte zoneLength = data[offset];
+        if (offset + 1 + zoneLength > data.Length)
+        {
+            // Seen in the wild: zone length exceeds remaining data length
+            // Skip the remaining fields.
+            Data = data[offset..].ToArray();
+            offset += Data.Length;
+            Zone = string.Empty;
+            AddressBlock = 0;
+        }
+        else
+        {
+            Zone = SpanUtilities.ReadPascalString(data[offset..], out var zoneBytesRead);
+            offset += zoneBytesRead;
 
-        AddressBlock = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
-        offset += 4;
+            AddressBlock = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
+            offset += 4;
 
-        Data = data[offset..].ToArray();
-        offset += Data.Length;
+            Data = data[offset..].ToArray();
+            offset += Data.Length;
+        }
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for Printer Access Protocol Address Record.");
     }

@@ -11,7 +11,7 @@ public readonly struct FontFamilyKerningTableEntry
     /// <summary>
     /// The minimum size of a Font Family Kerning Table Entry in bytes.
     /// </summary>
-    public const int MinSize = 6;
+    public const int MinSize = 4;
 
     /// <summary>
     /// Gets the style identifier for this kerning table entry.

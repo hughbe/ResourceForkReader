@@ -171,6 +171,11 @@ public static class ResourceForkType
     public const string ComponentList = "thn#";
 
     /// <summary>
+    /// The 'CSND' resource type for compressed sound.
+    /// </summary>
+    public const string CompressedSound = "CSND";
+
+    /// <summary>
     /// The 'ncts' resource type for constants list.
     /// </summary>
     public const string ConstantsList = "ncts";
@@ -489,6 +494,11 @@ public static class ResourceForkType
     /// The 'icl8' resource type for large 8 bit icons.
     /// </summary>
     public const string LargeIcon8Bit = "icl8";
+
+    /// <summary>
+    /// The 'LROM' resource type for LaserPrep ROM resources.
+    /// </summary>
+    public const string LaserPrepROM = "LROM";
 
     /// <summary>
     /// The 'LAYO' resource type for layout resources.
@@ -918,6 +928,11 @@ public static class ResourceForkType
     /// The 'macs' resource type for system version resources.
     /// </summary>
     public const string SystemVersion2 = "macs";
+
+    /// <summary>
+    /// The 'SVRS' resource type for system version resources.
+    /// </summary>
+    public const string SystemVersion3 = "SVRS";
 
     /// <summary>
     /// The 'TEXT' resource type for text resources.

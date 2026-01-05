@@ -16,6 +16,15 @@ public class ResourceForkTests
     [InlineData("Testing/Desktop_NoComment.res")]
     [InlineData("Testing/Desktop_Comment.res")]
     [InlineData("Testing/Desktop_MultiComments.res")]
+    [InlineData("System1.0/DeskTop.res")]
+    [InlineData("System1.0/Disk Copy.res")]
+    [InlineData("System1.0/Finder.res")]
+    [InlineData("System1.0/Font Mover.res")]
+    [InlineData("System1.0/Fonts.res")]
+    [InlineData("System1.0/Imagewriter.res")]
+    [InlineData("System1.0/Scrapbook File.res")]
+    [InlineData("System1.0/System.res")]
+    [InlineData("System1.0/SysVersion.res")]
     [InlineData("System1.1/DeskTop.res")]
     [InlineData("System1.1/Disk Copy.res")]
     [InlineData("System1.1/Finder.res")]
@@ -24,14 +33,60 @@ public class ResourceForkTests
     [InlineData("System1.1/Imagewriter.res")]
     [InlineData("System1.1/Scrapbook File.res")]
     [InlineData("System1.1/System.res")]
-    [InlineData("System2/128K Disk Copy.res")]
-    [InlineData("System2/Desktop.res")]
-    [InlineData("System2/Finder.res")]
-    [InlineData("System2/Font_DA Mover.res")]
-    [InlineData("System2/Fonts.res")]
-    [InlineData("System2/ImageWriter.res")]
-    [InlineData("System2/Scrapbook File.res")]
-    [InlineData("System2/System.res")]
+    [InlineData("System2.0/Finder 1.1/Desktop.res")]
+    [InlineData("System2.0/Finder 1.1/Disk Copy.res")]
+    [InlineData("System2.0/Finder 1.1/Finder.res")]
+    [InlineData("System2.0/Finder 1.1/Font Mover.res")]
+    [InlineData("System2.0/Finder 1.1/Fonts.res")]
+    [InlineData("System2.0/Finder 1.1/Imagewriter.res")]
+    [InlineData("System2.0/Finder 1.1/SysVersion.res")]
+    [InlineData("System2.0/Finder 1.1/System.res")]
+    [InlineData("System2.0/128K Disk Copy.res")]
+    [InlineData("System2.0/Desktop.res")]
+    [InlineData("System2.0/Finder.res")]
+    [InlineData("System2.0/Font_DA Mover.res")]
+    [InlineData("System2.0/Fonts.res")]
+    [InlineData("System2.0/ImageWriter.res")]
+    [InlineData("System2.0/Scrapbook File.res")]
+    [InlineData("System2.0/System.res")]
+    [InlineData("System2.1/Desktop.res")]
+    [InlineData("System2.1/Finder.res")]
+    [InlineData("System2.1/HD 20 Test.res")]
+    [InlineData("System2.1/HD Diag.res")]
+    [InlineData("System2.1/Hard Disk 20.res")]
+    [InlineData("System2.1/ImageWriter.res")]
+    [InlineData("System2.1/Scrapbook File.res")]
+    [InlineData("System2.1/System.res")]
+    [InlineData("System3.0/Desktop.res")]
+    [InlineData("System3.0/System Folder/AppleTalk ImageWriter.res")]
+    [InlineData("System3.0/System Folder/Finder.res")]
+    [InlineData("System3.0/System Folder/Font_DA Mover.res")]
+    [InlineData("System3.0/System Folder/ImageWriter.res")]
+    [InlineData("System3.0/System Folder/Laser Prep.res")]
+    [InlineData("System3.0/System Folder/LaserWriter.res")]
+    [InlineData("System3.0/System Folder/Scrapbook File.res")]
+    [InlineData("System3.0/System Folder/System.res")]
+    [InlineData("System3.0/Utilities Folder/Desk Accessories.res")]
+    [InlineData("System3.0/Utilities Folder/Fonts.res")]
+    [InlineData("System3.0/Utilities Folder/Installer.res")]
+    [InlineData("System3.0/Utilities Folder/Installer Scripts/Mac Plus Update.res")]
+    [InlineData("System3.1.1/Desktop.res")]
+    [InlineData("System3.1.1/File.res")]
+    [InlineData("System3.1.1/Mousing Around.res")]
+    [InlineData("System3.1.1/readme.res")]
+    [InlineData("System3.1.1/System Folder/Calc Scene.res")]
+    [InlineData("System3.1.1/System Folder/Caps scene.res")]
+    [InlineData("System3.1.1/System Folder/Control Scene.res")]
+    [InlineData("System3.1.1/System Folder/Desktop 1.res")]
+    [InlineData("System3.1.1/System Folder/Finder.res")]
+    [InlineData("System3.1.1/System Folder/ImageWriter.res")]
+    [InlineData("System3.1.1/System Folder/OVWT.res")]
+    [InlineData("System3.1.1/System Folder/Scrap Scene.res")]
+    [InlineData("System3.1.1/System Folder/Scrapbook File.res")]
+    [InlineData("System3.1.1/System Folder/Sounds.res")]
+    [InlineData("System3.1.1/System Folder/System.res")]
+    [InlineData("System3.1.1/System Folder/Tour Guide.res")]
+    [InlineData("System3.1.1/System Folder/Tour List.res")]
     [InlineData("System3.2/Desktop.res")]
     [InlineData("System3.2/Font_DA Mover.res")]
     [InlineData("System3.2/HD 20 Test.res")]
@@ -40,6 +95,13 @@ public class ResourceForkTests
     [InlineData("System3.2/System Folder/ImageWriter.res")]
     [InlineData("System3.2/System Folder/Scrapbook File.res")]
     [InlineData("System3.2/System Folder/System.res")]
+    [InlineData("System3.4/Desktop.res")]
+    [InlineData("System3.4/Installer.res")]
+    [InlineData("System3.4/Installer Scripts/AppleShare Script.res")]
+    [InlineData("System3.4/Installer Scripts/Mac System 512Ke Script.res")]
+    [InlineData("System3.4/System Folder/AppleShare.res")]
+    [InlineData("System3.4/System Folder/Finder.res")]
+    [InlineData("System3.4/System Folder/System.res")]
     [InlineData("System5/Desktop.res")]
     [InlineData("System5/System Tools 1/TeachText.res")]
     [InlineData("System5/System Tools 1/System Folder/Color.res")]
@@ -1169,6 +1231,17 @@ public class ResourceForkTests
 
                     break;
 
+                case ResourceForkType.CompressedSound:
+                    Debug.WriteLine("CSND Resources:");
+                    foreach (var csndResource in type.Value)
+                    {
+                        var csndData = fork.GetResourceData(csndResource);
+                        var compressedSoundRecord = new CompressedSoundRecord(csndData);
+                        Debug.WriteLine($"  Compressed Sound {csndResource}: SampleType={compressedSoundRecord.SampleType}, DecompressedSize={compressedSoundRecord.DecompressedSize}, DecompressedData Length={compressedSoundRecord.DecompressedData.Length}");
+                    }
+
+                    break;
+
                 case ResourceForkType.Palette:
                     Debug.WriteLine("pltt Resources:");
                     foreach (var plttResource in type.Value)
@@ -1538,6 +1611,7 @@ public class ResourceForkTests
 
                 case ResourceForkType.SystemVersion1:
                 case ResourceForkType.SystemVersion2:
+                case ResourceForkType.SystemVersion3:
                     Debug.WriteLine("System Version Resources:");
                     foreach (var macsResource in type.Value)
                     {
@@ -2247,6 +2321,7 @@ public class ResourceForkTests
                 case ResourceForkType.MacroMakerInformation1:
                 case ResourceForkType.MacroMakerInformation2:
                 case ResourceForkType.MacroMakerInformation3:
+                case ResourceForkType.LaserPrepROM:
                 case "TTXT":
                 case "PCOD":
                 case "RFIL":
@@ -2710,6 +2785,13 @@ public class ResourceForkTests
                 case ResourceForkType.ConstantsList: // "System3.2/System Folder/System.res"
                 case ResourceForkType.TitleList1: // "System3.2/System Folder/System.res"
                 case "uins": // "System5/Desktop.res"
+                case "PSHX": // "System3.0/System Folder/LaserWriter.res"
+                case "BITD": // "System3.1.1/System Folder/Control Scene.res"
+                case "RONY": // "System3.1.1/Mousing Around.res"
+                case "MMTE": // "System3.1.1/System Foldr/OVWT.res"
+                case "CARY": // "System3.1.1/Desktop.res"
+                case "JSHL": // "System3.1.1/Desktop.res"
+                case "MMVW": // "System3.1.1/Desktop.res"
                     // Unknown.
                     break;
 
