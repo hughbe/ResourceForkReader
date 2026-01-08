@@ -458,6 +458,12 @@ public class ResourceForkTests
     [InlineData("System7/System Folder/Preferences/WindowShade Preferences.res")]
     public void Ctor_Stream(string fileName)
     {
+        // Skip tests with filenames containing characters invalid.
+        if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+        {
+            return; // Skip this test
+        }
+
         var filePath = Path.Combine("Samples", fileName);
         using var stream = File.OpenRead(filePath);
 
@@ -489,6 +495,9 @@ public class ResourceForkTests
 
     private static void DumpFork(ResourceFork fork)
     {
+        // Create Output directory if it doesn't exist (needed for Windows)
+        Directory.CreateDirectory("Output");
+
         Debug.WriteLine("Resource Fork Header:");
         Debug.WriteLine($"  Data Offset: {fork.Header.DataOffset}");
         Debug.WriteLine($"  Map Offset: {fork.Header.MapOffset}");
