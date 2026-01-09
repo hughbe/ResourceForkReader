@@ -39,7 +39,7 @@ public readonly struct TypeList
         // Structure not documented.
         int offset = 0;
 
-        NumberOfTypes = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(0, 2));
+        NumberOfTypes = BinaryPrimitives.ReadUInt16BigEndian(data[..2]);
         offset += 2;
 
         if (offset + NumberOfTypes * 4 > data.Length)

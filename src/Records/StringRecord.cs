@@ -32,7 +32,7 @@ public readonly struct StringRecord
 
         // Seen cases where string length is odd, followed by a padding byte.
         // Or there are additional zero bytes after the string.
-        RemainingData = data.Slice(offset).ToArray();
+        RemainingData = data[offset..].ToArray();
         offset += RemainingData.Length;
 
         Debug.Assert(offset == data.Length, "Did not consume all bytes for StringRecord.");

@@ -118,7 +118,7 @@ public readonly struct PostScriptTable
         MaxMemType1 = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(offset, 4));
         offset += 4;
 
-        FormatData = data.Slice(offset).ToArray();
+        FormatData = data[offset..].ToArray();
         offset += FormatData.Length;
 
         Debug.Assert(offset == data.Length, "Offset should equal data length after reading PostScript Table.");

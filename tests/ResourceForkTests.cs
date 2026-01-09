@@ -736,7 +736,7 @@ public class ResourceForkTests
                     {
                         var pictData = fork.GetResourceData(pictResource);
                         var pictureRecord = new PictureRecord(pictData);
-                        Debug.WriteLine($"  Picture {pictResource}: PictureData Length={pictureRecord.PictureData.Length}");
+                        Debug.WriteLine($"  Picture {pictResource}: OpcodeData Length={pictureRecord.OpcodeData.Length}");
                     }
 
                     break;

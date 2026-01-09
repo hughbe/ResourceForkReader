@@ -25,7 +25,7 @@ public readonly struct ApplicationListRecord
         var entries = new List<ApplicationListEntry>();
         while (offset < data.Length)
         {
-            entries.Add(new ApplicationListEntry(data.Slice(offset), out var bytesRead));
+            entries.Add(new ApplicationListEntry(data[offset..], out var bytesRead));
             offset += bytesRead;
             
             if (offset % 2 != 0)
