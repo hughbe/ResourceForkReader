@@ -477,14 +477,27 @@ public class ResourceForkTests
     [InlineData("MacSpeak/Speak.Rsrc.res")]
     [InlineData("MacSpeak/Speak.res")]
     [InlineData("MacSpeak/System.res")]
+    [InlineData("Disk Write/About MacWrite.res")]
+    [InlineData("Disk Write/DeskTop.res")]
+    [InlineData("Disk Write/Finder.res")]
+    [InlineData("Disk Write/Imagewriter.res")]
+    [InlineData("Disk Write/MacWrite.res")]
+    [InlineData("Disk Write/Sample Memo.res")]
+    [InlineData("Disk Write/Scrapbook File.res")]
+    [InlineData("Disk Write/System.res")]
+    [InlineData("MacWrite_Paint 1.0/Desktop.res")]
+    [InlineData("MacWrite_Paint 1.0/Disk Copy.res")]
+    [InlineData("MacWrite_Paint 1.0/Finder.res")]
+    [InlineData("MacWrite_Paint 1.0/Font Mover.res")]
+    [InlineData("MacWrite_Paint 1.0/Fonts.res")]
+    [InlineData("MacWrite_Paint 1.0/Imagewriter.res")]
+    [InlineData("MacWrite_Paint 1.0/MacPaint.res")]
+    [InlineData("MacWrite_Paint 1.0/MacWrite.res")]
+    [InlineData("MacWrite_Paint 1.0/Scrapbook File.res")]
+    [InlineData("MacWrite_Paint 1.0/SysVersion.res")]
+    [InlineData("MacWrite_Paint 1.0/System.res")]
     public void Ctor_Stream(string fileName)
     {
-        // Skip tests with filenames containing characters invalid.
-        if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-        {
-            return; // Skip this test
-        }
-
         var filePath = Path.Combine("Samples", fileName);
         using var stream = File.OpenRead(filePath);
 

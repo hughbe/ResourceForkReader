@@ -61,36 +61,44 @@ public struct ResourceForkMap
         ResourceTypeCount = BinaryPrimitives.ReadUInt16BigEndian(data[offset..]);
         offset += 2;
 
-        // Read the resource types and the entries.
-        var types = new Dictionary<string, List<ResourceListEntry>>(ResourceTypeCount + 1);
-        for (int i = 0; i < ResourceTypeCount + 1; i++)
+        if (ResourceTypeCount == 0xFFFF)
         {
-            var resourceType = new ResourceTypeListItem(data.Slice(offset, ResourceTypeListItem.Size));
-            offset += ResourceTypeListItem.Size;
-
-            var resourceListOffset = Header.ResourceTypeListOffset + resourceType.ResourceListOffset;
-            if (resourceListOffset >= data.Length)
+            // No resource types defined.
+            Types = [];
+        }
+        else
+        {
+            // Read the resource types and the entries.
+            var types = new Dictionary<string, List<ResourceListEntry>>(ResourceTypeCount + 1);
+            for (int i = 0; i < ResourceTypeCount + 1; i++)
             {
-                throw new ArgumentException("Resource list offset is out of bounds.", nameof(data));
-            }
+                var resourceType = new ResourceTypeListItem(data.Slice(offset, ResourceTypeListItem.Size));
+                offset += ResourceTypeListItem.Size;
 
-            for (int j = 0; j < resourceType.ResourceCount + 1; j++)
-            {
-                var entry = new ResourceListEntry(data.Slice(resourceListOffset, ResourceListEntry.Size));
-                resourceListOffset += ResourceListEntry.Size;
-
-                if (!types.TryGetValue(resourceType.Type, out var entries))
+                var resourceListOffset = Header.ResourceTypeListOffset + resourceType.ResourceListOffset;
+                if (resourceListOffset >= data.Length)
                 {
-                    entries = [];
-                    types[resourceType.Type] = entries;
+                    throw new ArgumentException("Resource list offset is out of bounds.", nameof(data));
                 }
 
-                entries.Add(entry);
+                for (int j = 0; j < resourceType.ResourceCount + 1; j++)
+                {
+                    var entry = new ResourceListEntry(data.Slice(resourceListOffset, ResourceListEntry.Size));
+                    resourceListOffset += ResourceListEntry.Size;
+
+                    if (!types.TryGetValue(resourceType.Type, out var entries))
+                    {
+                        entries = [];
+                        types[resourceType.Type] = entries;
+                    }
+
+                    entries.Add(entry);
+                }
+
             }
 
+            Types = types;
         }
-
-        Types = types;
 
         Debug.Assert(offset <= data.Length, "Did not consume all data for ResourceForkMap.");
     }
