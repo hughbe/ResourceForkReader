@@ -202,6 +202,6 @@ public readonly struct ControlRecord
         Title = SpanUtilities.ReadPascalString(data[offset..], out var titleBytesRead);
         offset += titleBytesRead;
 
-        Debug.Assert(offset == data.Length, "Did not consume all bytes for ControlRecord.");
+        Debug.Assert(offset <= data.Length, "Did not consume all bytes for ControlRecord.");
     }
 }

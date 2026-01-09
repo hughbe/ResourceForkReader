@@ -2870,6 +2870,7 @@ public class ResourceForkTests
                 case "zTRM": // "MacSpeak/Desktop.res"
                 case "RRYD": // "MacSpeak/Desktop.res"
                 case "STOT": // "MacSpeak/Desktop.res"
+                case "\x1fN?t": // "MacPaint/Desktop.res"
                     // Unknown.
                     break;
 

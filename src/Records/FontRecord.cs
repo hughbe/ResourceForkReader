@@ -254,7 +254,16 @@ public readonly struct FontRecord
         // bit offset to that glyph from the bit offset to the next glyph in
         // the table.
         var numberOfGlyphs = LastCharacterCode - FirstCharacterCode + 2;
-
+        if (numberOfGlyphs < 0)
+        {
+            // No glyphs defined.
+            BitmapLocationTable = [];
+            WidthOffsetTable = [];
+            GlyphWidthTable = null;
+            ImageHeightTable = null;
+            return;
+        }
+            
         // Extra word for end offset
         var bitmapLocationTable = new ushort[numberOfGlyphs + 1];
         for (int i = 0; i < bitmapLocationTable.Length; i++)
