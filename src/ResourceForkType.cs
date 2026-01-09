@@ -246,6 +246,16 @@ public static class ResourceForkType
     public const string Droplet = "dplt";
 
     /// <summary>
+    /// The 'EFNT' resource type for editor fonts.
+    /// </summary>
+    public const string EditorFont = "EFNT";
+
+    /// <summary>
+    /// The 'ETAB' resource type for editor tabs.
+    /// </summary>
+    public const string EditorTab = "ETAB";
+
+    /// <summary>
     /// The 'epch' resource type for epch resources.
     /// </summary>
     public const string epch = "epch";

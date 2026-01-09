@@ -456,6 +456,27 @@ public class ResourceForkTests
     [InlineData("System7/System Folder/Preferences/PC Exchange Preferences.res")]
     [InlineData("System7/System Folder/Preferences/StuffIt Expander Preferences.res")]
     [InlineData("System7/System Folder/Preferences/WindowShade Preferences.res")]
+    [InlineData("MacPaint/Desktop.res")]
+    [InlineData("MacPaint/Icon.res")]
+    [InlineData("MacPaint/1.0/Icon.res")]
+    [InlineData("MacPaint/1.0/MacPaint.res")]
+    [InlineData("MacPaint/1.3/Icon.res")]
+    [InlineData("MacPaint/1.3/MacPaint.res")]
+    [InlineData("MacPaint/1.4/Icon.res")]
+    [InlineData("MacPaint/1.4/MacPaint.res")]
+    [InlineData("MacPaint/1.5/Icon.res")]
+    [InlineData("MacPaint/1.5/MacPaint.res")]
+    [InlineData("MacPaint/2.0/Icon.res")]
+    [InlineData("MacPaint/2.0/MacPaint.res")]
+    [InlineData("MacPaint/TheVolumeSettingsFolder/DesktopPrinters DB.res")]
+    [InlineData("MacPaint/TheVolumeSettingsFolder/OpenFolderListDF.res")]
+    [InlineData("MacSpeak/Desktop.res")]
+    [InlineData("MacSpeak/Finder.res")]
+    [InlineData("MacSpeak/MacinTalk.res")]
+    [InlineData("MacSpeak/Speak.Pas.res")]
+    [InlineData("MacSpeak/Speak.Rsrc.res")]
+    [InlineData("MacSpeak/Speak.res")]
+    [InlineData("MacSpeak/System.res")]
     public void Ctor_Stream(string fileName)
     {
         // Skip tests with filenames containing characters invalid.
@@ -2327,6 +2348,28 @@ public class ResourceForkTests
 
                     break;
 
+                case ResourceForkType.EditorFont:
+                    Debug.WriteLine("EFNT Resources:");
+                    foreach (var efntResource in type.Value)
+                    {
+                        var efntData = fork.GetResourceData(efntResource);
+                        var editorFontRecord = new EditorFont(efntData);
+                        Debug.WriteLine($"  Editor Font Record {efntResource}: Name=\"{editorFontRecord.Name}\"");
+                    }
+
+                    break;
+
+                case ResourceForkType.EditorTab:
+                    Debug.WriteLine("ETAB Resources:");
+                    foreach (var etabResource in type.Value)
+                    {
+                        var etabData = fork.GetResourceData(etabResource);
+                        var editorTabRecord = new EditorTabRecord(etabData);
+                        Debug.WriteLine($"  Editor Tab Record {etabResource}: NumberOfPixelsForEachSpace={editorTabRecord.NumberOfPixelsForEachSpace}, NumberOfSpacesPerTab={editorTabRecord.NumberOfSpacesPerTab}");
+                    }
+
+                    break;
+
                 case ResourceForkType.MacroMakerInformation1:
                 case ResourceForkType.MacroMakerInformation2:
                 case ResourceForkType.MacroMakerInformation3:
@@ -2801,6 +2844,19 @@ public class ResourceForkTests
                 case "CARY": // "System3.1.1/Desktop.res"
                 case "JSHL": // "System3.1.1/Desktop.res"
                 case "MMVW": // "System3.1.1/Desktop.res"
+                case "TALK": // "MacSpeak/MacinTalk.res"
+                case "SITx": // "MacSpeak/Desktop.res"
+                case "RULZ": // "MacSpeak/MacinTalk.res"
+                case "MTRM": // "MacSpeak/Desktop.res"
+                case "FInf": // "MacSpeak/Desktop.res"
+                case "aust": // "MacSpeak/Desktop.res"
+                case "I}r8": // "MacSpeak/Desktop.res"
+                case "rKAL": // "MacSpeak/Desktop.res"
+                case "CpRm": // "MacSpeak/Desktop.res"
+                case "BnHq": // "MacSpeak/Desktop.res"
+                case "zTRM": // "MacSpeak/Desktop.res"
+                case "RRYD": // "MacSpeak/Desktop.res"
+                case "STOT": // "MacSpeak/Desktop.res"
                     // Unknown.
                     break;
 
