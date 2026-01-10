@@ -266,6 +266,16 @@ public static class ResourceForkType
     public const string ErrorString = "errs";
 
     /// <summary>
+    /// The 'XCMD' resource type for external commands.
+    /// </summary>
+    public const string ExternalCommand = "XCMD";
+
+    /// <summary>
+    /// The 'XFCN' resource type for external functions.
+    /// </summary>
+    public const string ExternalFunction = "XFCN";
+
+    /// <summary>
     /// The 'FCMT' resource type for file comments.
     /// </summary>
     public const string FileComment = "FCMT";

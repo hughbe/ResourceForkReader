@@ -11,6 +11,10 @@ public class ResourceForkTests
     [InlineData("ResEdit.res")]
     [InlineData("Read Me.res")]
     [InlineData("Desktop.res")]
+    [InlineData("DART 1.5.3/DART 1.5 Manual.res")]
+    [InlineData("DART 1.5.3/DART Converter.res")]
+    [InlineData("DART 1.5.3/DART.res")]
+    [InlineData("DART 1.5.3/Desktop.res")]
     [InlineData("OneEmptyFolder_Locked.res")]
     [InlineData("OneEmptyFolder_Unlocked.res")]
     [InlineData("Testing/Desktop_NoComment.res")]
@@ -606,6 +610,8 @@ public class ResourceForkTests
                 case ResourceForkType.nsnd:
                 case ResourceForkType.nsrd:
                 case ResourceForkType.SystemDecompressor:
+                case ResourceForkType.ExternalCommand:
+                case ResourceForkType.ExternalFunction:
                     Debug.WriteLine("CODE Resources:");
                     foreach (var entry in type.Value)
                     {
@@ -2871,6 +2877,19 @@ public class ResourceForkTests
                 case "RRYD": // "MacSpeak/Desktop.res"
                 case "STOT": // "MacSpeak/Desktop.res"
                 case "\x1fN?t": // "MacPaint/Desktop.res"
+                case "DART": // "DART 1.5.3/DART.res"
+                case "book": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "page": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "chap": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "FOLO": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "IDX#": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "IDXP": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "IDX ": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "PARA": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "DCFN": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "DCF#": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "FOL#": // "DART 1.5.3/DART 1.5 Manual.res"
+                case "FOLS": // "DART 1.5.3/DART 1.5 Manual.res"
                     // Unknown.
                     break;
 
