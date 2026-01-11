@@ -9,7 +9,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>ResourceForkReader</PackageId>
-    <Version>0.1.0</Version>
+    <Version>1.0.0</Version>
     <Authors>Hugh Bellamy</Authors>
     <Description>A lightweight .NET library for parsing classic Macintosh resource fork files. Read headers/maps, enumerate types/entries, and extract resource data with helpers for common records.</Description>
     <PackageTags>mac;resource-fork;classic-mac;binary-parsing;resources</PackageTags>
@@ -22,7 +22,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/hughbe/ResourceForkReader</PackageProjectUrl>
-    <Copyright>Hugh Bellamy 2025</Copyright>
+    <Copyright>Hugh Bellamy 2025-2026</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
